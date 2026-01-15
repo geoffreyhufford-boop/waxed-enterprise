@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@theme {
+  /* Dark palette from the app */
+  --color-waxed-black: #0d0d0d;
+  --color-waxed-dark: #1a1a1a;
+  --color-waxed-card: #1f1f1f;
+  --color-waxed-border: #333333;
+  --color-waxed-muted: #444444;
+
+  /* Text colors - higher contrast for readability */
+  --color-waxed-text: #f5f5f5;
+  --color-waxed-text-secondary: #b3b3b3;
+  --color-waxed-text-muted: #8a8a8a;
+
+  /* Olive/khaki accent from the app */
+  --color-waxed-olive: #a3a06c;
+  --color-waxed-olive-hover: #b8b57a;
+  --color-waxed-olive-muted: #7a7850;
+
+  /* Status colors */
+  --color-waxed-sold: #a3a06c;
+  --color-waxed-active: #6ca370;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-waxed-black text-waxed-text antialiased;
+  }
+
+  ::selection {
+    @apply bg-waxed-olive text-waxed-black;
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium
+           bg-waxed-olive text-waxed-black rounded-lg
+           hover:bg-waxed-olive-hover
+           transition-colors duration-150 focus:outline-none focus:ring-2
+           focus:ring-waxed-olive focus:ring-offset-2 focus:ring-offset-waxed-black;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium
+           bg-waxed-card text-waxed-text border border-waxed-border rounded-lg
+           hover:bg-waxed-muted hover:border-waxed-muted
+           transition-colors duration-150 focus:outline-none focus:ring-2
+           focus:ring-waxed-olive focus:ring-offset-2 focus:ring-offset-waxed-black;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium
+           bg-transparent text-waxed-text-secondary rounded-lg
+           hover:bg-waxed-card hover:text-waxed-text
+           transition-colors duration-150;
+  }
+
+  .card {
+    @apply bg-waxed-card border border-waxed-border rounded-xl p-6;
+  }
+
+  .stat-card {
+    @apply bg-waxed-card border border-waxed-border rounded-xl p-5;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2.5 text-sm rounded-lg
+           bg-waxed-card border border-waxed-border text-waxed-text
+           focus:outline-none focus:ring-2 focus:ring-waxed-olive focus:border-transparent
+           placeholder:text-waxed-text-muted;
+  }
+
+  .label-text {
+    @apply block text-xs font-medium text-waxed-text-secondary uppercase tracking-wide mb-1.5;
+  }
+
+  .pill {
+    @apply inline-flex items-center px-3 py-1.5 text-xs font-medium
+           bg-waxed-card border border-waxed-border rounded-full
+           text-waxed-text-secondary;
+  }
+
+  .pill-active {
+    @apply bg-waxed-olive/20 border-waxed-olive/30 text-waxed-olive;
+  }
+}
