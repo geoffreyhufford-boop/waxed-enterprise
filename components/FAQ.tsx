@@ -10,35 +10,35 @@ interface FAQItem {
 const faqs: FAQItem[] = [
   {
     question: 'Do I need to scan every record?',
-    answer: 'No. Scanning is for new arrivals and quick adds. Your existing inventory comes over via CSV import or Discogs sync. Most stores only scan incoming stock.',
+    answer: 'No. Scanning is for new arrivals and quick adds. Your existing inventory comes over via import—Discogs, spreadsheets, Shopify, or POS exports. Most stores only scan incoming stock after the initial bulk import.',
   },
   {
-    question: 'Can you import my Discogs shop?',
-    answer: 'Yes. Export your Discogs inventory as CSV and upload it directly. We map fields automatically—titles, artists, conditions, prices all come over.',
+    question: 'What can I import from?',
+    answer: 'Discogs CSV, Excel, Google Sheets, Shopify exports, or POS exports (Square, Lightspeed, etc). If your inventory is in a file somewhere, we can bring it over. Most imports take under 5 minutes.',
   },
   {
-    question: 'What if I don\'t use Discogs?',
-    answer: 'No problem. You can upload any CSV with your inventory data, or start from scratch and build your catalog by scanning. We provide templates to get started.',
+    question: 'Do I need Discogs?',
+    answer: 'No. Discogs is just one option. Most stores start with whatever they already have—spreadsheets, Shopify, or a POS export. We start where your data lives.',
   },
   {
-    question: 'How do condition grades work?',
-    answer: 'We use Goldmine grading standards (Mint, Near Mint, VG+, VG, G+, G, Fair, Poor) for both media and sleeve. You can add custom notes for edge cases.',
+    question: 'Is this useful before I have buyers?',
+    answer: 'Yes. Waxed works as an inventory manager, catalog system, ops dashboard, and analytics tool from day one. Marketplace liquidity comes later—stores win immediately.',
   },
   {
-    question: 'Do you support in-store POS?',
-    answer: 'In-store sales are on the roadmap. For now, Waxed focuses on online inventory and marketplace. We\'ll announce POS features when they\'re ready.',
+    question: 'How is this different from just using Discogs?',
+    answer: 'Discogs is a marketplace you\'re using as an ops tool. Waxed is a real inventory and fulfillment system that happens to have a storefront. Central source of truth, batch workflows, label printing, analytics that answer "what should I buy more of."',
   },
   {
     question: 'What fees do you take?',
-    answer: 'We charge a flat monthly subscription. Transaction fees depend on your plan—Starter includes standard payment processing, Pro and Enterprise get reduced rates. No listing fees.',
+    answer: 'Flat monthly subscription. Transaction fees depend on your plan—Starter includes standard processing, Pro and Enterprise get reduced rates. No listing fees, no percentage cuts on sales.',
   },
   {
     question: 'Can customers pick up locally?',
-    answer: 'Yes. You can enable local pickup at checkout. Customers select it as a shipping option, and you mark orders as ready for pickup when they\'re pulled.',
+    answer: 'Yes. Enable local pickup at checkout. Customers select it as a shipping option, and you mark orders ready when they\'re pulled. Good for stores with foot traffic.',
   },
   {
-    question: 'When do labels and shipping go live?',
-    answer: 'Integrated shipping labels with USPS, UPS, and FedEx are in development. Early access users will be first to test. Target is Q2 2026.',
+    question: 'When do shipping labels go live?',
+    answer: 'Label generation with USPS, UPS, and FedEx is in development. Early access users will be first to test. Discounted rates included—no more post office runs.',
   },
 ]
 

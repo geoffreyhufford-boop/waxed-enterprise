@@ -1,39 +1,39 @@
 export default function ProblemSolution() {
   const problems = [
     {
-      label: 'Spreadsheets',
-      description: 'Inventory lives in scattered files nobody trusts',
+      label: 'Discogs is your ops tool',
+      description: 'Managing inventory through a marketplace that wasn\'t built for it',
     },
     {
-      label: 'Manual listings',
-      description: 'Hours spent copy-pasting the same data to multiple platforms',
+      label: 'Spreadsheet chaos',
+      description: 'Stock lives in Excel files nobody trusts, synced to nothing',
     },
     {
-      label: 'Shipping pain',
-      description: 'Printing labels, tracking numbers, buyer messages everywhere',
+      label: 'Post office workflows',
+      description: 'Handwriting labels, tracking numbers in DMs, no batch fulfillment',
     },
     {
-      label: 'No analytics',
-      description: 'Guessing what sells instead of knowing',
+      label: 'Guessing what sells',
+      description: 'No real data on genre velocity, pricing ranges, or what\'s sitting',
     },
   ]
 
   const solutions = [
     {
-      label: 'One system of record',
-      description: 'Single source of truth for every record in stock',
+      label: 'Real inventory system',
+      description: 'Central source of truth for stock, condition, variants, and notes',
     },
     {
-      label: 'Bulk import',
-      description: 'Bring your Discogs catalog over in minutes',
+      label: 'Flexible import',
+      description: 'Discogs, spreadsheets, Shopify, POS exports—start where your inventory already lives',
     },
     {
-      label: 'Fulfillment tools',
-      description: 'Labels, tracking, and buyer comms in one workflow',
+      label: 'Modern fulfillment',
+      description: 'Order queue, printed labels, discounted shipping rates, batch workflows',
     },
     {
-      label: 'Real insights',
-      description: 'See what moves, what sits, and what to price',
+      label: 'Actionable analytics',
+      description: 'What\'s selling, what\'s not, what you should buy more of',
     },
   ]
 

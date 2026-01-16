@@ -6,6 +6,7 @@ import {
   Hero,
   ProblemSolution,
   Features,
+  ProductShowcase,
   Onboarding,
   Trust,
   Pricing,
@@ -27,6 +28,7 @@ export default function Home() {
         <Hero onOpenModal={openModal} />
         <ProblemSolution />
         <Features />
+        <ProductShowcase />
         <Onboarding />
         <Trust />
         <Pricing onOpenModal={openModal} />

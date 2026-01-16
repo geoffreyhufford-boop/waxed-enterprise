@@ -2,28 +2,28 @@ export default function Onboarding() {
   const steps = [
     {
       number: '01',
-      title: 'Import your catalog',
-      description: 'Connect your Discogs account or upload a CSV export. We pull in titles, artists, conditions, and prices.',
+      title: 'Export your inventory',
+      description: 'Discogs CSV, Excel, Google Sheets, Shopify export, or POS export—whatever you already have. We start where your data lives.',
     },
     {
       number: '02',
-      title: 'Review and normalize',
-      description: 'Clean up condition grades, merge duplicates, and fill in missing fields. Bulk editing makes it fast.',
+      title: 'Import to Waxed',
+      description: 'Upload the file. We map fields automatically and flag anything that needs review. Most stores are imported in under 5 minutes.',
     },
     {
       number: '03',
-      title: 'Publish your storefront',
-      description: 'Go live with a clean, searchable catalog. Customers can browse by genre, artist, or condition.',
+      title: 'Review and publish',
+      description: 'Check your catalog, clean up edge cases, add notes. Hit publish and your storefront goes live with your full inventory.',
     },
     {
       number: '04',
       title: 'Scan new arrivals',
-      description: 'Barcode scanning adds records to inventory in seconds. Works with any USB or Bluetooth scanner.',
+      description: 'Use camera scanning for incoming stock. Consumer-grade speed, enterprise-grade accuracy. Keeps inventory current without re-importing.',
     },
     {
       number: '05',
-      title: 'Fulfill orders',
-      description: 'Print labels, mark shipped, send tracking. The workflow handles buyer comms automatically.',
+      title: 'Fulfill from the dashboard',
+      description: 'Orders come in, you pack them out. Print labels, mark shipped, tracking updates automatically. No more post office workflows.',
     },
   ]
 
@@ -35,12 +35,15 @@ export default function Onboarding() {
             Onboarding
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-waxed-text">
-            From spreadsheet to storefront in an afternoon.
+            Your inventory to live storefront in one afternoon.
           </h2>
+          <p className="text-waxed-text-secondary mt-4">
+            No scanning thousands of records. Your catalog already exists somewhere—we just bring it over.
+          </p>
         </div>
 
         <div className="grid gap-6 lg:gap-0">
-          {steps.map((step, index) => (
+          {steps.map((step) => (
             <div
               key={step.number}
               className="lg:grid lg:grid-cols-12 lg:gap-8 lg:border-t lg:border-waxed-border lg:py-8 first:lg:border-t-0 first:lg:pt-0"
