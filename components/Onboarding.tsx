@@ -35,7 +35,7 @@ export default function Onboarding() {
             Onboarding
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-waxed-text">
-            Your inventory to live storefront in one afternoon.
+            From crates to your live storefront in one afternoon.
           </h2>
           <p className="text-waxed-text-secondary mt-4">
             No scanning thousands of records. Your catalog already exists somewhere—we just bring it over.

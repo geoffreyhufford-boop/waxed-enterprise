@@ -1,8 +1,8 @@
 export default function ProblemSolution() {
   const problems = [
     {
-      label: 'Discogs is your ops tool',
-      description: 'Managing inventory through a marketplace that wasn\'t built for it',
+      label: 'Discogs is where records are listed, not where stores are run.',
+      description: 'Your operations end up split across tools that don\'t talk to each other.',
     },
     {
       label: 'Spreadsheet chaos',
@@ -10,11 +10,11 @@ export default function ProblemSolution() {
     },
     {
       label: 'Post office workflows',
-      description: 'Handwriting labels, tracking numbers in DMs, no batch fulfillment',
+      description: 'Discogs for listings, spreadsheets for stock, Square for POS, shipping apps for labels. Everything lives in different places.',
     },
     {
-      label: 'Guessing what sells',
-      description: 'No real data on genre velocity, pricing ranges, or what\'s sitting',
+      label: 'Without clear demand signals, stores are left guessing.',
+      description: 'What\'s moving, what\'s stalled, and what\'s mispriced stays hidden.',
     },
   ]
 
@@ -29,11 +29,11 @@ export default function ProblemSolution() {
     },
     {
       label: 'Modern fulfillment',
-      description: 'Order queue, printed labels, discounted shipping rates, batch workflows',
+      description: 'Order queue, prepaid labels, batch workflows, returns, and tracking in one place.',
     },
     {
       label: 'Actionable analytics',
-      description: 'What\'s selling, what\'s not, what you should buy more of',
+      description: 'See what\'s selling, what\'s stalled, and what demand is pointing to next.',
     },
   ]
 

@@ -22,7 +22,7 @@ export default function Hero({ onOpenModal }: HeroProps) {
             Import from Discogs, spreadsheets, Shopify, or your POS. Scan new arrivals to stay current. Run everything from one place.
           </p>
           <p className="text-base text-waxed-text-muted mb-8 max-w-2xl">
-            Useful on day one, even before a single buyer shows up.
+            Immediate operational value, with marketplace reach built in.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <button onClick={onOpenModal} className="btn-primary text-base px-6 py-3">

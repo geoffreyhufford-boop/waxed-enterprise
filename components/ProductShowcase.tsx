@@ -72,7 +72,7 @@ export default function ProductShowcase() {
             The Platform
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-waxed-text">
-            See what your store gets.
+            A single dashboard for inventory, orders, and performance.
           </h2>
           <p className="text-waxed-text-secondary mt-4">
             Inventory, analytics, integrations—all in one dark-mode dashboard built for record stores.
