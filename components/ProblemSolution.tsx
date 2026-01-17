@@ -5,8 +5,8 @@ export default function ProblemSolution() {
       description: 'Your operations end up split across tools that don\'t talk to each other.',
     },
     {
-      label: 'Spreadsheet chaos',
-      description: 'Stock lives in Excel files nobody trusts, synced to nothing',
+      label: 'Inventory drift',
+      description: 'Records sell in-store but remain listed online. Inventory lives across Discogs, spreadsheets, and the shop floor—leading to oversells and refunds.',
     },
     {
       label: 'Post office workflows',
@@ -20,8 +20,8 @@ export default function ProblemSolution() {
 
   const solutions = [
     {
-      label: 'Real inventory system',
-      description: 'Central source of truth for stock, condition, variants, and notes',
+      label: 'One operational source of truth',
+      description: 'Waxed consolidates inventory, listings, and order workflows into a single system—reducing mismatches between what\'s on the shelf and what\'s available online.',
     },
     {
       label: 'Flexible import',
