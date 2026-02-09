@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import {
   Navigation,
@@ -13,6 +15,9 @@ import {
 } from '@/components'
 
 export default function Home() {
+  const router = useRouter()
+  useEffect(() => { router.replace('/dashboard') }, [router])
+
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => setIsModalOpen(true)
