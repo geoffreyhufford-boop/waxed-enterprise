@@ -1,26 +1,40 @@
 @import "tailwindcss";
 
 @theme {
-  /* Dark palette from the app */
-  --color-waxed-black: #0d0d0d;
-  --color-waxed-dark: #1a1a1a;
-  --color-waxed-card: #1f1f1f;
-  --color-waxed-border: #333333;
-  --color-waxed-muted: #444444;
+  /* Two-tone gradient palette */
+  --color-waxe-deep: #0a0a0f;
+  --color-waxe-base: #12121a;
+  --color-waxe-surface: #1a1a24;
+  --color-waxe-card: rgba(26, 26, 36, 0.6);
+  --color-waxe-card-solid: #1e1e2a;
+  --color-waxe-border: rgba(255, 255, 255, 0.08);
+  --color-waxe-border-hover: rgba(255, 255, 255, 0.12);
 
-  /* Text colors - higher contrast for readability */
-  --color-waxed-text: #f5f5f5;
-  --color-waxed-text-secondary: #b3b3b3;
-  --color-waxed-text-muted: #8a8a8a;
+  /* Text colors */
+  --color-waxe-text: #f0f0f5;
+  --color-waxe-text-secondary: #a0a0b0;
+  --color-waxe-text-muted: #6a6a7a;
 
-  /* Olive/khaki accent from the app */
-  --color-waxed-olive: #a3a06c;
-  --color-waxed-olive-hover: #b8b57a;
-  --color-waxed-olive-muted: #7a7850;
+  /* Gradient accents - warm to cool */
+  --color-waxe-warm: #c9a87c;
+  --color-waxe-warm-hover: #d4b88a;
+  --color-waxe-cool: #7c9ec9;
+  --color-waxe-cool-muted: #5a7a9a;
 
-  /* Status colors */
-  --color-waxed-sold: #a3a06c;
-  --color-waxed-active: #6ca370;
+  /* Legacy aliases for compatibility */
+  --color-waxed-black: #0a0a0f;
+  --color-waxed-dark: #12121a;
+  --color-waxed-card: #1e1e2a;
+  --color-waxed-border: rgba(255, 255, 255, 0.08);
+  --color-waxed-muted: #2a2a36;
+  --color-waxed-text: #f0f0f5;
+  --color-waxed-text-secondary: #a0a0b0;
+  --color-waxed-text-muted: #6a6a7a;
+  --color-waxed-olive: #c9a87c;
+  --color-waxed-olive-hover: #d4b88a;
+  --color-waxed-olive-muted: #9a8060;
+  --color-waxed-sold: #c9a87c;
+  --color-waxed-active: #7cb89a;
 }
 
 @layer base {
@@ -29,11 +43,17 @@
   }
 
   body {
-    @apply bg-waxed-black text-waxed-text antialiased;
+    @apply bg-waxe-deep text-waxe-text antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 20% 40%, rgba(201, 168, 124, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(124, 158, 201, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 30% at 50% 80%, rgba(201, 168, 124, 0.04) 0%, transparent 50%);
+    background-attachment: fixed;
+    min-height: 100vh;
   }
 
   ::selection {
-    @apply bg-waxed-olive text-waxed-black;
+    @apply bg-waxe-warm text-waxe-deep;
   }
 }
 
@@ -43,54 +63,127 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium
-           bg-waxed-olive text-waxed-black rounded-lg
-           hover:bg-waxed-olive-hover
-           transition-colors duration-150 focus:outline-none focus:ring-2
-           focus:ring-waxed-olive focus:ring-offset-2 focus:ring-offset-waxed-black;
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium
+           bg-waxe-warm text-waxe-deep rounded-2xl
+           hover:bg-waxe-warm-hover
+           transition-all duration-200 ease-out
+           focus:outline-none focus:ring-2 focus:ring-waxe-warm/50 focus:ring-offset-2 focus:ring-offset-waxe-deep
+           shadow-lg shadow-waxe-warm/20;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium
-           bg-waxed-card text-waxed-text border border-waxed-border rounded-lg
-           hover:bg-waxed-muted hover:border-waxed-muted
-           transition-colors duration-150 focus:outline-none focus:ring-2
-           focus:ring-waxed-olive focus:ring-offset-2 focus:ring-offset-waxed-black;
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium
+           bg-waxe-card backdrop-blur-sm text-waxe-text border border-waxe-border rounded-2xl
+           hover:bg-waxe-surface hover:border-waxe-border-hover
+           transition-all duration-200 ease-out
+           focus:outline-none focus:ring-2 focus:ring-waxe-warm/30 focus:ring-offset-2 focus:ring-offset-waxe-deep;
   }
 
   .btn-ghost {
     @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium
-           bg-transparent text-waxed-text-secondary rounded-lg
-           hover:bg-waxed-card hover:text-waxed-text
-           transition-colors duration-150;
+           bg-transparent text-waxe-text-secondary rounded-xl
+           hover:bg-waxe-card hover:text-waxe-text
+           transition-all duration-200;
   }
 
+  /* Soft glass card - for feature cards and general use */
   .card {
-    @apply bg-waxed-card border border-waxed-border rounded-xl p-6;
+    @apply bg-waxe-card backdrop-blur-md border border-waxe-border rounded-3xl p-6
+           transition-all duration-300 ease-out
+           hover:border-waxe-border-hover hover:bg-waxe-surface/60;
+  }
+
+  /* Value prop card - matching soft style */
+  .value-card {
+    @apply bg-waxe-card backdrop-blur-md border border-waxe-border rounded-3xl p-6
+           transition-all duration-300 ease-out
+           hover:border-waxe-border-hover hover:bg-waxe-surface/60;
   }
 
   .stat-card {
-    @apply bg-waxed-card border border-waxed-border rounded-xl p-5;
+    @apply bg-waxe-card backdrop-blur-md border border-waxe-border rounded-2xl p-5
+           transition-all duration-200;
   }
 
   .input-field {
-    @apply w-full px-4 py-2.5 text-sm rounded-lg
-           bg-waxed-card border border-waxed-border text-waxed-text
-           focus:outline-none focus:ring-2 focus:ring-waxed-olive focus:border-transparent
-           placeholder:text-waxed-text-muted;
+    @apply w-full px-4 py-3 text-sm rounded-2xl
+           bg-waxe-card backdrop-blur-sm border border-waxe-border text-waxe-text
+           focus:outline-none focus:ring-2 focus:ring-waxe-warm/40 focus:border-transparent
+           placeholder:text-waxe-text-muted
+           transition-all duration-200;
+  }
+
+  select.input-field {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236a6a7a' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
   }
 
   .label-text {
-    @apply block text-xs font-medium text-waxed-text-secondary uppercase tracking-wide mb-1.5;
+    @apply block text-xs font-medium text-waxe-text-muted uppercase tracking-wider mb-2;
   }
 
   .pill {
     @apply inline-flex items-center px-3 py-1.5 text-xs font-medium
-           bg-waxed-card border border-waxed-border rounded-full
-           text-waxed-text-secondary;
+           bg-waxe-card backdrop-blur-sm border border-waxe-border rounded-full
+           text-waxe-text-secondary;
   }
 
   .pill-active {
-    @apply bg-waxed-olive/20 border-waxed-olive/30 text-waxed-olive;
+    @apply bg-waxe-warm/15 border-waxe-warm/25 text-waxe-warm;
+  }
+
+  /* Gradient text utility */
+  .text-gradient {
+    @apply bg-gradient-to-r from-waxe-warm to-waxe-cool bg-clip-text text-transparent;
+  }
+
+  /* Dashboard navigation */
+  .nav-item {
+    @apply flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl
+           text-waxe-text-secondary
+           hover:text-waxe-text hover:bg-waxe-card
+           transition-all duration-200;
+  }
+
+  .nav-item-active {
+    @apply flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl
+           text-waxe-warm bg-waxe-warm/10 border border-waxe-warm/15;
+  }
+
+  /* Dashboard table */
+  .table-header {
+    @apply text-left px-4 py-3 text-xs font-semibold text-waxe-text-muted uppercase tracking-wider
+           bg-waxe-surface/50;
+  }
+
+  .table-row {
+    @apply px-4 py-3 text-sm text-waxe-text-secondary whitespace-nowrap;
+  }
+
+  /* Dashboard messages */
+  .message-inbound {
+    @apply max-w-[75%] px-4 py-2.5 rounded-2xl rounded-bl-sm text-sm
+           bg-waxe-surface border border-waxe-border text-waxe-text;
+  }
+
+  .message-outbound {
+    @apply max-w-[75%] px-4 py-2.5 rounded-2xl rounded-br-sm text-sm
+           bg-waxe-warm/15 border border-waxe-warm/20 text-waxe-text;
+  }
+
+  /* Dashboard tabs */
+  .tab-item {
+    @apply px-4 py-2 text-sm font-medium rounded-lg
+           text-waxe-text-muted
+           hover:text-waxe-text-secondary hover:bg-waxe-card/50
+           transition-all duration-200 cursor-pointer;
+  }
+
+  .tab-item-active {
+    @apply px-4 py-2 text-sm font-medium rounded-lg
+           text-waxe-warm bg-waxe-warm/10;
   }
 }

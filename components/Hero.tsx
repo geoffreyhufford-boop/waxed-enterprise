@@ -5,45 +5,30 @@ interface HeroProps {
 }
 
 export default function Hero({ onOpenModal }: HeroProps) {
-  const stats = [
-    { label: 'Records Imported', value: '84K+' },
-    { label: 'Active Stores', value: '127' },
-    { label: 'Avg. Import Time', value: '< 5 min' },
-  ]
-
   return (
-    <section className="pt-32 pb-16 sm:pt-40 sm:pb-20">
+    <section className="pt-32 pb-20 sm:pt-44 sm:pb-28">
       <div className="section-container">
-        <div className="max-w-3xl mb-12">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] mb-6 text-waxed-text">
-            The backend your record store should&apos;ve had ten years ago.
+        <div className="max-w-3xl text-center mx-auto">
+          <p className="text-sm font-medium text-waxe-warm uppercase tracking-wider mb-4">
+            Dealer Portal
+          </p>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.08] mb-6 text-waxe-text">
+            Power Your Record Store
           </h1>
-          <p className="text-lg sm:text-xl text-waxed-text-secondary leading-relaxed mb-4 max-w-2xl">
-            Import from Discogs, spreadsheets, Shopify, or your POS. Scan new arrivals to stay current. Run everything from one place.
+          <p className="text-xl sm:text-2xl text-waxe-text-secondary leading-relaxed mb-4">
+            The professional dashboard for vinyl dealers.
           </p>
-          <p className="text-base text-waxed-text-muted mb-8 max-w-2xl">
-            Immediate operational value, with marketplace reach built in.
+          <p className="text-base text-waxe-text-muted mb-10 max-w-xl mx-auto">
+            Manage inventory, track sales, and grow your business on the WAXE marketplace.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <button onClick={onOpenModal} className="btn-primary text-base px-6 py-3">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#pricing" className="btn-primary text-base">
+              View Pricing
+            </a>
+            <button onClick={onOpenModal} className="btn-secondary text-base">
               Request Early Access
             </button>
-            <a href="#onboarding" className="btn-secondary text-base px-6 py-3">
-              See how onboarding works
-            </a>
           </div>
-        </div>
-
-        {/* Stat cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {stats.map((stat) => (
-            <div key={stat.label} className="stat-card">
-              <p className="text-xs font-medium text-waxed-text-muted uppercase tracking-wide mb-1">
-                {stat.label}
-              </p>
-              <p className="text-2xl font-semibold text-waxed-text">{stat.value}</p>
-            </div>
-          ))}
         </div>
       </div>
     </section>

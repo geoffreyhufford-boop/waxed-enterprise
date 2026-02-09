@@ -10,20 +10,17 @@ export default function Navigation({ onOpenModal }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const navLinks = [
-    { href: '#product', label: 'Product' },
-    { href: '#onboarding', label: 'Onboarding' },
-    { href: '#analytics', label: 'Analytics' },
-    { href: '#trust', label: 'Trust' },
-    { href: '#faq', label: 'FAQ' },
+    { href: '#features', label: 'Features' },
+    { href: '#pricing', label: 'Pricing' },
   ]
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-waxed-black/95 backdrop-blur-sm border-b border-waxed-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-waxe-deep/90 backdrop-blur-lg border-b border-waxe-border">
       <div className="section-container">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a href="#" className="text-lg font-semibold tracking-tight text-waxed-olive">
-            WAXED
+          <a href="#" className="text-xl font-semibold tracking-tight text-waxe-warm">
+            WAXE
           </a>
 
           {/* Desktop Navigation */}
@@ -32,20 +29,20 @@ export default function Navigation({ onOpenModal }: NavigationProps) {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-waxed-text-secondary hover:text-waxed-text transition-colors"
+                className="text-sm text-waxe-text-secondary hover:text-waxe-text transition-colors"
               >
                 {link.label}
               </a>
             ))}
-            <button onClick={onOpenModal} className="btn-primary">
-              Request Early Access
+            <button onClick={onOpenModal} className="btn-primary text-sm px-5 py-2">
+              Get Started
             </button>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-waxed-text-secondary hover:text-waxed-text transition-colors"
+            className="md:hidden p-2 text-waxe-text-secondary hover:text-waxe-text transition-colors"
             aria-label="Toggle menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -76,14 +73,14 @@ export default function Navigation({ onOpenModal }: NavigationProps) {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-waxed-border">
+          <div className="md:hidden py-4 border-t border-waxe-border">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm text-waxed-text-secondary hover:text-waxed-text transition-colors"
+                  className="text-sm text-waxe-text-secondary hover:text-waxe-text transition-colors"
                 >
                   {link.label}
                 </a>
@@ -95,7 +92,7 @@ export default function Navigation({ onOpenModal }: NavigationProps) {
                 }}
                 className="btn-primary mt-2"
               >
-                Request Early Access
+                Get Started
               </button>
             </div>
           </div>

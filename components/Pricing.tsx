@@ -7,24 +7,24 @@ interface PricingProps {
 export default function Pricing({ onOpenModal }: PricingProps) {
   const plans = [
     {
-      name: 'Starter',
-      target: 'Small stores',
-      price: '$49',
+      name: 'Free',
+      target: 'Getting started',
+      price: '$0',
       period: '/mo',
       features: [
-        'Up to 2,000 listings',
-        'Basic analytics',
-        'Email support',
+        'Up to 500 listings',
+        'Basic storefront',
+        'Community support',
       ],
     },
     {
       name: 'Pro',
-      target: 'Busy stores',
-      price: '$129',
+      target: 'Growing stores',
+      price: '$29',
       period: '/mo',
       features: [
         'Unlimited listings',
-        'Full analytics suite',
+        'Full analytics',
         'Priority support',
       ],
       highlighted: true,
@@ -36,47 +36,47 @@ export default function Pricing({ onOpenModal }: PricingProps) {
       period: '',
       features: [
         'Multiple storefronts',
-        'Dedicated account manager',
+        'Dedicated support',
         'Custom integrations',
       ],
-      cta: 'Talk to us',
+      cta: 'Contact Us',
     },
   ]
 
   return (
-    <section className="py-16 sm:py-20 bg-waxed-dark">
+    <section id="pricing" className="py-16 sm:py-24">
       <div className="section-container">
-        <div className="max-w-2xl mb-12">
-          <p className="text-xs font-medium text-waxed-text-muted uppercase tracking-wide mb-3">
-            Early Access Pricing
+        <div className="text-center mb-12">
+          <p className="text-sm font-medium text-waxe-warm uppercase tracking-wider mb-3">
+            Pricing
           </p>
-          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-waxed-text">
-            Simple pricing that scales with you.
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-waxe-text">
+            Start free. Scale when ready.
           </h2>
-          <p className="text-waxed-text-secondary mt-4">
-            Lock in early access rates. Prices shown are placeholders—final pricing announced at launch.
+          <p className="text-waxe-text-secondary mt-4 max-w-lg mx-auto">
+            No credit card required. Upgrade anytime as your store grows.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
           {plans.map((plan) => (
             <div
               key={plan.name}
               className={`card ${
-                plan.highlighted ? 'border-waxed-olive' : ''
+                plan.highlighted ? 'border-waxe-warm/40 bg-waxe-surface/80' : ''
               }`}
             >
               <div className="mb-6">
-                <p className="text-xs font-medium text-waxed-text-muted uppercase tracking-wide">
+                <p className="text-xs font-medium text-waxe-text-muted uppercase tracking-wider">
                   {plan.target}
                 </p>
-                <h3 className="text-xl font-semibold mt-1 text-waxed-text">{plan.name}</h3>
+                <h3 className="text-xl font-semibold mt-1 text-waxe-text">{plan.name}</h3>
               </div>
 
               <div className="mb-6">
-                <span className="text-3xl font-semibold text-waxed-text">{plan.price}</span>
+                <span className="text-3xl font-semibold text-waxe-text">{plan.price}</span>
                 {plan.period && (
-                  <span className="text-waxed-text-secondary">{plan.period}</span>
+                  <span className="text-waxe-text-secondary">{plan.period}</span>
                 )}
               </div>
 
@@ -84,7 +84,7 @@ export default function Pricing({ onOpenModal }: PricingProps) {
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3 text-sm">
                     <svg
-                      className="w-4 h-4 text-waxed-olive mt-0.5 flex-shrink-0"
+                      className="w-4 h-4 text-waxe-warm mt-0.5 flex-shrink-0"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -96,7 +96,7 @@ export default function Pricing({ onOpenModal }: PricingProps) {
                         d="M5 13l4 4L19 7"
                       />
                     </svg>
-                    <span className="text-waxed-text-secondary">{feature}</span>
+                    <span className="text-waxe-text-secondary">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -105,7 +105,7 @@ export default function Pricing({ onOpenModal }: PricingProps) {
                 onClick={onOpenModal}
                 className={plan.highlighted ? 'btn-primary w-full' : 'btn-secondary w-full'}
               >
-                {plan.cta || 'Request Access'}
+                {plan.cta || 'Get Started'}
               </button>
             </div>
           ))}

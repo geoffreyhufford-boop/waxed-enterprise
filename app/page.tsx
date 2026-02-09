@@ -4,13 +4,10 @@ import { useState } from 'react'
 import {
   Navigation,
   Hero,
-  ProblemSolution,
+  ValueProps,
   Features,
-  ProductShowcase,
-  Onboarding,
-  Trust,
   Pricing,
-  FAQ,
+  ClosingCTA,
   Footer,
   EarlyAccessModal,
 } from '@/components'
@@ -26,13 +23,10 @@ export default function Home() {
       <Navigation onOpenModal={openModal} />
       <main>
         <Hero onOpenModal={openModal} />
-        <ProblemSolution />
+        <ValueProps />
         <Features />
-        <ProductShowcase />
-        <Onboarding />
-        <Trust />
         <Pricing onOpenModal={openModal} />
-        <FAQ />
+        <ClosingCTA onOpenModal={openModal} />
       </main>
       <Footer />
       <EarlyAccessModal isOpen={isModalOpen} onClose={closeModal} />

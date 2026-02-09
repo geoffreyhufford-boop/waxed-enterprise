@@ -177,7 +177,7 @@ export default function EarlyAccessModal({ isOpen, onClose }: EarlyAccessModalPr
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-waxe-deep/90 backdrop-blur-sm"
       onClick={handleClose}
       role="dialog"
       aria-modal="true"
@@ -185,13 +185,13 @@ export default function EarlyAccessModal({ isOpen, onClose }: EarlyAccessModalPr
     >
       <div
         ref={modalRef}
-        className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto bg-waxed-dark border border-waxed-border rounded-2xl p-6 sm:p-8"
+        className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto bg-waxe-surface border border-waxe-border rounded-3xl p-6 sm:p-8 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 p-2 text-waxed-text-muted hover:text-waxed-text transition-colors rounded-lg hover:bg-waxed-card"
+          className="absolute top-4 right-4 p-2 text-waxe-text-muted hover:text-waxe-text transition-colors rounded-xl hover:bg-waxe-card"
           aria-label="Close modal"
           disabled={isSubmitting}
         >
@@ -202,13 +202,13 @@ export default function EarlyAccessModal({ isOpen, onClose }: EarlyAccessModalPr
 
         {isSubmitted ? (
           <div className="text-center py-8">
-            <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center bg-waxed-olive/20 border border-waxed-olive/30 rounded-xl">
-              <svg className="w-6 h-6 text-waxed-olive" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center bg-waxe-warm/20 border border-waxe-warm/30 rounded-2xl">
+              <svg className="w-6 h-6 text-waxe-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-xl font-semibold mb-2 text-waxed-text">You&apos;re on the list</h2>
-            <p className="text-waxed-text-secondary text-sm mb-6">
+            <h2 className="text-xl font-semibold mb-2 text-waxe-text">You&apos;re on the list</h2>
+            <p className="text-waxe-text-secondary text-sm mb-6">
               We&apos;ll reach out when your early access slot opens.
             </p>
             <button onClick={handleClose} className="btn-secondary">
@@ -217,11 +217,11 @@ export default function EarlyAccessModal({ isOpen, onClose }: EarlyAccessModalPr
           </div>
         ) : (
           <>
-            <h2 id="modal-title" className="text-xl font-semibold mb-1 text-waxed-text">
-              Request Early Access
+            <h2 id="modal-title" className="text-xl font-semibold mb-1 text-waxe-text">
+              Get Started with WAXE
             </h2>
-            <p className="text-waxed-text-secondary text-sm mb-6">
-              Tell us about your store. We&apos;ll reach out when spots open.
+            <p className="text-waxe-text-secondary text-sm mb-6">
+              Tell us about your store. We&apos;ll get you set up.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">

@@ -2,21 +2,21 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Waxed Enterprise | Vinyl Record Store Operating System',
-  description: 'Turn your inventory into a storefront. Import Discogs, scan new arrivals, sell online, and run ops in one place. The operating system for independent record stores.',
-  keywords: ['vinyl', 'record store', 'inventory management', 'discogs', 'marketplace', 'pos', 'record shop'],
-  authors: [{ name: 'Waxed Enterprise' }],
+  title: 'WAXE Dealer Portal | Power Your Record Store',
+  description: 'The professional dashboard for vinyl dealers. Manage inventory, track sales, and grow your business on the WAXE marketplace.',
+  keywords: ['vinyl', 'record store', 'inventory management', 'discogs', 'marketplace', 'pos', 'record shop', 'dealer portal'],
+  authors: [{ name: 'WAXE' }],
   openGraph: {
-    title: 'Waxed Enterprise | Vinyl Record Store Operating System',
-    description: 'Turn your inventory into a storefront. Import Discogs, scan new arrivals, sell online, and run ops in one place.',
+    title: 'WAXE Dealer Portal | Power Your Record Store',
+    description: 'The professional dashboard for vinyl dealers. Manage inventory, track sales, and grow your business on the WAXE marketplace.',
     type: 'website',
     locale: 'en_US',
-    siteName: 'Waxed Enterprise',
+    siteName: 'WAXE',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Waxed Enterprise | Vinyl Record Store Operating System',
-    description: 'Turn your inventory into a storefront. The operating system for independent record stores.',
+    title: 'WAXE Dealer Portal | Power Your Record Store',
+    description: 'The professional dashboard for vinyl dealers. Manage inventory, track sales, and grow your business.',
   },
   robots: {
     index: true,
