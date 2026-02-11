@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { DashboardHeader, StatCard, StatusBadge, FilterDropdown, DataTable } from '@/components/dashboard'
 import { inventoryRecords, catalogResults, importBatch, type InventoryRecord } from '@/lib/dashboard-data'
 
@@ -38,7 +38,23 @@ export default function InventoryPage() {
   const [showCatalog, setShowCatalog] = useState(false)
   const [showImport, setShowImport] = useState(false)
   const [catalogSearch, setCatalogSearch] = useState('Aphex Twin')
+  const scrollRef = useRef<HTMLDivElement>(null)
   const [selectedRecord, setSelectedRecord] = useState<InventoryRecord | null>(null)
+  const [activePanel, setActivePanel] = useState(0)
+  const panelCount = 2
+
+  const handleScroll = () => {
+    if (!scrollRef.current) return
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
+    const maxScroll = scrollWidth - clientWidth
+    if (maxScroll <= 0) return
+    setActivePanel(Math.round((scrollLeft / maxScroll) * (panelCount - 1)))
+  }
+
+  const scrollToPanel = (i: number) => {
+    const panels = scrollRef.current?.querySelectorAll(':scope > .snap-start')
+    if (panels?.[i]) panels[i].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' })
+  }
 
   const filtered = inventoryRecords.filter((r) => {
     if (search) {
@@ -54,7 +70,7 @@ export default function InventoryPage() {
   const printQueue = inventoryRecords.filter(r => r.inPrintQueue)
 
   return (
-    <>
+    <div className="flex flex-col flex-1 min-h-0">
       <DashboardHeader
         title="Inventory"
         subtitle={`${inventoryRecords.length} records across all channels`}
@@ -67,7 +83,7 @@ export default function InventoryPage() {
       />
 
       {/* Stats Row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
         <StatCard label="Total Records" value="2,847" trend="+124" trendUp={true} />
         <StatCard label="Active Listings" value="2,412" trend="+98" trendUp={true} />
         <StatCard label="Avg Price" value="$47.20" trend="+$2.30" trendUp={true} />
@@ -75,23 +91,38 @@ export default function InventoryPage() {
       </div>
 
       {/* Search + Filters */}
-      <div className="flex flex-wrap items-center gap-3 mb-6">
+      <div className="shrink-0 flex flex-wrap items-center gap-2 mb-3">
         <input
           type="text"
           placeholder="Search artist, title, label, ID..."
-          className="input-field w-64"
+          className="bg-waxe-card border-2 border-waxe-border text-sm text-waxe-text placeholder:text-waxe-text-muted px-3 py-1.5 w-48 lg:w-56 focus:outline-none focus:border-waxe-border-hover"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-      </div>
-      <div className="flex flex-wrap gap-2 mb-6">
         <FilterDropdown label="Genre" options={['All', 'Jazz', 'Rock', 'Hip-Hop', 'Electronic', 'Soul']} value={genreFilter} onChange={setGenreFilter} />
         <FilterDropdown label="Condition" options={['All', '10', '9', '8', '7', '6', '5']} value={conditionFilter} onChange={setConditionFilter} />
         <FilterDropdown label="Status" options={['All', 'active', 'sold', 'reserved', 'pending']} value={statusFilter} onChange={setStatusFilter} />
+        <div className="flex-1" />
+        <button className="btn-secondary text-sm px-3 py-1.5" onClick={() => scrollToPanel(activePanel === 1 ? 0 : 1)}>
+          {activePanel === 0 ? (
+            <>
+              ⎙ Print Queue
+              {printQueue.length > 0 && (
+                <span className="ml-1.5 inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold bg-waxe-warm text-waxe-deep">{printQueue.length}</span>
+              )}
+            </>
+          ) : (
+            <>{'<< '}Inventory</>
+          )}
+        </button>
       </div>
 
-      {/* Data Table with Photo Slots */}
-      <DataTable headers={['Photo', 'Record', 'Condition', 'Price', 'Suggested', 'Source', 'Status', 'Queue']}>
+      {/* Horizontal swipe panels */}
+      <div ref={scrollRef} onScroll={handleScroll} className="flex-1 min-h-0 overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
+
+        {/* ── Panel 1: Inventory Table ── */}
+        <div className="snap-start shrink-0 w-full min-h-0">
+        <DataTable headers={['Photo', 'Record', 'Condition', 'Price', 'Suggested', 'Source', 'Status', 'Queue']} maxHeight="100%">
         {filtered.map((record) => (
           <tr key={record.id} className="table-row hover:bg-waxe-surface/30 transition-colors cursor-pointer" onClick={() => setSelectedRecord(record)}>
             {/* Album Art */}
@@ -167,30 +198,47 @@ export default function InventoryPage() {
           </tr>
         ))}
       </DataTable>
+        </div>
 
-      {/* Label Print Queue */}
-      {printQueue.length > 0 && (
-        <div className="mt-6 bg-waxe-card border-2 border-waxe-border rounded-none p-5">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Label Print Queue</h2>
-            <button className="btn-ghost text-xs">Print All ({printQueue.length})</button>
-          </div>
-          <div className="space-y-2">
-            {printQueue.map((record) => (
-              <div key={record.id} className="flex items-center justify-between py-2 px-3 bg-waxe-surface/30">
-                <div className="flex items-center gap-3">
-                  <span className="text-xs font-mono text-waxe-text-muted">{record.id}</span>
-                  <span className="text-sm text-waxe-text">{record.artist} — {record.title}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-sm font-medium text-waxe-text">${record.price.toFixed(2)}</span>
-                  <button className="text-xs text-waxe-cool hover:text-waxe-warm-hover transition-colors">Print</button>
+        {/* ── Panel 2: Print Queue ── */}
+        <div className="snap-start shrink-0 w-full flex flex-col min-h-0">
+          <div className="bg-waxe-card border-2 border-waxe-border rounded-none flex flex-col flex-1 min-h-0">
+            <div className="shrink-0 flex items-center justify-between p-5 border-b-2 border-waxe-border">
+              <div className="flex items-center gap-3">
+                <button className="btn-ghost text-sm px-2 py-1" onClick={() => scrollToPanel(0)}>
+                  {'<< '}Back
+                </button>
+                <div>
+                  <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Label Print Queue</h3>
+                  <p className="text-[10px] text-waxe-text-muted uppercase tracking-[0.1em] mt-1">{printQueue.length} labels ready</p>
                 </div>
               </div>
-            ))}
+              {printQueue.length > 0 && (
+                <button className="btn-primary text-sm px-4 py-2">Print All ({printQueue.length})</button>
+              )}
+            </div>
+            <div className="flex-1 min-h-0 overflow-y-auto p-5 space-y-2">
+              {printQueue.length > 0 ? printQueue.map((record) => (
+                <div key={record.id} className="flex items-center justify-between py-2.5 px-3 bg-waxe-surface/30">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-mono text-waxe-text-muted">{record.id}</span>
+                    <span className="text-sm text-waxe-text">{record.artist} — {record.title}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm font-medium text-waxe-text">${record.price.toFixed(2)}</span>
+                    <button className="text-xs text-waxe-cool hover:text-waxe-warm-hover">Print</button>
+                  </div>
+                </div>
+              )) : (
+                <p className="text-sm text-waxe-text-muted text-center py-8">No labels in queue</p>
+              )}
+            </div>
           </div>
         </div>
-      )}
+
+        {/* No spacer needed — panels are full width */}
+      </div>
+
 
       {/* ─── Record Detail / Edit Modal ─── */}
       {selectedRecord && (
@@ -748,6 +796,6 @@ export default function InventoryPage() {
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }

@@ -127,11 +127,11 @@ export interface RevenueDataPoint {
 
 export interface GenreDemandPoint {
   month: string
-  jazz: number
-  rock: number
-  hiphop: number
-  electronic: number
-  soul: number
+  techno: number
+  house: number
+  ambient: number
+  electro: number
+  breakbeat: number
 }
 
 export interface PriceTrendPoint {
@@ -232,66 +232,50 @@ export const featureStatuses: FeatureStatus[] = [
 
 export const inventoryRecords: InventoryRecord[] = [
   {
-    id: 'WX-001', artist: 'Miles Davis', title: 'Kind of Blue', label: 'Columbia', year: 1959, condition: 9, price: 85.00, suggestedPrice: 92.00, priceDelta: 7, syncSource: 'discogs', status: 'active', genre: 'Jazz', inPrintQueue: false, hasPhoto: true, photoColor: '#1a3a5c', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music/7f/9f/d6/mzi.vtnaewef.jpg/300x300bb.jpg',
-    pressing: '1st Press', countryOfPressing: 'US', catalogNo: 'CL 1355', matrixRunout: '1A/1A', discogsReleaseId: 'r1235678',
-    vinylWeight: '140g', vinylColor: 'Black', format: '12"', speed: '33 RPM',
-    sleeveCondition: 7, sleeveType: 'Single', innerSleeve: 'Original printed',
-    mastering: 'AAA', pressingPlant: 'Columbia Pitman',
-    flawNotes: 'Light ring wear on cover, vinyl plays clean with minor surface noise on Side B',
+    id: 'WX-001', artist: 'Aphex Twin', title: 'Selected Ambient Works 85-92', label: 'Apollo', year: 1992, condition: 9, price: 85.00, suggestedPrice: 92.00, priceDelta: 7, syncSource: 'discogs', status: 'active', genre: 'Ambient', inPrintQueue: false, hasPhoto: true, photoColor: '#1a2a3c', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/5f/b3/e0/5fb3e08d-c2cd-3da4-6ad7-c5dc61803683/cover.jpg/300x300bb.jpg',
+    pressing: '1st Press', countryOfPressing: 'UK', catalogNo: 'AMB LP 3922', matrixRunout: 'AMB3922-A1 MPO',
+    vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
+    sleeveCondition: 8, sleeveType: 'Gatefold', innerSleeve: 'Generic white',
+    mastering: 'AAA', pressingPlant: 'MPO',
+    flawNotes: 'Light shelf wear on cover, vinyl plays clean throughout. Original Apollo/R&S pressing.',
     discogsMedian: 88, discogsLow: 45, discogsHigh: 320,
   },
   {
-    id: 'WX-002', artist: 'Fleetwood Mac', title: 'Rumours', label: 'Warner Bros.', year: 1977, condition: 7, price: 42.00, suggestedPrice: 38.00, priceDelta: -4, syncSource: 'shopify', status: 'active', genre: 'Rock', inPrintQueue: true, hasPhoto: true, photoColor: '#4a3728', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/4d/13/ba/4d13bac3-d3d5-7581-2c74-034219eadf2b/081227970949.jpg/300x300bb.jpg',
-    pressing: 'Repress', countryOfPressing: 'US', catalogNo: 'BSK 3010', matrixRunout: 'BSK-1-3010-A SM2',
-    vinylWeight: '120g', vinylColor: 'Black', format: '12"', speed: '33 RPM',
-    sleeveCondition: 6, sleeveType: 'Gatefold', innerSleeve: 'Original printed', inserts: ['Lyric insert'],
-    mastering: 'AAA', pressingPlant: 'Capitol Records',
-    flawNotes: 'Seam split on top edge (~2"), inner sleeve has wear. Vinyl has light marks but plays through',
-    discogsMedian: 35, discogsLow: 12, discogsHigh: 85,
+    id: 'WX-002', artist: 'Basic Channel', title: 'BCD', label: 'Basic Channel', year: 1995, condition: 7, price: 120.00, suggestedPrice: 135.00, priceDelta: 15, syncSource: 'discogs', status: 'active', genre: 'Dub Techno', inPrintQueue: true, hasPhoto: true, photoColor: '#2a2a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music/y2005/m02/d25/h00/s05.zgibqflu.jpg/300x300bb.jpg',
+    pressing: '1st Press', countryOfPressing: 'Germany', catalogNo: 'BC-CD', matrixRunout: 'BC-CD A1',
+    vinylWeight: '140g', vinylColor: 'Black', format: '12"', speed: '33 RPM',
+    sleeveCondition: 6, sleeveType: 'Single', innerSleeve: 'Generic white',
+    mastering: 'AAA', pressingPlant: 'Dubplates & Mastering',
+    flawNotes: 'Minimal plain sleeve has edge wear. Vinyl has light marks but plays through. Hard to find original press.',
+    discogsMedian: 130, discogsLow: 60, discogsHigh: 280,
   },
   {
-    id: 'WX-003', artist: 'Kendrick Lamar', title: 'To Pimp a Butterfly', label: 'Interscope', year: 2015, condition: 10, price: 35.00, suggestedPrice: 40.00, priceDelta: 5, syncSource: 'csv', status: 'active', genre: 'Hip-Hop', inPrintQueue: false, hasPhoto: true, photoColor: '#2c4a2c', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/b5/a6/91/b5a69171-5232-3d5b-9c15-8963802f83dd/15UMGIM15814.rgb.jpg/300x300bb.jpg',
-    pressing: '1st Press', countryOfPressing: 'US', catalogNo: 'B0022986-01', discogsReleaseId: 'r6854831',
-    vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
+    id: 'WX-003', artist: 'Underworld', title: 'Dubnobasswithmyheadman', label: "Junior Boy's Own", year: 1994, condition: 10, price: 45.00, suggestedPrice: 48.00, priceDelta: 3, syncSource: 'shopify', status: 'active', genre: 'Techno', inPrintQueue: false, hasPhoto: true, photoColor: '#3a3a5a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/6b/ab/57/6bab57d0-7a4f-51fa-865f-cb0b4710c8cd/00602537908103.rgb.jpg/300x300bb.jpg',
+    pressing: 'Reissue', countryOfPressing: 'UK', catalogNo: 'COLLECT005LP',
+    vinylWeight: '180g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
     sleeveCondition: 10, sleeveType: 'Gatefold', innerSleeve: 'Poly-lined', inserts: ['Download card'],
-    mastering: 'AAD',
-    discogsMedian: 38, discogsLow: 22, discogsHigh: 65,
+    mastering: 'AAD', pressingPlant: 'Optimal',
+    discogsMedian: 42, discogsLow: 28, discogsHigh: 75,
   },
   {
-    id: 'WX-004', artist: 'Tame Impala', title: 'Currents', label: 'Modular', year: 2015, condition: 9, price: 28.00, suggestedPrice: 30.00, priceDelta: 2, syncSource: 'discogs', status: 'sold', genre: 'Electronic', inPrintQueue: false, hasPhoto: true, photoColor: '#3a2a4a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/64/48/5c/64485cc9-968c-68cc-764e-9a7c71733def/00602567155454.rgb.jpg/300x300bb.jpg',
-    pressing: 'Reissue', countryOfPressing: 'EU', catalogNo: '4795518', discogsReleaseId: 'r7241049',
-    vinylWeight: '180g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
-    sleeveCondition: 9, sleeveType: 'Gatefold', innerSleeve: 'Poly-lined', inserts: ['Download card', 'Poster'],
-    mastering: 'AAD', pressingPlant: 'GZ Media',
-    discogsMedian: 30, discogsLow: 18, discogsHigh: 55,
+    id: 'WX-004', artist: 'Burial', title: 'Untrue', label: 'Hyperdub', year: 2007, condition: 9, price: 48.00, suggestedPrice: 52.00, priceDelta: 4, syncSource: 'discogs', status: 'active', genre: 'Techno', inPrintQueue: false, hasPhoto: true, photoColor: '#1a1a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/9d/0f/1c/9d0f1c2b-2fae-d8ac-3920-ce9ec5bc85b5/7982.jpg/300x300bb.jpg',
+    pressing: '1st Press', countryOfPressing: 'UK', catalogNo: 'HDBCD002', matrixRunout: 'HDBLP002-A2',
+    vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
+    sleeveCondition: 9, sleeveType: 'Gatefold', innerSleeve: 'Poly-lined',
+    mastering: 'AAD', pressingPlant: 'The Vinyl Factory',
+    discogsMedian: 50, discogsLow: 30, discogsHigh: 95,
   },
   {
-    id: 'WX-005', artist: 'Nina Simone', title: 'I Put a Spell on You', label: 'Philips', year: 1965, condition: 6, price: 55.00, suggestedPrice: 60.00, priceDelta: 5, syncSource: 'manual', status: 'active', genre: 'Soul', inPrintQueue: true, hasPhoto: true, photoColor: '#3d2a4a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/18/db/05/18db0507-f276-d93d-a4a7-e856a3f1590a/13UAAIM08283.rgb.jpg/300x300bb.jpg',
-    pressing: '1st Press', countryOfPressing: 'US', catalogNo: 'PHM 200-172', matrixRunout: 'A-5770',
-    vinylWeight: '120g', vinylColor: 'Black', format: '12"', speed: '33 RPM',
+    id: 'WX-005', artist: 'Jeff Mills', title: 'Waveform Transmission Vol. 1', label: 'Tresor', year: 1992, condition: 6, price: 95.00, suggestedPrice: 110.00, priceDelta: 15, syncSource: 'manual', status: 'active', genre: 'Techno', inPrintQueue: true, hasPhoto: true, photoColor: '#0a0a0a',
+    pressing: '1st Press', countryOfPressing: 'Germany', catalogNo: 'Tresor 9', matrixRunout: 'TR009-A',
+    vinylWeight: '140g', vinylColor: 'Black', format: '3x12"', speed: '33 RPM',
     sleeveCondition: 5, sleeveType: 'Single', innerSleeve: 'Generic white',
-    mastering: 'AAA',
-    flawNotes: 'Cover has water stain on back, ring wear on front. Vinyl has surface noise in quiet passages. Original Philips mono pressing.',
-    discogsMedian: 62, discogsLow: 25, discogsHigh: 180,
+    mastering: 'AAA', pressingPlant: 'Pallas',
+    flawNotes: 'Cover has ring wear and edge scuffs. Original Tresor pressing. Vinyl has surface noise in quiet passages.',
+    discogsMedian: 105, discogsLow: 45, discogsHigh: 350,
   },
   {
-    id: 'WX-006', artist: 'Radiohead', title: 'OK Computer', label: 'Parlophone', year: 1997, condition: 8, price: 38.00, suggestedPrice: 42.00, priceDelta: 4, syncSource: 'discogs', status: 'active', genre: 'Rock', inPrintQueue: false, hasPhoto: true, photoColor: '#2a3a4a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/07/60/ba/0760ba0f-148c-b18f-d0ff-169ee96f3af5/634904078164.png/300x300bb.jpg',
-    pressing: 'Reissue', countryOfPressing: 'UK', catalogNo: 'NODATA 02', discogsReleaseId: 'r5765734',
-    vinylWeight: '180g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
-    sleeveCondition: 8, sleeveType: 'Gatefold', innerSleeve: 'Poly-lined',
-    mastering: 'AAD', pressingPlant: 'GZ Media',
-    discogsMedian: 40, discogsLow: 25, discogsHigh: 70,
-  },
-  {
-    id: 'WX-007', artist: 'J Dilla', title: 'Donuts', label: 'Stones Throw', year: 2006, condition: 10, price: 95.00, suggestedPrice: 110.00, priceDelta: 15, syncSource: 'discogs', status: 'active', genre: 'Hip-Hop', inPrintQueue: false, hasPhoto: true, photoColor: '#c9a87c', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/63/d3/c5/63d3c537-ac30-86e7-8e69-8a03a5346209/792.jpg/300x300bb.jpg',
-    pressing: '1st Press', countryOfPressing: 'US', catalogNo: 'STH 2126', matrixRunout: 'STH2126A1', discogsReleaseId: 'r632876',
-    vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '45 RPM',
-    sleeveCondition: 10, sleeveType: 'Gatefold', innerSleeve: 'Original printed', inserts: ['Poster', 'Sticker sheet'],
-    mastering: 'AAA', pressingPlant: 'RTI',
-    discogsMedian: 105, discogsLow: 60, discogsHigh: 350,
-  },
-  {
-    id: 'WX-008', artist: 'Boards of Canada', title: 'Music Has the Right to Children', label: 'Warp', year: 1998, condition: 7, price: 65.00, suggestedPrice: 68.00, priceDelta: 3, syncSource: 'shopify', status: 'reserved', genre: 'Electronic', inPrintQueue: true, hasPhoto: true, photoColor: '#2a3a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/b5/4c/c2/b54cc20d-03f5-f2c4-4a0d-9b51ad65af89/dj.txuslqgv.jpg/300x300bb.jpg',
+    id: 'WX-006', artist: 'Boards of Canada', title: 'Music Has the Right to Children', label: 'Warp', year: 1998, condition: 7, price: 65.00, suggestedPrice: 68.00, priceDelta: 3, syncSource: 'shopify', status: 'reserved', genre: 'Ambient', inPrintQueue: true, hasPhoto: true, photoColor: '#2a3a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/b5/4c/c2/b54cc20d-03f5-f2c4-4a0d-9b51ad65af89/dj.txuslqgv.jpg/300x300bb.jpg',
     pressing: '1st Press', countryOfPressing: 'UK', catalogNo: 'WARP LP 55', matrixRunout: 'WARPLP55 A2 MPO', discogsReleaseId: 'r28384',
     vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
     sleeveCondition: 7, sleeveType: 'Gatefold', innerSleeve: 'Original printed',
@@ -300,39 +284,55 @@ export const inventoryRecords: InventoryRecord[] = [
     discogsMedian: 72, discogsLow: 35, discogsHigh: 200,
   },
   {
-    id: 'WX-009', artist: 'Marvin Gaye', title: "What's Going On", label: 'Tamla', year: 1971, condition: 8, price: 72.00, suggestedPrice: 75.00, priceDelta: 3, syncSource: 'csv', status: 'active', genre: 'Soul', inPrintQueue: false, hasPhoto: true, photoColor: '#4a6a3a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/76/36/2d/76362d74-cb7a-8ef9-104e-cde1d858e9a9/20UMGIM95279.rgb.jpg/300x300bb.jpg',
-    pressing: '1st Press', countryOfPressing: 'US', catalogNo: 'TS 310', matrixRunout: 'T-310-A-RE2 MR TS',
-    vinylWeight: '120g', vinylColor: 'Black', format: '12"', speed: '33 RPM',
+    id: 'WX-007', artist: 'Drexciya', title: "Neptune's Lair", label: 'Tresor', year: 1999, condition: 10, price: 140.00, suggestedPrice: 160.00, priceDelta: 20, syncSource: 'discogs', status: 'active', genre: 'Electro', inPrintQueue: false, hasPhoto: true, photoColor: '#0a2a4a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/95/a4/3f/95a43f9d-4eb9-e5a9-ee64-910d3fb95e6c/3663729188892_3000.jpg/300x300bb.jpg',
+    pressing: '1st Press', countryOfPressing: 'Germany', catalogNo: 'Tresor 56', matrixRunout: 'TR056-A1', discogsReleaseId: 'r28901',
+    vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
+    sleeveCondition: 10, sleeveType: 'Gatefold', innerSleeve: 'Original printed', inserts: ['Liner notes'],
+    mastering: 'AAA', pressingPlant: 'Pallas',
+    discogsMedian: 155, discogsLow: 80, discogsHigh: 450,
+  },
+  {
+    id: 'WX-008', artist: 'Daft Punk', title: 'Homework', label: 'Virgin', year: 1997, condition: 8, price: 55.00, suggestedPrice: 58.00, priceDelta: 3, syncSource: 'discogs', status: 'active', genre: 'House', inPrintQueue: false, hasPhoto: true, photoColor: '#3a2a1a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/dc/68/45/dc684589-af57-6895-1177-4f2acbb93e47/190296240911.jpg/300x300bb.jpg',
+    pressing: '1st Press', countryOfPressing: 'France', catalogNo: 'V 2821', matrixRunout: 'V2821 A1',
+    vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
+    sleeveCondition: 8, sleeveType: 'Gatefold', innerSleeve: 'Original printed',
+    mastering: 'AAD', pressingPlant: 'MPO',
+    discogsMedian: 55, discogsLow: 30, discogsHigh: 120,
+  },
+  {
+    id: 'WX-009', artist: 'Orbital', title: 'Orbital 2', label: 'Internal', year: 1993, condition: 8, price: 38.00, suggestedPrice: 42.00, priceDelta: 4, syncSource: 'csv', status: 'active', genre: 'Techno', inPrintQueue: false, hasPhoto: true, photoColor: '#4a3a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/e0/5a/1f/e05a1f95-1c5a-cd76-52ef-0e72ac9d7726/639842823128.jpg/300x300bb.jpg',
+    pressing: '1st Press', countryOfPressing: 'UK', catalogNo: 'TRUCD 5', matrixRunout: 'TRULP5-A1',
+    vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
     sleeveCondition: 7, sleeveType: 'Gatefold', innerSleeve: 'Original printed',
+    mastering: 'AAD',
+    flawNotes: 'Light ring wear on cover. Vinyl clean with minor surface marks.',
+    discogsMedian: 40, discogsLow: 20, discogsHigh: 85,
+  },
+  {
+    id: 'WX-010', artist: 'Robert Hood', title: 'Minimal Nation', label: 'M-Plant', year: 1994, condition: 6, price: 180.00, suggestedPrice: 200.00, priceDelta: 20, syncSource: 'discogs', status: 'active', genre: 'Techno', inPrintQueue: false, hasPhoto: true, photoColor: '#1a1a1a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/cd/12/ed/cd12ed3b-6879-74ce-18c5-18dd5c72cf34/mzi.ugxsyblg.jpg/300x300bb.jpg',
+    pressing: '1st Press', countryOfPressing: 'US', catalogNo: 'M.PM5', matrixRunout: 'MPM5-A', discogsReleaseId: 'r9284',
+    vinylWeight: '140g', vinylColor: 'Black', format: '3x12"', speed: '33 RPM',
+    sleeveCondition: 5, sleeveType: 'Single', innerSleeve: 'Generic white',
     mastering: 'AAA',
-    flawNotes: 'Name written in pen on back cover. Vinyl is clean.',
-    discogsMedian: 70, discogsLow: 30, discogsHigh: 250,
+    flawNotes: 'Plain sleeve has shelf wear and minor ring wear. Vinyl has surface noise. Extremely rare original M-Plant pressing.',
+    discogsMedian: 195, discogsLow: 90, discogsHigh: 800,
   },
   {
-    id: 'WX-010', artist: 'John Coltrane', title: 'A Love Supreme', label: 'Impulse!', year: 1965, condition: 6, price: 120.00, suggestedPrice: 135.00, priceDelta: 15, syncSource: 'discogs', status: 'active', genre: 'Jazz', inPrintQueue: false, hasPhoto: true, photoColor: '#5a3a1a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/e5/24/aa/e524aacd-467b-66f3-8931-0fcd6750a4b9/08UMGIM07914.rgb.jpg/300x300bb.jpg',
-    pressing: '1st Press', countryOfPressing: 'US', catalogNo: 'A-77', matrixRunout: 'A-77 A VAN GELDER', discogsReleaseId: 'r1238902',
-    vinylWeight: '140g', vinylColor: 'Black', format: '12"', speed: '33 RPM',
-    sleeveCondition: 5, sleeveType: 'Gatefold', innerSleeve: 'Generic white',
-    mastering: 'AAA', pressingPlant: 'Van Gelder Studio',
-    flawNotes: 'Cover has ring wear and edge wear. RVG stamp in dead wax. Vinyl has light surface noise throughout, plays without skips. Rare original orange/black label.',
-    discogsMedian: 140, discogsLow: 60, discogsHigh: 800,
-  },
-  {
-    id: 'WX-011', artist: 'MF DOOM', title: 'Mm..Food', label: 'Rhymesayers', year: 2004, condition: 9, price: 48.00, suggestedPrice: 52.00, priceDelta: 4, syncSource: 'manual', status: 'active', genre: 'Hip-Hop', inPrintQueue: false, hasPhoto: true, photoColor: '#4a3a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/1c/0f/81/1c0f818a-e458-dd84-6f1b-ccbdf5fe14d6/825646291045.jpg/300x300bb.jpg',
-    pressing: 'Reissue', countryOfPressing: 'US', catalogNo: 'RSE-0150-1', discogsReleaseId: 'r4768503',
-    vinylWeight: '180g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
+    id: 'WX-011', artist: 'Plastikman', title: 'Sheet One', label: 'NovaMute', year: 1993, condition: 9, price: 72.00, suggestedPrice: 78.00, priceDelta: 6, syncSource: 'manual', status: 'active', genre: 'Acid', inPrintQueue: false, hasPhoto: true, photoColor: '#2a2a3a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/1b/2d/ca/1b2dcad1-2b98-ddb8-2470-c515cc609b13/192641477133_Cover.jpg/300x300bb.jpg',
+    pressing: 'Reissue', countryOfPressing: 'UK', catalogNo: 'NoMu 22L',
+    vinylWeight: '180g', vinylColor: 'Clear', format: '2x12"', speed: '33 RPM',
     sleeveCondition: 9, sleeveType: 'Gatefold', innerSleeve: 'Poly-lined',
-    mastering: 'AAD', pressingPlant: 'RTI',
-    discogsMedian: 50, discogsLow: 30, discogsHigh: 80,
+    mastering: 'AAD', pressingPlant: 'GZ Media',
+    discogsMedian: 75, discogsLow: 40, discogsHigh: 130,
   },
   {
-    id: 'WX-012', artist: 'Stevie Wonder', title: 'Songs in the Key of Life', label: 'Tamla', year: 1976, condition: 7, price: 58.00, suggestedPrice: 55.00, priceDelta: -3, syncSource: 'discogs', status: 'active', genre: 'Soul', inPrintQueue: true, hasPhoto: true, photoColor: '#6a5a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/eb/1f/12/eb1f12ec-474c-63aa-43af-09282f423b9d/00602537004737.rgb.jpg/300x300bb.jpg',
-    pressing: '1st Press', countryOfPressing: 'US', catalogNo: 'T13-340C2', matrixRunout: 'T-13-340-C-2 RE1',
-    vinylWeight: '120g', vinylColor: 'Black', format: '2x12" + 7"', speed: '33 RPM',
-    sleeveCondition: 6, sleeveType: 'Gatefold', innerSleeve: 'Original printed', inserts: ['24-page booklet', 'Bonus 7"'],
-    mastering: 'AAA', pressingPlant: 'ARP (Allied Record Pressing)',
-    flawNotes: 'Cover has edge wear and light staining. Bonus 7" included. All vinyl plays well, light ticks on Side A.',
-    discogsMedian: 55, discogsLow: 18, discogsHigh: 120,
+    id: 'WX-012', artist: 'The KLF', title: 'Chill Out', label: 'KLF Communications', year: 1990, condition: 7, price: 68.00, suggestedPrice: 72.00, priceDelta: 4, syncSource: 'discogs', status: 'active', genre: 'Ambient', inPrintQueue: true, hasPhoto: true, photoColor: '#5a6a3a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/37/b5/53/37b5534a-a270-feff-710d-e82395e4d9dc/193483938530.jpg/300x300bb.jpg',
+    pressing: '1st Press', countryOfPressing: 'UK', catalogNo: 'JAMS LP 5', matrixRunout: 'JAMSLP5 A1',
+    vinylWeight: '120g', vinylColor: 'Black', format: '12"', speed: '33 RPM',
+    sleeveCondition: 6, sleeveType: 'Single', innerSleeve: 'Generic white',
+    mastering: 'AAA',
+    flawNotes: 'Cover has light staining on back. Vinyl plays well with occasional tick. Original UK pressing.',
+    discogsMedian: 70, discogsLow: 30, discogsHigh: 180,
   },
 ]
 
@@ -353,11 +353,11 @@ export const importBatch: ImportBatch = {
   needsReview: 14,
   status: 'review',
   records: [
-    { artist: 'Burial', title: 'Untrue', matchConfidence: 98, suggestedPrice: 45, matched: true, discogsMatch: 'Hyperdub — HDBCD002' },
+    { artist: 'Surgeon', title: 'Force + Form', matchConfidence: 98, suggestedPrice: 45, matched: true, discogsMatch: 'Tresor — Tresor 65' },
     { artist: 'Four Tet', title: 'Rounds', matchConfidence: 95, suggestedPrice: 32, matched: true, discogsMatch: 'Domino — WIGCD136' },
     { artist: 'Floating Points', title: 'Crush', matchConfidence: 97, suggestedPrice: 28, matched: true, discogsMatch: 'Ninja Tune — ZENCD260' },
-    { artist: 'DJ Shadow', title: 'Endtroducing...', matchConfidence: 92, suggestedPrice: 35, matched: true, discogsMatch: 'Mo\' Wax — MW059' },
-    { artist: 'Bonobo', title: 'Black Sands', matchConfidence: 96, suggestedPrice: 30, matched: true, discogsMatch: 'Ninja Tune — ZENCD150' },
+    { artist: 'Autechre', title: 'Tri Repetae', matchConfidence: 92, suggestedPrice: 35, matched: true, discogsMatch: 'Warp — WARP LP 38' },
+    { artist: 'Carl Craig', title: 'Landcruising', matchConfidence: 96, suggestedPrice: 30, matched: true, discogsMatch: 'Blanco y Negro — 0630-14511-1' },
     { artist: 'Theo Parrish', title: 'First Floor', matchConfidence: 64, suggestedPrice: undefined, matched: false, discogsMatch: undefined },
     { artist: 'Moodymann', title: 'Silentintroduction', matchConfidence: 58, suggestedPrice: undefined, matched: false, discogsMatch: undefined },
     { artist: 'Kerri Chandler', title: 'Spaces and Places', matchConfidence: 72, suggestedPrice: 42, matched: false, discogsMatch: 'Kaoz Theory — KT042 (?)' },
@@ -368,38 +368,39 @@ export const shelves: Shelf[] = [
   {
     id: 'shelf-1', name: 'New Arrivals', type: 'curated', recordCount: 24,
     records: [
-      { id: 'WX-003', artist: 'Kendrick Lamar', title: 'To Pimp a Butterfly', featured: false },
-      { id: 'WX-007', artist: 'J Dilla', title: 'Donuts', featured: true },
-      { id: 'WX-011', artist: 'MF DOOM', title: 'Mm..Food', featured: false },
+      { id: 'WX-003', artist: 'Underworld', title: 'Dubnobasswithmyheadman', featured: false },
+      { id: 'WX-004', artist: 'Burial', title: 'Untrue', featured: true },
+      { id: 'WX-011', artist: 'Plastikman', title: 'Sheet One', featured: false },
     ],
   },
   {
     id: 'shelf-2', name: 'Hot Shelf', type: 'algorithmic', recordCount: 18,
     records: [
-      { id: 'WX-001', artist: 'Miles Davis', title: 'Kind of Blue', featured: true },
-      { id: 'WX-010', artist: 'John Coltrane', title: 'A Love Supreme', featured: false },
-      { id: 'WX-009', artist: 'Marvin Gaye', title: "What's Going On", featured: true },
+      { id: 'WX-001', artist: 'Aphex Twin', title: 'Selected Ambient Works 85-92', featured: true },
+      { id: 'WX-008', artist: 'Daft Punk', title: 'Homework', featured: true },
+      { id: 'WX-009', artist: 'Orbital', title: 'Orbital 2', featured: false },
     ],
   },
   {
     id: 'shelf-3', name: 'Staff Picks', type: 'featured', recordCount: 12,
     records: [
-      { id: 'WX-006', artist: 'Radiohead', title: 'OK Computer', featured: true },
-      { id: 'WX-008', artist: 'Boards of Canada', title: 'Music Has the Right to Children', featured: true },
+      { id: 'WX-007', artist: 'Drexciya', title: "Neptune's Lair", featured: true },
+      { id: 'WX-006', artist: 'Boards of Canada', title: 'Music Has the Right to Children', featured: true },
     ],
   },
   {
-    id: 'shelf-4', name: 'Jazz Essentials', type: 'genre', recordCount: 31,
+    id: 'shelf-4', name: 'Deep Cuts', type: 'genre', recordCount: 31,
     records: [
-      { id: 'WX-001', artist: 'Miles Davis', title: 'Kind of Blue', featured: false },
-      { id: 'WX-010', artist: 'John Coltrane', title: 'A Love Supreme', featured: false },
+      { id: 'WX-005', artist: 'Jeff Mills', title: 'Waveform Transmission Vol. 1', featured: false },
+      { id: 'WX-010', artist: 'Robert Hood', title: 'Minimal Nation', featured: false },
+      { id: 'WX-002', artist: 'Basic Channel', title: 'BCD', featured: true },
     ],
   },
   {
     id: 'shelf-5', name: 'Rare Pressings', type: 'curated', recordCount: 8,
     records: [
-      { id: 'WX-007', artist: 'J Dilla', title: 'Donuts', featured: true },
-      { id: 'WX-010', artist: 'John Coltrane', title: 'A Love Supreme', featured: true },
+      { id: 'WX-010', artist: 'Robert Hood', title: 'Minimal Nation', featured: true },
+      { id: 'WX-007', artist: 'Drexciya', title: "Neptune's Lair", featured: true },
     ],
   },
 ]
@@ -408,8 +409,8 @@ export const storefrontConfig: StorefrontConfig = {
   storeName: 'Wax & Groove Records',
   url: 'waxandgroove.waxe.io',
   status: 'live',
-  primaryColor: '#1B2632',
-  accentColor: '#FFB162',
+  primaryColor: '#FFFFFF',
+  accentColor: '#2400FF',
   logoText: 'W&G',
   description: 'Portland\'s finest curated vinyl since 2018',
 }
@@ -425,13 +426,13 @@ export const revenueData: RevenueDataPoint[] = [
 ]
 
 export const genreDemandData: GenreDemandPoint[] = [
-  { month: 'Aug', jazz: 82, rock: 65, hiphop: 48, electronic: 35, soul: 58 },
-  { month: 'Sep', jazz: 78, rock: 70, hiphop: 55, electronic: 40, soul: 52 },
-  { month: 'Oct', jazz: 85, rock: 68, hiphop: 62, electronic: 45, soul: 60 },
-  { month: 'Nov', jazz: 90, rock: 72, hiphop: 70, electronic: 50, soul: 65 },
-  { month: 'Dec', jazz: 95, rock: 80, hiphop: 75, electronic: 55, soul: 70 },
-  { month: 'Jan', jazz: 88, rock: 75, hiphop: 68, electronic: 48, soul: 72 },
-  { month: 'Feb', jazz: 92, rock: 78, hiphop: 72, electronic: 52, soul: 68 },
+  { month: 'Aug', techno: 82, house: 75, ambient: 48, electro: 55, breakbeat: 38 },
+  { month: 'Sep', techno: 85, house: 78, ambient: 52, electro: 58, breakbeat: 42 },
+  { month: 'Oct', techno: 88, house: 80, ambient: 55, electro: 62, breakbeat: 45 },
+  { month: 'Nov', techno: 92, house: 85, ambient: 58, electro: 65, breakbeat: 50 },
+  { month: 'Dec', techno: 95, house: 88, ambient: 62, electro: 70, breakbeat: 55 },
+  { month: 'Jan', techno: 90, house: 82, ambient: 58, electro: 66, breakbeat: 48 },
+  { month: 'Feb', techno: 93, house: 86, ambient: 60, electro: 68, breakbeat: 52 },
 ]
 
 export const priceTrendData: PriceTrendPoint[] = [
@@ -445,13 +446,13 @@ export const priceTrendData: PriceTrendPoint[] = [
 ]
 
 export const restockRecommendations: RestockRecommendation[] = [
-  { artist: 'Daft Punk', title: 'Discovery', genre: 'Electronic', demandScore: 94, avgSalePrice: 45, lastSold: '3 days ago', velocity: 'high' },
-  { artist: 'Amy Winehouse', title: 'Back to Black', genre: 'Soul', demandScore: 91, avgSalePrice: 32, lastSold: '1 week ago', velocity: 'high' },
-  { artist: 'The Beatles', title: 'Abbey Road', genre: 'Rock', demandScore: 88, avgSalePrice: 38, lastSold: '5 days ago', velocity: 'high' },
-  { artist: 'Madvillain', title: 'Madvillainy', genre: 'Hip-Hop', demandScore: 85, avgSalePrice: 55, lastSold: '2 weeks ago', velocity: 'medium' },
-  { artist: 'Bill Evans', title: 'Waltz for Debby', genre: 'Jazz', demandScore: 82, avgSalePrice: 72, lastSold: '1 week ago', velocity: 'medium' },
-  { artist: 'Khruangbin', title: 'Con Todo El Mundo', genre: 'Rock', demandScore: 78, avgSalePrice: 28, lastSold: '4 days ago', velocity: 'medium' },
-  { artist: 'Erykah Badu', title: 'Baduizm', genre: 'Soul', demandScore: 75, avgSalePrice: 35, lastSold: '3 weeks ago', velocity: 'low' },
+  { artist: 'Autechre', title: 'Tri Repetae', genre: 'IDM', demandScore: 94, avgSalePrice: 45, lastSold: '3 days ago', velocity: 'high' },
+  { artist: 'Carl Craig', title: 'Landcruising', genre: 'Techno', demandScore: 91, avgSalePrice: 38, lastSold: '1 week ago', velocity: 'high' },
+  { artist: 'Theo Parrish', title: 'First Floor', genre: 'House', demandScore: 88, avgSalePrice: 55, lastSold: '5 days ago', velocity: 'high' },
+  { artist: 'Moodymann', title: 'Silentintroduction', genre: 'House', demandScore: 85, avgSalePrice: 65, lastSold: '2 weeks ago', velocity: 'medium' },
+  { artist: 'Surgeon', title: 'Force + Form', genre: 'Techno', demandScore: 82, avgSalePrice: 32, lastSold: '1 week ago', velocity: 'medium' },
+  { artist: 'Kerri Chandler', title: 'Spaces and Places', genre: 'House', demandScore: 78, avgSalePrice: 42, lastSold: '4 days ago', velocity: 'medium' },
+  { artist: 'Biosphere', title: 'Substrata', genre: 'Ambient', demandScore: 75, avgSalePrice: 35, lastSold: '3 weeks ago', velocity: 'low' },
 ]
 
 export const velocityData: VelocityDataPoint[] = [
@@ -464,13 +465,13 @@ export const velocityData: VelocityDataPoint[] = [
 ]
 
 export const transactions: Transaction[] = [
-  { id: 'TXN-4821', time: '2:34 PM', customer: 'Walk-in', items: 'Miles Davis — Kind of Blue', total: 85.00, method: 'card', synced: true },
-  { id: 'TXN-4820', time: '2:12 PM', customer: 'Sarah M.', items: '2 records', total: 67.00, method: 'tap', synced: true },
-  { id: 'TXN-4819', time: '1:48 PM', customer: 'Walk-in', items: 'Kendrick Lamar — TPAB', total: 35.00, method: 'cash', synced: true },
-  { id: 'TXN-4818', time: '12:30 PM', customer: 'James R.', items: '3 records', total: 142.00, method: 'card', synced: true },
-  { id: 'TXN-4817', time: '11:55 AM', customer: 'Walk-in', items: 'Radiohead — OK Computer', total: 38.00, method: 'tap', synced: true },
-  { id: 'TXN-4816', time: '11:20 AM', customer: 'Mike D.', items: 'Nina Simone — I Put a Spell on You', total: 55.00, method: 'card', synced: false },
-  { id: 'TXN-4815', time: '10:45 AM', customer: 'Walk-in', items: '2 records', total: 48.00, method: 'cash', synced: true },
+  { id: 'TXN-4821', time: '2:34 PM', customer: 'Walk-in', items: 'Aphex Twin — SAW 85-92', total: 85.00, method: 'card', synced: true },
+  { id: 'TXN-4820', time: '2:12 PM', customer: 'Sarah M.', items: '2 records', total: 103.00, method: 'tap', synced: true },
+  { id: 'TXN-4819', time: '1:48 PM', customer: 'Walk-in', items: 'Burial — Untrue', total: 48.00, method: 'cash', synced: true },
+  { id: 'TXN-4818', time: '12:30 PM', customer: 'James R.', items: '3 records', total: 178.00, method: 'card', synced: true },
+  { id: 'TXN-4817', time: '11:55 AM', customer: 'Walk-in', items: 'Daft Punk — Homework', total: 55.00, method: 'tap', synced: true },
+  { id: 'TXN-4816', time: '11:20 AM', customer: 'Mike D.', items: 'Jeff Mills — Waveform Transmission', total: 95.00, method: 'card', synced: false },
+  { id: 'TXN-4815', time: '10:45 AM', customer: 'Walk-in', items: '2 records', total: 68.00, method: 'cash', synced: true },
 ]
 
 export const hourlySalesData: HourlySalesPoint[] = [
@@ -486,53 +487,53 @@ export const hourlySalesData: HourlySalesPoint[] = [
 
 export const conversations: Conversation[] = [
   {
-    id: 'conv-1', customerName: 'Sarah Mitchell', lastMessage: 'Is the Kind of Blue still available?', lastTime: '2:15 PM', unread: 2,
+    id: 'conv-1', customerName: 'Sarah Mitchell', lastMessage: 'Is the Aphex Twin still available?', lastTime: '2:15 PM', unread: 2,
     messages: [
-      { id: 'm1', sender: 'customer', text: 'Hi! I saw the Miles Davis — Kind of Blue listing. Is it still available?', time: '2:10 PM' },
-      { id: 'm2', sender: 'dealer', text: 'Hey Sarah! Yes, it\'s still here. Condition 9, original Columbia pressing.', time: '2:12 PM' },
+      { id: 'm1', sender: 'customer', text: 'Hi! I saw the Aphex Twin — SAW 85-92 listing. Is it still available?', time: '2:10 PM' },
+      { id: 'm2', sender: 'dealer', text: 'Hey Sarah! Yes, it\'s still here. Condition 9, original Apollo pressing.', time: '2:12 PM' },
       { id: 'm3', sender: 'customer', text: 'Amazing! Can I see a closer photo of the sleeve?', time: '2:13 PM' },
-      { id: 'm4', sender: 'customer', text: 'Is the Kind of Blue still available?', time: '2:15 PM', linkedItem: 'WX-001' },
+      { id: 'm4', sender: 'customer', text: 'Is the Aphex Twin still available?', time: '2:15 PM', linkedItem: 'WX-001' },
     ],
   },
   {
     id: 'conv-2', customerName: 'James Rodriguez', lastMessage: 'Thanks, I\'ll pick it up tomorrow', lastTime: '1:45 PM', unread: 0,
     messages: [
-      { id: 'm5', sender: 'customer', text: 'Do you have any J Dilla records in stock?', time: '1:30 PM' },
-      { id: 'm6', sender: 'dealer', text: 'We have Donuts — Condition 10, Stones Throw pressing. $95.', time: '1:32 PM', linkedItem: 'WX-007' },
+      { id: 'm5', sender: 'customer', text: 'Do you have any Drexciya records in stock?', time: '1:30 PM' },
+      { id: 'm6', sender: 'dealer', text: 'We have Neptune\'s Lair — Sealed, original Tresor pressing. $140.', time: '1:32 PM', linkedItem: 'WX-007' },
       { id: 'm7', sender: 'customer', text: 'That\'s perfect. Can you hold it for me?', time: '1:40 PM' },
       { id: 'm8', sender: 'dealer', text: 'Done! Reserved under your name. We\'re open until 7 PM.', time: '1:42 PM' },
       { id: 'm9', sender: 'customer', text: 'Thanks, I\'ll pick it up tomorrow', time: '1:45 PM' },
     ],
   },
   {
-    id: 'conv-3', customerName: 'Alex Chen', lastMessage: 'Looking for rare electronic vinyl', lastTime: '12:30 PM', unread: 1,
+    id: 'conv-3', customerName: 'Alex Chen', lastMessage: 'Looking for rare techno vinyl', lastTime: '12:30 PM', unread: 1,
     messages: [
-      { id: 'm10', sender: 'customer', text: 'Looking for rare electronic vinyl. Do you have any Boards of Canada?', time: '12:28 PM' },
-      { id: 'm11', sender: 'dealer', text: 'Yes! Music Has the Right to Children, VG+ on Warp. $65.', time: '12:30 PM', linkedItem: 'WX-008' },
+      { id: 'm10', sender: 'customer', text: 'Looking for rare techno vinyl. Do you have any Robert Hood?', time: '12:28 PM' },
+      { id: 'm11', sender: 'dealer', text: 'Yes! Minimal Nation, original M-Plant pressing. $180. It\'s a grail.', time: '12:30 PM', linkedItem: 'WX-010' },
     ],
   },
   {
     id: 'conv-4', customerName: 'Maria Santos', lastMessage: 'Shipped! Tracking: 1Z999AA10..', lastTime: 'Yesterday', unread: 0,
     messages: [
-      { id: 'm12', sender: 'customer', text: 'Hi, just placed order #1847 for the Marvin Gaye LP', time: 'Yesterday' },
+      { id: 'm12', sender: 'customer', text: 'Hi, just placed order #1847 for the Orbital LP', time: 'Yesterday' },
       { id: 'm13', sender: 'dealer', text: 'Got it! Packing now. Should ship today.', time: 'Yesterday' },
       { id: 'm14', sender: 'dealer', text: 'Shipped! Tracking: 1Z999AA10..', time: 'Yesterday' },
     ],
   },
   {
-    id: 'conv-5', customerName: 'David Park', lastMessage: 'Any Coltrane pressings besides Love Supreme?', lastTime: 'Yesterday', unread: 0,
+    id: 'conv-5', customerName: 'David Park', lastMessage: 'Any Basic Channel besides BCD?', lastTime: 'Yesterday', unread: 0,
     messages: [
-      { id: 'm15', sender: 'customer', text: 'Any Coltrane pressings besides Love Supreme?', time: 'Yesterday' },
+      { id: 'm15', sender: 'customer', text: 'Any Basic Channel besides BCD?', time: 'Yesterday' },
     ],
   },
 ]
 
 export const genreBreakdowns: GenreBreakdown[] = [
-  { genre: 'Jazz', count: 482, revenue: 4820, percentage: 32 },
-  { genre: 'Rock', count: 398, revenue: 3580, percentage: 22 },
-  { genre: 'Hip-Hop', count: 356, revenue: 3200, percentage: 18 },
-  { genre: 'Soul', count: 312, revenue: 2800, percentage: 15 },
-  { genre: 'Electronic', count: 224, revenue: 1800, percentage: 10 },
+  { genre: 'Techno', count: 482, revenue: 4820, percentage: 32 },
+  { genre: 'House', count: 398, revenue: 3580, percentage: 22 },
+  { genre: 'Ambient', count: 356, revenue: 3200, percentage: 18 },
+  { genre: 'Electro', count: 312, revenue: 2800, percentage: 15 },
+  { genre: 'Dub Techno', count: 224, revenue: 1800, percentage: 10 },
   { genre: 'Other', count: 75, revenue: 530, percentage: 3 },
 ]
 

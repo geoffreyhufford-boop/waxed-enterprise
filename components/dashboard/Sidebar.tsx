@@ -5,14 +5,14 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const navItems = [
-  { href: '/dashboard', label: 'Overview' },
-  { href: '/dashboard/inventory', label: 'Inventory' },
-  { href: '/dashboard/analytics', label: 'Analytics' },
-  { href: '/dashboard/pos', label: 'POS' },
-  { href: '/dashboard/messages', label: 'Messages' },
+  { href: '/dashboard', label: 'Overview', icon: '◧' },
+  { href: '/dashboard/inventory', label: 'Inventory', icon: '▤' },
+  { href: '/dashboard/analytics', label: 'Analytics', icon: '◈' },
+  { href: '/dashboard/pos', label: 'POS', icon: '◉' },
+  { href: '/dashboard/messages', label: 'Messages', icon: '◻' },
 ]
 
-const bottomNavItem = { href: '/dashboard/storefront', label: 'Storefront' }
+const bottomNavItem = { href: '/dashboard/storefront', label: 'Storefront', icon: '◫' }
 
 export default function Sidebar() {
   const pathname = usePathname()
@@ -25,13 +25,13 @@ export default function Sidebar() {
 
   const nav = (
     <nav className="flex flex-col h-full">
-      <div className="p-6 border-b-2 border-waxe-border">
+      <div className="px-4 pt-6 pb-5 border-b-2 border-waxe-border">
         <Link href="/" className="block">
-          <span className="text-2xl font-black tracking-[0.1em] text-waxe-text">WAXED</span>
-          <span className="block text-[9px] font-bold uppercase tracking-[0.2em] text-waxe-text-muted mt-1">{'>> '}Dealer Portal</span>
+          <img src="/waxed-logo.svg" alt="WAXED" className="w-8 h-8" />
+          <span className="block text-[8px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mt-1.5">{'>> '}Waxed Dealer Portal</span>
         </Link>
       </div>
-      <div className="flex-1 py-4 px-3 flex flex-col">
+      <div className="flex-1 py-3 px-2 flex flex-col">
         <div className="space-y-0.5">
           {navItems.map((item) => (
             <Link
@@ -40,7 +40,7 @@ export default function Sidebar() {
               onClick={() => setMobileOpen(false)}
               className={isActive(item.href) ? 'nav-item-active' : 'nav-item'}
             >
-              {isActive(item.href) && <span className="text-[10px]">{'>'}</span>}
+              <span className="text-sm w-5 text-center">{item.icon}</span>
               <span>{item.label}</span>
             </Link>
           ))}
@@ -51,14 +51,14 @@ export default function Sidebar() {
             onClick={() => setMobileOpen(false)}
             className={isActive(bottomNavItem.href) ? 'nav-item-active' : 'nav-item'}
           >
-            {isActive(bottomNavItem.href) && <span className="text-[10px]">{'>'}</span>}
+            <span className="text-sm w-5 text-center">{bottomNavItem.icon}</span>
             <span>{bottomNavItem.label}</span>
           </Link>
         </div>
       </div>
-      <div className="p-5 border-t-2 border-waxe-border">
-        <p className="text-[10px] font-black uppercase tracking-[0.1em] text-waxe-text">Wax & Groove</p>
-        <p className="text-[9px] uppercase tracking-[0.15em] text-waxe-text-muted mt-0.5">Enterprise / V1.0</p>
+      <div className="p-4 border-t-2 border-waxe-border">
+        <p className="text-[9px] font-black uppercase tracking-[0.1em] text-waxe-text">Wax & Groove</p>
+        <p className="text-[8px] uppercase tracking-[0.15em] text-waxe-text-muted mt-0.5">Enterprise / V1.0</p>
       </div>
     </nav>
   )
@@ -85,7 +85,7 @@ export default function Sidebar() {
       )}
 
       {/* Desktop sidebar */}
-      <aside className="hidden lg:block w-60 shrink-0 h-screen sticky top-0 bg-waxe-card border-r-2 border-waxe-border">
+      <aside className="hidden lg:block w-52 shrink-0 h-screen sticky top-0 bg-waxe-card border-r-2 border-waxe-border">
         {nav}
       </aside>
     </>

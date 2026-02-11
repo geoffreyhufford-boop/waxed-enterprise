@@ -1,18 +1,18 @@
 const statusStyles: Record<string, string> = {
-  active: 'bg-waxe-text text-waxe-deep',
+  active: 'bg-waxe-positive text-waxe-deep',
   connected: 'bg-waxe-text text-waxe-deep',
   live: 'bg-waxe-text text-waxe-deep',
   synced: 'border-2 border-waxe-border text-waxe-text',
   syncing: 'border-2 border-waxe-text-muted text-waxe-text-muted',
   beta: 'border-2 border-waxe-text-muted text-waxe-text-muted',
   pending: 'border-2 border-waxe-text-muted text-waxe-text-muted',
-  reserved: 'border-2 border-waxe-border text-waxe-text',
-  sold: 'bg-waxe-surface text-waxe-text-muted line-through',
+  reserved: 'bg-waxe-warm text-waxe-text',
+  sold: 'bg-waxe-negative text-waxe-deep',
   disconnected: 'bg-waxe-surface text-waxe-text-muted line-through',
   coming_soon: 'border-2 border-waxe-text-muted text-waxe-text-muted',
   draft: 'border-2 border-waxe-text-muted text-waxe-text-muted',
-  high: 'bg-waxe-text text-waxe-deep',
-  medium: 'border-2 border-waxe-border text-waxe-text',
+  high: 'bg-waxe-negative text-waxe-deep',
+  medium: 'bg-waxe-warm text-waxe-deep',
   low: 'border-2 border-waxe-text-muted text-waxe-text-muted',
 }
 

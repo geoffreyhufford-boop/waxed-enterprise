@@ -21,7 +21,7 @@ export default function ChartCard({ title, subtitle, children, className = '' }:
           </>
         )}
       </div>
-      <div className="h-[240px]">
+      <div className="h-[240px] min-h-0">
         <ResponsiveContainer width="100%" height="100%">
           {children}
         </ResponsiveContainer>

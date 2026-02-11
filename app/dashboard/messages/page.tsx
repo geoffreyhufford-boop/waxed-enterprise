@@ -15,13 +15,13 @@ export default function MessagesPage() {
   )
 
   return (
-    <>
+    <div className="flex flex-col flex-1 min-h-0">
       <DashboardHeader
         title="Messages"
         subtitle={`${conversations.reduce((sum, c) => sum + c.unread, 0)} unread messages`}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 rounded-none border-2 border-waxe-border overflow-hidden" style={{ height: 'calc(100vh - 180px)' }}>
+      <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-0 rounded-none border-2 border-waxe-border overflow-hidden">
         {/* Left: Conversation List */}
         <div className="lg:col-span-1 border-r border-waxe-border bg-waxe-card/30 flex flex-col">
           <div className="p-3 border-b border-waxe-border">
@@ -92,6 +92,6 @@ export default function MessagesPage() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }

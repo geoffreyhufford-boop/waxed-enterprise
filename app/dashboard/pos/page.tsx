@@ -1,8 +1,8 @@
 'use client'
 
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
-import { DashboardHeader, StatCard, StatusBadge, DataTable, ChartCard } from '@/components/dashboard'
-import { transactions, hourlySalesData, posQuickStats } from '@/lib/dashboard-data'
+import { useState } from 'react'
+import { DashboardHeader, StatCard, StatusBadge, DataTable } from '@/components/dashboard'
+import { transactions, posQuickStats, inventoryRecords } from '@/lib/dashboard-data'
 
 const methodIcons: Record<string, string> = {
   card: '▰',
@@ -10,15 +10,20 @@ const methodIcons: Record<string, string> = {
   tap: '◎',
 }
 
-const chartTooltipStyle = {
-  contentStyle: { background: '#EEE9DF', border: '2px solid #2C3B4D', borderRadius: '0', fontSize: '10px', fontFamily: 'var(--font-mono)' },
-  labelStyle: { color: '#4A5B6D', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.1em', fontSize: '9px' },
-  itemStyle: { color: '#1B2632', fontFamily: 'var(--font-mono)' },
-}
+const quickLookupResults = inventoryRecords.slice(0, 5)
 
 export default function POSPage() {
+  const [lookupQuery, setLookupQuery] = useState('')
+
+  const lookupResults = lookupQuery
+    ? inventoryRecords.filter(r => {
+        const q = lookupQuery.toLowerCase()
+        return r.artist.toLowerCase().includes(q) || r.title.toLowerCase().includes(q) || r.id.toLowerCase().includes(q)
+      }).slice(0, 6)
+    : quickLookupResults
+
   return (
-    <>
+    <div className="flex flex-col flex-1 min-h-0">
       <DashboardHeader
         title="Point of Sale"
         subtitle="Square integration — live sync active"
@@ -30,6 +35,7 @@ export default function POSPage() {
         }
       />
 
+      <div className="flex-1 min-h-0 overflow-y-auto">
       {/* Quick Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {posQuickStats.map((stat) => (
@@ -38,50 +44,78 @@ export default function POSPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        {/* Hourly Sales Chart */}
-        <div className="lg:col-span-2">
-          <ChartCard title="Today's Sales" subtitle="Hourly breakdown">
-            <BarChart data={hourlySalesData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(44,59,77,0.15)" />
-              <XAxis dataKey="hour" tick={{ fill: '#4A5B6D', fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fill: '#4A5B6D', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} />
-              <Tooltip {...chartTooltipStyle} formatter={(value) => [`$${value}`, 'Sales']} />
-              <Bar dataKey="sales" fill="#FFB162" radius={[2, 2, 0, 0]} />
-            </BarChart>
-          </ChartCard>
+        {/* Quick Record Lookup */}
+        <div className="lg:col-span-2 bg-waxe-card border-2 border-waxe-border rounded-none p-5 flex flex-col">
+          <div className="flex items-center justify-between mb-4 shrink-0">
+            <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Quick Lookup <span className="text-waxe-cool">{'>>'}</span></h3>
+            <span className="text-[10px] text-waxe-text-muted uppercase tracking-[0.1em]">search to check price or ring up</span>
+          </div>
+          <input
+            type="text"
+            placeholder="Search artist, title, or ID..."
+            className="bg-waxe-deep border-2 border-waxe-border text-sm text-waxe-text placeholder:text-waxe-text-muted px-3 py-2 mb-4 focus:outline-none focus:border-waxe-border-hover shrink-0"
+            style={{ fontFamily: 'var(--font-mono)' }}
+            value={lookupQuery}
+            onChange={(e) => setLookupQuery(e.target.value)}
+          />
+          <div className="flex-1 space-y-1 overflow-y-auto">
+            {lookupResults.map((record) => (
+              <div key={record.id} className="flex items-center justify-between py-2.5 px-3 hover:bg-waxe-surface/30 transition-colors cursor-pointer">
+                <div className="flex items-center gap-3 min-w-0">
+                  <span className="text-xs font-mono text-waxe-text-muted shrink-0">{record.id}</span>
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-waxe-text truncate">{record.artist} — {record.title}</p>
+                    <p className="text-[10px] text-waxe-text-muted">{record.genre} · {record.label} · {record.year}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <div className="text-right">
+                    <p className="text-sm font-bold text-waxe-text">${record.price.toFixed(2)}</p>
+                    <p className="text-[10px] text-waxe-text-muted">Cond: {record.condition}/10</p>
+                  </div>
+                  <StatusBadge status={record.status} />
+                </div>
+              </div>
+            ))}
+            {lookupQuery && lookupResults.length === 0 && (
+              <p className="text-sm text-waxe-text-muted text-center py-6">No records found for &ldquo;{lookupQuery}&rdquo;</p>
+            )}
+          </div>
         </div>
 
         {/* Auto-Sync Status Panel */}
-        <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5">
-          <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em] mb-4">Auto-Sync <span className="text-waxe-cool">{'>>'}</span> Flow</h3>
-          <div className="space-y-0">
-            {[
-              { step: 'Square POS', status: 'Sale recorded', active: true },
-              { step: 'Inventory', status: 'Stock updated', active: true },
-              { step: 'Storefront', status: 'Listing removed', active: true },
-              { step: 'Analytics', status: 'Stats refreshed', active: true },
-            ].map((item, i) => (
-              <div key={i}>
-                <div className="flex items-center gap-3 py-3">
-                  <div className={`w-8 h-8 flex items-center justify-center text-xs font-bold ${
-                    item.active ? 'bg-waxe-text/10 text-waxe-text border border-waxe-text/20' : 'bg-waxe-surface text-waxe-text-muted border-2 border-waxe-border'
-                  }`}>
-                    {i + 1}
+        <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5 flex flex-col">
+          <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em] mb-4 shrink-0">Auto-Sync <span className="text-waxe-cool">{'>>'}</span> Flow</h3>
+          <div className="flex-1 flex flex-col justify-between">
+            <div className="space-y-0">
+              {[
+                { step: 'Square POS', status: 'Sale recorded', active: true },
+                { step: 'Inventory', status: 'Stock updated', active: true },
+                { step: 'Storefront', status: 'Listing removed', active: true },
+                { step: 'Analytics', status: 'Stats refreshed', active: true },
+              ].map((item, i) => (
+                <div key={i}>
+                  <div className="flex items-center gap-3 py-3">
+                    <div className={`w-8 h-8 flex items-center justify-center text-xs font-bold ${
+                      item.active ? 'bg-waxe-text/10 text-waxe-text border border-waxe-text/20' : 'bg-waxe-surface text-waxe-text-muted border-2 border-waxe-border'
+                    }`}>
+                      {i + 1}
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-waxe-text">{item.step}</p>
+                      <p className="text-xs text-waxe-text-muted">{item.status}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-waxe-text">{item.step}</p>
-                    <p className="text-xs text-waxe-text-muted">{item.status}</p>
-                  </div>
+                  {i < 3 && (
+                    <div className="ml-4 h-4 border-l border-dashed border-waxe-text/20" />
+                  )}
                 </div>
-                {i < 3 && (
-                  <div className="ml-4 h-4 border-l border-dashed border-waxe-text/20" />
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 pt-4 border-t border-waxe-border">
-            <p className="text-xs text-waxe-text-muted">Last full sync: 2 minutes ago</p>
-            <p className="text-xs text-waxe-text mt-1">All systems operational</p>
+              ))}
+            </div>
+            <div className="pt-4 border-t border-waxe-border">
+              <p className="text-xs text-waxe-text-muted">Last full sync: 2 minutes ago</p>
+              <p className="text-xs text-waxe-text mt-1">All systems operational</p>
+            </div>
           </div>
         </div>
       </div>
@@ -113,6 +147,7 @@ export default function POSPage() {
           </tr>
         ))}
       </DataTable>
-    </>
+      </div>
+    </div>
   )
 }

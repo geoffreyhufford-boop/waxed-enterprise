@@ -65,6 +65,10 @@
   ::selection {
     @apply bg-waxe-warm text-waxe-text;
   }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer components {
