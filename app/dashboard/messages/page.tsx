@@ -21,7 +21,7 @@ export default function MessagesPage() {
         subtitle={`${conversations.reduce((sum, c) => sum + c.unread, 0)} unread messages`}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 rounded-2xl border border-waxe-border overflow-hidden" style={{ height: 'calc(100vh - 180px)' }}>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 rounded-none border-2 border-waxe-border overflow-hidden" style={{ height: 'calc(100vh - 180px)' }}>
         {/* Left: Conversation List */}
         <div className="lg:col-span-1 border-r border-waxe-border bg-waxe-card/30 flex flex-col">
           <div className="p-3 border-b border-waxe-border">
@@ -50,7 +50,7 @@ export default function MessagesPage() {
           {/* Chat Header */}
           <div className="px-6 py-4 border-b border-waxe-border flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-waxe-warm/15 flex items-center justify-center text-xs font-bold text-waxe-warm">
+              <div className="w-9 h-9 rounded-full bg-waxe-cool/15 flex items-center justify-center text-xs font-bold text-waxe-cool">
                 {active.customerName.split(' ').map(n => n[0]).join('')}
               </div>
               <div>

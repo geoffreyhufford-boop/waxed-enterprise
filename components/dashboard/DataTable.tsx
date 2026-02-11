@@ -5,7 +5,7 @@ interface DataTableProps {
 
 export default function DataTable({ headers, children }: DataTableProps) {
   return (
-    <div className="overflow-x-auto rounded-2xl border border-waxe-border">
+    <div className="overflow-x-auto rounded-none border-2 border-waxe-border">
       <table className="w-full text-sm">
         <thead>
           <tr>
@@ -14,7 +14,7 @@ export default function DataTable({ headers, children }: DataTableProps) {
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-waxe-border">
+        <tbody className="divide-y divide-black/10">
           {children}
         </tbody>
       </table>

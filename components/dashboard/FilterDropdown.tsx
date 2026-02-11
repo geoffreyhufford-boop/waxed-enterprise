@@ -30,13 +30,13 @@ export default function FilterDropdown({ label, options, value, onChange }: Filt
         {label}: {value} <span className="ml-1 text-[10px]">▾</span>
       </button>
       {open && (
-        <div className="absolute top-full mt-1 left-0 z-40 min-w-[140px] bg-waxe-surface border border-waxe-border rounded-xl py-1 shadow-xl">
+        <div className="absolute top-full mt-1 left-0 z-40 min-w-[140px] bg-waxe-surface border border-waxe-border rounded-none py-1 shadow-xl">
           {options.map((opt) => (
             <button
               key={opt}
               onClick={() => { onChange(opt); setOpen(false) }}
               className={`block w-full text-left px-4 py-2 text-sm transition-colors ${
-                opt === value ? 'text-waxe-warm bg-waxe-warm/10' : 'text-waxe-text-secondary hover:text-waxe-text hover:bg-waxe-card'
+                opt === value ? 'text-waxe-cool bg-waxe-cool/10' : 'text-waxe-text-secondary hover:text-waxe-text hover:bg-waxe-card'
               }`}
             >
               {opt}

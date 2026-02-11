@@ -25,13 +25,13 @@ export default function StorefrontPage() {
       />
 
       {/* Status Bar */}
-      <div className="bg-waxe-card backdrop-blur-md border border-waxe-border rounded-2xl p-4 mb-6 flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-4 mb-6 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg font-bold" style={{ background: `${storefrontConfig.primaryColor}20`, color: storefrontConfig.primaryColor }}>
+          <div className="w-10 h-10 flex items-center justify-center text-lg font-bold" style={{ background: `${storefrontConfig.primaryColor}20`, color: storefrontConfig.primaryColor }}>
             {storefrontConfig.logoText}
           </div>
           <div>
-            <p className="text-sm font-semibold text-waxe-text">{storefrontConfig.storeName}</p>
+            <p className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">{storefrontConfig.storeName}</p>
             <p className="text-xs text-waxe-cool">{storefrontConfig.url}</p>
           </div>
         </div>
@@ -43,9 +43,9 @@ export default function StorefrontPage() {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         {/* Left: Shelf Manager */}
         <div className="lg:col-span-3 space-y-6">
-          <div className="bg-waxe-card backdrop-blur-md border border-waxe-border rounded-2xl p-5">
+          <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-sm font-semibold text-waxe-text">Shelves</h2>
+              <h2 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Shelves</h2>
               <button className="btn-ghost text-xs">+ Add Shelf</button>
             </div>
             <div className="space-y-3">
@@ -62,16 +62,16 @@ export default function StorefrontPage() {
           </div>
 
           {/* Selected Shelf Details */}
-          <div className="bg-waxe-card backdrop-blur-md border border-waxe-border rounded-2xl p-5">
+          <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-sm font-semibold text-waxe-text">{activeShelf.name} — Records</h2>
+              <h2 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">{activeShelf.name} — Records</h2>
               <button className="btn-ghost text-xs">+ Add Records</button>
             </div>
             <div className="space-y-2">
               {activeShelf.records.map((record) => (
-                <div key={record.id} className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-waxe-surface/30 transition-colors">
+                <div key={record.id} className="flex items-center justify-between py-2 px-3 hover:bg-waxe-surface/30 transition-colors">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-waxe-surface border border-waxe-border overflow-hidden shrink-0">
+                    <div className="w-10 h-10 bg-waxe-surface overflow-hidden shrink-0">
                       {artworkMap[record.id] ? (
                         <img src={artworkMap[record.id]} alt="" className="w-full h-full object-cover" />
                       ) : (
@@ -86,10 +86,10 @@ export default function StorefrontPage() {
                     </div>
                   </div>
                   <button
-                    className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-colors ${
+                    className={`w-8 h-8 flex items-center justify-center text-sm transition-colors ${
                       record.featured
-                        ? 'bg-waxe-warm/15 text-waxe-warm border border-waxe-warm/25'
-                        : 'bg-waxe-surface text-waxe-text-muted border border-waxe-border hover:border-waxe-border-hover'
+                        ? 'bg-waxe-warm/15 text-waxe-cool border border-waxe-warm/25'
+                        : 'bg-waxe-surface text-waxe-text-muted border-2 border-waxe-border hover:border-waxe-border-hover'
                     }`}
                     title={record.featured ? 'Featured' : 'Feature this record'}
                   >
@@ -103,8 +103,8 @@ export default function StorefrontPage() {
 
         {/* Right: Customization Panel */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-waxe-card backdrop-blur-md border border-waxe-border rounded-2xl p-5">
-            <h2 className="text-sm font-semibold text-waxe-text mb-4">Store Customization</h2>
+          <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5">
+            <h2 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em] mb-4">Store Customization</h2>
             <div className="space-y-4">
               <div>
                 <label className="label-text">Store Name</label>
@@ -122,14 +122,14 @@ export default function StorefrontPage() {
                 <div>
                   <label className="label-text">Primary Color</label>
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg border border-waxe-border" style={{ background: storefrontConfig.primaryColor }} />
+                    <div className="w-8 h-8 border-2 border-waxe-border" style={{ background: storefrontConfig.primaryColor }} />
                     <span className="text-xs font-mono text-waxe-text-muted">{storefrontConfig.primaryColor}</span>
                   </div>
                 </div>
                 <div>
                   <label className="label-text">Accent Color</label>
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg border border-waxe-border" style={{ background: storefrontConfig.accentColor }} />
+                    <div className="w-8 h-8 border-2 border-waxe-border" style={{ background: storefrontConfig.accentColor }} />
                     <span className="text-xs font-mono text-waxe-text-muted">{storefrontConfig.accentColor}</span>
                   </div>
                 </div>
@@ -138,9 +138,9 @@ export default function StorefrontPage() {
           </div>
 
           {/* Store Preview Card */}
-          <div className="bg-waxe-card backdrop-blur-md border border-waxe-border rounded-2xl p-5">
-            <h2 className="text-sm font-semibold text-waxe-text mb-4">Preview</h2>
-            <div className="rounded-xl border border-waxe-border overflow-hidden">
+          <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5">
+            <h2 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em] mb-4">Preview</h2>
+            <div className="border-2 border-waxe-border overflow-hidden">
               {/* Mini browser chrome */}
               <div className="bg-waxe-surface px-3 py-2 flex items-center gap-2 border-b border-waxe-border">
                 <div className="flex gap-1">
@@ -164,7 +164,7 @@ export default function StorefrontPage() {
                       <p className="text-[10px] font-semibold text-waxe-text-secondary mb-1">{shelf.name}</p>
                       <div className="flex gap-1">
                         {shelf.records.slice(0, 3).map((r) => (
-                          <div key={r.id} className="w-6 h-6 rounded bg-waxe-card border border-waxe-border overflow-hidden">
+                          <div key={r.id} className="w-6 h-6 bg-waxe-card overflow-hidden">
                             {artworkMap[r.id] ? (
                               <img src={artworkMap[r.id]} alt="" className="w-full h-full object-cover" />
                             ) : (

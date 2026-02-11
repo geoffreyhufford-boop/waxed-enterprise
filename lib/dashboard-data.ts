@@ -408,8 +408,8 @@ export const storefrontConfig: StorefrontConfig = {
   storeName: 'Wax & Groove Records',
   url: 'waxandgroove.waxe.io',
   status: 'live',
-  primaryColor: '#c9a87c',
-  accentColor: '#7c9ec9',
+  primaryColor: '#1B2632',
+  accentColor: '#FFB162',
   logoText: 'W&G',
   description: 'Portland\'s finest curated vinyl since 2018',
 }

@@ -16,7 +16,7 @@ export default function MessageThread({ conversation, isActive, onClick }: Messa
     >
       <div className="flex items-center justify-between mb-1">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-waxe-warm/15 flex items-center justify-center text-xs font-bold text-waxe-warm">
+          <div className="w-8 h-8 rounded-full bg-waxe-cool/15 flex items-center justify-center text-xs font-bold text-waxe-cool">
             {conversation.customerName.split(' ').map(n => n[0]).join('')}
           </div>
           <span className="text-sm font-medium text-waxe-text">{conversation.customerName}</span>

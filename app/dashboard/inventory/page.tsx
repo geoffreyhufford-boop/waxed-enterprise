@@ -12,9 +12,9 @@ const syncSourceLabel: Record<string, string> = {
 }
 
 const syncSourceColor: Record<string, string> = {
-  discogs: 'text-[#7c9ec9]',
-  shopify: 'text-[#7cb89a]',
-  csv: 'text-[#c9a87c]',
+  discogs: 'text-waxe-text',
+  shopify: 'text-waxe-text-secondary',
+  csv: 'text-waxe-text-muted',
   manual: 'text-waxe-text-muted',
 }
 
@@ -97,14 +97,14 @@ export default function InventoryPage() {
             {/* Album Art */}
             <td className="px-4 py-3 w-[72px]">
               <div
-                className="w-10 h-10 rounded-lg border border-waxe-border overflow-hidden relative"
+                className="w-10 h-10 overflow-hidden relative"
                 style={{ background: record.photoColor || autoColor(record.artist + record.title) }}
               >
                 {record.artworkUrl ? (
                   <img src={record.artworkUrl} alt={`${record.artist} — ${record.title}`} className="absolute inset-0 w-full h-full object-cover" />
                 ) : (
                   <>
-                    <div className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-white/60">
+                    <div className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-waxe-deep/60">
                       {record.artist.split(' ').pop()?.slice(0, 2).toUpperCase()}
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 h-3 bg-gradient-to-t from-black/40 to-transparent" />
@@ -122,18 +122,20 @@ export default function InventoryPage() {
               <div className="flex items-center gap-2">
                 <div className="w-8 h-5 rounded bg-waxe-surface flex items-center justify-center">
                   <span className={`text-xs font-bold ${
-                    record.condition >= 9 ? 'text-[#7cb89a]' :
-                    record.condition >= 7 ? 'text-[#c9a87c]' :
-                    record.condition >= 5 ? 'text-waxe-text-secondary' :
-                    'text-red-400'
+                    record.condition >= 9 ? 'text-waxe-cond-9' :
+                    record.condition >= 7 ? 'text-waxe-cond-7' :
+                    record.condition >= 5 ? 'text-waxe-cond-5' :
+                    record.condition >= 3 ? 'text-waxe-cond-3' :
+                    'text-waxe-cond-1'
                   }`}>{record.condition}</span>
                 </div>
                 <div className="w-10 h-1.5 bg-waxe-surface rounded-full overflow-hidden">
                   <div className={`h-full rounded-full ${
-                    record.condition >= 9 ? 'bg-[#7cb89a]' :
-                    record.condition >= 7 ? 'bg-[#c9a87c]' :
-                    record.condition >= 5 ? 'bg-waxe-text-muted' :
-                    'bg-red-400'
+                    record.condition >= 9 ? 'bg-waxe-cond-9' :
+                    record.condition >= 7 ? 'bg-waxe-cond-7' :
+                    record.condition >= 5 ? 'bg-waxe-cond-5' :
+                    record.condition >= 3 ? 'bg-waxe-cond-3' :
+                    'bg-waxe-cond-1'
                   }`} style={{ width: `${record.condition * 10}%` }} />
                 </div>
               </div>
@@ -143,7 +145,7 @@ export default function InventoryPage() {
               {record.suggestedPrice && record.priceDelta !== undefined && (
                 <div className="flex items-center gap-1.5">
                   <span className="text-sm text-waxe-text-secondary">${record.suggestedPrice.toFixed(2)}</span>
-                  <span className={`text-xs font-medium ${record.priceDelta > 0 ? 'text-[#7cb89a]' : record.priceDelta < 0 ? 'text-red-400' : 'text-waxe-text-muted'}`}>
+                  <span className={`text-xs font-medium ${record.priceDelta > 0 ? 'text-waxe-positive' : record.priceDelta < 0 ? 'text-waxe-negative' : 'text-waxe-text-muted'}`}>
                     {record.priceDelta > 0 ? '+' : ''}{record.priceDelta}
                   </span>
                 </div>
@@ -159,7 +161,7 @@ export default function InventoryPage() {
             </td>
             <td className="px-4 py-3">
               {record.inPrintQueue && (
-                <span className="text-xs text-waxe-warm" title="In print queue">⎙</span>
+                <span className="text-xs text-waxe-cool" title="In print queue">⎙</span>
               )}
             </td>
           </tr>
@@ -168,21 +170,21 @@ export default function InventoryPage() {
 
       {/* Label Print Queue */}
       {printQueue.length > 0 && (
-        <div className="mt-6 bg-waxe-card backdrop-blur-md border border-waxe-border rounded-2xl p-5">
+        <div className="mt-6 bg-waxe-card border-2 border-waxe-border rounded-none p-5">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-semibold text-waxe-text">Label Print Queue</h2>
+            <h2 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Label Print Queue</h2>
             <button className="btn-ghost text-xs">Print All ({printQueue.length})</button>
           </div>
           <div className="space-y-2">
             {printQueue.map((record) => (
-              <div key={record.id} className="flex items-center justify-between py-2 px-3 rounded-lg bg-waxe-surface/30">
+              <div key={record.id} className="flex items-center justify-between py-2 px-3 bg-waxe-surface/30">
                 <div className="flex items-center gap-3">
                   <span className="text-xs font-mono text-waxe-text-muted">{record.id}</span>
                   <span className="text-sm text-waxe-text">{record.artist} — {record.title}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-sm font-medium text-waxe-text">${record.price.toFixed(2)}</span>
-                  <button className="text-xs text-waxe-warm hover:text-waxe-warm-hover transition-colors">Print</button>
+                  <button className="text-xs text-waxe-cool hover:text-waxe-warm-hover transition-colors">Print</button>
                 </div>
               </div>
             ))}
@@ -193,34 +195,34 @@ export default function InventoryPage() {
       {/* ─── Record Detail / Edit Modal ─── */}
       {selectedRecord && (
         <div className="fixed inset-0 z-50 flex items-start justify-center pt-[5vh]">
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setSelectedRecord(null)} />
-          <div className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-waxe-base border border-waxe-border rounded-2xl shadow-2xl">
+          <div className="absolute inset-0 bg-waxe-text/40" onClick={() => setSelectedRecord(null)} />
+          <div className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-waxe-base border-2 border-waxe-border rounded-none shadow-xl">
             {/* Header */}
-            <div className="sticky top-0 bg-waxe-base border-b border-waxe-border p-5 rounded-t-2xl z-10">
+            <div className="sticky top-0 bg-waxe-base border-b border-waxe-border p-5 rounded-none z-10">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   {/* Album art — click to upload custom photo */}
                   <button
-                    className="w-16 h-16 rounded-xl border border-waxe-border overflow-hidden relative shrink-0 group hover:border-waxe-warm/40 transition-colors"
+                    className="w-16 h-16 overflow-hidden relative shrink-0"
                     style={{ background: selectedRecord.photoColor || autoColor(selectedRecord.artist + selectedRecord.title) }}
                   >
                     {selectedRecord.artworkUrl ? (
                       <img src={selectedRecord.artworkUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
                     ) : (
                       <>
-                        <div className="absolute inset-0 flex items-center justify-center text-sm font-bold text-white/60">
+                        <div className="absolute inset-0 flex items-center justify-center text-sm font-bold text-waxe-deep/60">
                           {selectedRecord.artist.split(' ').pop()?.slice(0, 2).toUpperCase()}
                         </div>
                         <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-black/40 to-transparent" />
                       </>
                     )}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span className="text-xs text-white">📷</span>
-                      <span className="text-[9px] text-white/70">Upload</span>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-waxe-text/50 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span className="text-xs text-waxe-deep">📷</span>
+                      <span className="text-[9px] text-waxe-deep/70">Upload</span>
                     </div>
                   </button>
                   <div>
-                    <h2 className="text-lg font-bold text-waxe-text">{selectedRecord.artist}</h2>
+                    <h2 className="text-xl font-black text-waxe-text uppercase tracking-tight">{selectedRecord.artist}</h2>
                     <p className="text-sm text-waxe-text-muted">{selectedRecord.title}</p>
                     <span className="text-xs font-mono text-waxe-text-muted">{selectedRecord.id}</span>
                   </div>
@@ -238,10 +240,10 @@ export default function InventoryPage() {
                   via {syncSourceLabel[selectedRecord.syncSource]}
                 </span>
                 {selectedRecord.inPrintQueue && (
-                  <span className="text-xs text-waxe-warm bg-waxe-warm/10 px-2 py-0.5 rounded-full border border-waxe-warm/15">In print queue</span>
+                  <span className="text-xs text-waxe-cool bg-waxe-warm/10 px-2 py-0.5 rounded-full border border-waxe-warm/15">In print queue</span>
                 )}
                 {selectedRecord.discogsReleaseId && (
-                  <span className="text-xs font-mono text-[#7c9ec9] bg-[#7c9ec9]/10 px-2 py-0.5 rounded-full border border-[#7c9ec9]/15">{selectedRecord.discogsReleaseId}</span>
+                  <span className="text-xs font-mono text-waxe-text-secondary bg-waxe-text-secondary/10 px-2 py-0.5 border border-waxe-text-secondary/15">{selectedRecord.discogsReleaseId}</span>
                 )}
               </div>
 
@@ -273,8 +275,8 @@ export default function InventoryPage() {
               </div>
 
               {/* ── Pressing Identity ── */}
-              <div className="bg-waxe-surface/30 rounded-xl p-4">
-                <h3 className="text-xs font-semibold text-waxe-text-muted uppercase tracking-wider mb-3">Pressing Details</h3>
+              <div className="bg-waxe-surface/30 rounded-none p-4">
+                <h3 className="text-[10px] font-black text-waxe-text uppercase tracking-[0.1em] mb-3">Pressing Details</h3>
                 <div className="grid grid-cols-3 gap-4 mb-4">
                   <div>
                     <label className="text-xs text-waxe-text-muted mb-1.5 block">Pressing</label>
@@ -308,8 +310,8 @@ export default function InventoryPage() {
               </div>
 
               {/* ── Physical Specs ── */}
-              <div className="bg-waxe-surface/30 rounded-xl p-4">
-                <h3 className="text-xs font-semibold text-waxe-text-muted uppercase tracking-wider mb-3">Physical Specs</h3>
+              <div className="bg-waxe-surface/30 rounded-none p-4">
+                <h3 className="text-[10px] font-black text-waxe-text uppercase tracking-[0.1em] mb-3">Physical Specs</h3>
                 <div className="grid grid-cols-4 gap-4 mb-4">
                   <div>
                     <label className="text-xs text-waxe-text-muted mb-1.5 block">Format</label>
@@ -353,20 +355,21 @@ export default function InventoryPage() {
               </div>
 
               {/* ── Condition ── */}
-              <div className="bg-waxe-surface/30 rounded-xl p-4">
-                <h3 className="text-xs font-semibold text-waxe-text-muted uppercase tracking-wider mb-3">Condition</h3>
+              <div className="bg-waxe-surface/30 rounded-none p-4">
+                <h3 className="text-[10px] font-black text-waxe-text uppercase tracking-[0.1em] mb-3">Condition</h3>
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
                     <label className="text-xs text-waxe-text-muted mb-1.5 block">
                       Media — {selectedRecord.condition}/10 ({conditionLabels[selectedRecord.condition] || 'Unknown'})
                     </label>
                     <div className="flex items-center gap-3">
-                      <input type="range" min="1" max="10" defaultValue={selectedRecord.condition} className="flex-1 accent-[#c9a87c]" />
-                      <div className={`w-10 h-7 rounded-lg flex items-center justify-center text-sm font-bold ${
-                        selectedRecord.condition >= 9 ? 'bg-[#7cb89a]/15 text-[#7cb89a]' :
-                        selectedRecord.condition >= 7 ? 'bg-[#c9a87c]/15 text-[#c9a87c]' :
-                        selectedRecord.condition >= 5 ? 'bg-waxe-surface text-waxe-text-secondary' :
-                        'bg-red-400/15 text-red-400'
+                      <input type="range" min="1" max="10" defaultValue={selectedRecord.condition} className="flex-1 accent-waxe-text" />
+                      <div className={`w-10 h-7 flex items-center justify-center text-sm font-bold ${
+                        selectedRecord.condition >= 9 ? 'bg-waxe-cond-9/15 text-waxe-cond-9' :
+                        selectedRecord.condition >= 7 ? 'bg-waxe-cond-7/15 text-waxe-cond-7' :
+                        selectedRecord.condition >= 5 ? 'bg-waxe-cond-5/15 text-waxe-cond-5' :
+                        selectedRecord.condition >= 3 ? 'bg-waxe-cond-3/15 text-waxe-cond-3' :
+                        'bg-waxe-cond-1/15 text-waxe-cond-1'
                       }`}>{selectedRecord.condition}</div>
                     </div>
                   </div>
@@ -375,12 +378,13 @@ export default function InventoryPage() {
                       Sleeve — {selectedRecord.sleeveCondition}/10 ({conditionLabels[selectedRecord.sleeveCondition] || 'Unknown'})
                     </label>
                     <div className="flex items-center gap-3">
-                      <input type="range" min="1" max="10" defaultValue={selectedRecord.sleeveCondition} className="flex-1 accent-[#7c9ec9]" />
-                      <div className={`w-10 h-7 rounded-lg flex items-center justify-center text-sm font-bold ${
-                        selectedRecord.sleeveCondition >= 9 ? 'bg-[#7cb89a]/15 text-[#7cb89a]' :
-                        selectedRecord.sleeveCondition >= 7 ? 'bg-[#c9a87c]/15 text-[#c9a87c]' :
-                        selectedRecord.sleeveCondition >= 5 ? 'bg-waxe-surface text-waxe-text-secondary' :
-                        'bg-red-400/15 text-red-400'
+                      <input type="range" min="1" max="10" defaultValue={selectedRecord.sleeveCondition} className="flex-1 accent-waxe-text-secondary" />
+                      <div className={`w-10 h-7 flex items-center justify-center text-sm font-bold ${
+                        selectedRecord.sleeveCondition >= 9 ? 'bg-waxe-cond-9/15 text-waxe-cond-9' :
+                        selectedRecord.sleeveCondition >= 7 ? 'bg-waxe-cond-7/15 text-waxe-cond-7' :
+                        selectedRecord.sleeveCondition >= 5 ? 'bg-waxe-cond-5/15 text-waxe-cond-5' :
+                        selectedRecord.sleeveCondition >= 3 ? 'bg-waxe-cond-3/15 text-waxe-cond-3' :
+                        'bg-waxe-cond-1/15 text-waxe-cond-1'
                       }`}>{selectedRecord.sleeveCondition}</div>
                     </div>
                   </div>
@@ -420,8 +424,8 @@ export default function InventoryPage() {
               </div>
 
               {/* ── Pricing & Market ── */}
-              <div className="bg-waxe-surface/30 rounded-xl p-4">
-                <h3 className="text-xs font-semibold text-waxe-text-muted uppercase tracking-wider mb-3">Pricing & Market Data</h3>
+              <div className="bg-waxe-surface/30 rounded-none p-4">
+                <h3 className="text-[10px] font-black text-waxe-text uppercase tracking-[0.1em] mb-3">Pricing & Market Data</h3>
                 <div className="grid grid-cols-3 gap-4 mb-4">
                   <div>
                     <label className="text-xs text-waxe-text-muted mb-1.5 block">Your Price</label>
@@ -440,9 +444,9 @@ export default function InventoryPage() {
                   <div>
                     <label className="text-xs text-waxe-text-muted mb-1.5 block">Delta</label>
                     {selectedRecord.priceDelta !== undefined && (
-                      <div className={`h-[42px] rounded-xl flex items-center justify-center text-sm font-bold ${
-                        selectedRecord.priceDelta > 0 ? 'bg-[#7cb89a]/10 text-[#7cb89a]' :
-                        selectedRecord.priceDelta < 0 ? 'bg-red-400/10 text-red-400' :
+                      <div className={`h-[42px] flex items-center justify-center text-sm font-bold ${
+                        selectedRecord.priceDelta > 0 ? 'bg-waxe-positive/10 text-waxe-positive' :
+                        selectedRecord.priceDelta < 0 ? 'bg-waxe-negative/10 text-waxe-negative' :
                         'bg-waxe-surface text-waxe-text-muted'
                       }`}>
                         {selectedRecord.priceDelta > 0 ? '+' : ''}{selectedRecord.priceDelta}
@@ -461,7 +465,7 @@ export default function InventoryPage() {
                       </div>
                       <div className="text-center">
                         <p className="text-xs text-waxe-text-muted">Median</p>
-                        <p className="text-sm font-bold text-waxe-warm">${selectedRecord.discogsMedian}</p>
+                        <p className="text-sm font-bold text-waxe-cool">${selectedRecord.discogsMedian}</p>
                       </div>
                       <div className="text-center">
                         <p className="text-xs text-waxe-text-muted">High</p>
@@ -513,14 +517,14 @@ export default function InventoryPage() {
 
               <div className="flex items-center gap-6 py-2">
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" defaultChecked={selectedRecord.inPrintQueue} className="accent-[#c9a87c] w-4 h-4" />
+                  <input type="checkbox" defaultChecked={selectedRecord.inPrintQueue} className="accent-waxe-text w-4 h-4" />
                   <span className="text-sm text-waxe-text">In print queue</span>
                 </label>
               </div>
             </div>
 
             {/* Footer */}
-            <div className="sticky bottom-0 bg-waxe-base border-t border-waxe-border p-5 rounded-b-2xl flex items-center justify-between">
+            <div className="sticky bottom-0 bg-waxe-base border-t border-waxe-border p-5 flex items-center justify-between">
               <button className="text-sm text-red-400 hover:text-red-300 transition-colors">Delete Record</button>
               <div className="flex gap-2">
                 <button className="btn-secondary text-sm px-4 py-2" onClick={() => setSelectedRecord(null)}>Cancel</button>
@@ -534,12 +538,12 @@ export default function InventoryPage() {
       {/* ─── Catalog Search Modal ─── */}
       {showCatalog && (
         <div className="fixed inset-0 z-50 flex items-start justify-center pt-[5vh]">
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setShowCatalog(false)} />
-          <div className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-waxe-base border border-waxe-border rounded-2xl shadow-2xl">
-            <div className="sticky top-0 bg-waxe-base border-b border-waxe-border p-5 rounded-t-2xl z-10">
+          <div className="absolute inset-0 bg-waxe-text/40" onClick={() => setShowCatalog(false)} />
+          <div className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-waxe-base border-2 border-waxe-border rounded-none shadow-xl">
+            <div className="sticky top-0 bg-waxe-base border-b border-waxe-border p-5 rounded-none z-10">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h2 className="text-lg font-bold text-waxe-text">Catalog Search</h2>
+                  <h2 className="text-xl font-black text-waxe-text uppercase tracking-tight">Catalog Search</h2>
                   <p className="text-xs text-waxe-text-muted">Search the Discogs database to add records</p>
                 </div>
                 <button onClick={() => setShowCatalog(false)} className="text-waxe-text-muted hover:text-waxe-text text-lg">✕</button>
@@ -561,17 +565,17 @@ export default function InventoryPage() {
 
               <div className="space-y-3">
                 {catalogResults.map((result) => (
-                  <div key={result.discogsId} className="bg-waxe-card border border-waxe-border rounded-xl p-4 hover:border-waxe-border-hover transition-colors">
+                  <div key={result.discogsId} className="bg-waxe-card border-2 border-waxe-border rounded-none p-4 hover:border-waxe-border-hover transition-colors">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-waxe-text">{result.artist} — {result.title}</p>
+                        <p className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">{result.artist} — {result.title}</p>
                         <p className="text-xs text-waxe-text-muted mt-0.5">
                           {result.label} · {result.catNo} · {result.year} · {result.country} · {result.format}
                         </p>
                         <div className="flex items-center gap-4 mt-2">
                           <span className="text-xs text-waxe-text-muted">{result.pressings} pressings</span>
                           <span className="text-xs text-waxe-text-muted">Have: {result.have.toLocaleString()}</span>
-                          <span className="text-xs text-waxe-warm">Want: {result.want.toLocaleString()}</span>
+                          <span className="text-xs text-waxe-cool">Want: {result.want.toLocaleString()}</span>
                         </div>
                       </div>
                       <div className="text-right shrink-0">
@@ -583,7 +587,7 @@ export default function InventoryPage() {
                     <div className="flex items-center justify-between mt-3 pt-3 border-t border-waxe-border">
                       <div className="flex items-center gap-2">
                         {result.want > result.have && (
-                          <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#7cb89a]/15 text-[#7cb89a] border border-[#7cb89a]/25">
+                          <span className="text-[10px] font-medium px-2 py-0.5 bg-waxe-text/10 text-waxe-text border border-waxe-text/15">
                             High demand
                           </span>
                         )}
@@ -602,12 +606,12 @@ export default function InventoryPage() {
       {/* ─── Bulk Import Modal ─── */}
       {showImport && (
         <div className="fixed inset-0 z-50 flex items-start justify-center pt-[5vh]">
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setShowImport(false)} />
-          <div className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-waxe-base border border-waxe-border rounded-2xl shadow-2xl">
-            <div className="sticky top-0 bg-waxe-base border-b border-waxe-border p-5 rounded-t-2xl z-10">
+          <div className="absolute inset-0 bg-waxe-text/40" onClick={() => setShowImport(false)} />
+          <div className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-waxe-base border-2 border-waxe-border rounded-none shadow-xl">
+            <div className="sticky top-0 bg-waxe-base border-b border-waxe-border p-5 rounded-none z-10">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h2 className="text-lg font-bold text-waxe-text">Import Records</h2>
+                  <h2 className="text-xl font-black text-waxe-text uppercase tracking-tight">Import Records</h2>
                   <p className="text-xs text-waxe-text-muted">Bulk import from CSV, Discogs export, Shopify, or scan</p>
                 </div>
                 <button onClick={() => setShowImport(false)} className="text-waxe-text-muted hover:text-waxe-text text-lg">✕</button>
@@ -623,9 +627,9 @@ export default function InventoryPage() {
                 ].map((source) => (
                   <button
                     key={source.id}
-                    className={`p-3 rounded-xl border text-center transition-all ${
+                    className={`p-3 rounded-none border text-center transition-all ${
                       source.id === importBatch.source
-                        ? 'bg-waxe-warm/10 border-waxe-warm/30 text-waxe-warm'
+                        ? 'bg-waxe-text/5 border-waxe-text text-waxe-text'
                         : 'bg-waxe-card border-waxe-border text-waxe-text-secondary hover:border-waxe-border-hover'
                     }`}
                   >
@@ -647,23 +651,23 @@ export default function InventoryPage() {
                   return (
                     <div key={step} className="flex items-center gap-2 flex-1">
                       <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                        isComplete ? 'bg-[#7cb89a] text-waxe-deep' :
-                        isCurrent ? 'bg-waxe-warm text-waxe-deep' :
-                        'bg-waxe-surface text-waxe-text-muted border border-waxe-border'
+                        isComplete ? 'bg-waxe-text text-waxe-base' :
+                        isCurrent ? 'bg-waxe-text-secondary text-waxe-base' :
+                        'bg-waxe-surface text-waxe-text-muted border-2 border-waxe-border'
                       }`}>
                         {isComplete ? '✓' : i + 1}
                       </div>
                       <span className={`text-xs ${isCurrent ? 'text-waxe-text font-medium' : 'text-waxe-text-muted'}`}>{step}</span>
-                      {i < 3 && <div className={`flex-1 h-px ${isComplete ? 'bg-[#7cb89a]' : 'bg-waxe-border'}`} />}
+                      {i < 3 && <div className={`flex-1 h-px ${isComplete ? 'bg-waxe-text' : 'bg-waxe-border'}`} />}
                     </div>
                   )
                 })}
               </div>
 
               {/* File info */}
-              <div className="bg-waxe-surface/50 rounded-xl p-4 mb-5 flex items-center justify-between">
+              <div className="bg-waxe-surface/50 rounded-none p-4 mb-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-waxe-warm/15 flex items-center justify-center text-sm text-waxe-warm">⬆</div>
+                  <div className="w-10 h-10 bg-waxe-text/10 flex items-center justify-center text-sm text-waxe-text">⬆</div>
                   <div>
                     <p className="text-sm font-medium text-waxe-text">{importBatch.fileName}</p>
                     <p className="text-xs text-waxe-text-muted">{importBatch.totalRecords} records found</p>
@@ -671,11 +675,11 @@ export default function InventoryPage() {
                 </div>
                 <div className="flex items-center gap-4 text-right">
                   <div>
-                    <p className="text-sm font-bold text-[#7cb89a]">{importBatch.matched}</p>
+                    <p className="text-sm font-bold text-waxe-text">{importBatch.matched}</p>
                     <p className="text-[10px] text-waxe-text-muted">auto-matched</p>
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-[#c9a87c]">{importBatch.needsReview}</p>
+                    <p className="text-sm font-bold text-waxe-text-muted">{importBatch.needsReview}</p>
                     <p className="text-[10px] text-waxe-text-muted">needs review</p>
                   </div>
                 </div>
@@ -688,22 +692,22 @@ export default function InventoryPage() {
                   <span className="text-xs font-medium text-waxe-text">{Math.round((importBatch.matched / importBatch.totalRecords) * 100)}%</span>
                 </div>
                 <div className="h-2 bg-waxe-surface rounded-full overflow-hidden flex">
-                  <div className="h-full bg-[#7cb89a] rounded-l-full" style={{ width: `${(importBatch.matched / importBatch.totalRecords) * 100}%` }} />
-                  <div className="h-full bg-[#c9a87c]" style={{ width: `${(importBatch.needsReview / importBatch.totalRecords) * 100}%` }} />
+                  <div className="h-full bg-waxe-text rounded-l-full" style={{ width: `${(importBatch.matched / importBatch.totalRecords) * 100}%` }} />
+                  <div className="h-full bg-waxe-text-muted" style={{ width: `${(importBatch.needsReview / importBatch.totalRecords) * 100}%` }} />
                 </div>
               </div>
 
               {/* Records list */}
               <div className="space-y-2">
                 {importBatch.records.map((record, i) => (
-                  <div key={i} className={`flex items-center justify-between p-3 rounded-xl border transition-colors ${
+                  <div key={i} className={`flex items-center justify-between p-3 rounded-none border transition-colors ${
                     record.matched
                       ? 'bg-waxe-card/30 border-waxe-border'
-                      : 'bg-[#c9a87c]/5 border-[#c9a87c]/20'
+                      : 'bg-waxe-text-muted/5 border-waxe-text-muted/20'
                   }`}>
                     <div className="flex items-center gap-3 flex-1 min-w-0">
                       <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] ${
-                        record.matched ? 'bg-[#7cb89a]/15 text-[#7cb89a]' : 'bg-[#c9a87c]/15 text-[#c9a87c]'
+                        record.matched ? 'bg-waxe-text/10 text-waxe-text' : 'bg-waxe-text-muted/15 text-waxe-text-muted'
                       }`}>
                         {record.matched ? '✓' : '?'}
                       </div>
@@ -712,7 +716,7 @@ export default function InventoryPage() {
                         {record.discogsMatch ? (
                           <p className="text-xs text-waxe-text-muted truncate">{record.discogsMatch}</p>
                         ) : (
-                          <p className="text-xs text-[#c9a87c]">No confident match — manual lookup needed</p>
+                          <p className="text-xs text-waxe-text-muted">No confident match — manual lookup needed</p>
                         )}
                       </div>
                     </div>
@@ -724,7 +728,7 @@ export default function InventoryPage() {
                         <p className="text-[10px] text-waxe-text-muted">{record.matchConfidence}% match</p>
                       </div>
                       {!record.matched && (
-                        <button className="text-xs text-waxe-warm hover:text-waxe-warm-hover transition-colors">Lookup</button>
+                        <button className="text-xs text-waxe-cool hover:text-waxe-warm-hover transition-colors">Lookup</button>
                       )}
                     </div>
                   </div>

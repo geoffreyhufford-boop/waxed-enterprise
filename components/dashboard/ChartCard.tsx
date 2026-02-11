@@ -11,10 +11,15 @@ interface ChartCardProps {
 
 export default function ChartCard({ title, subtitle, children, className = '' }: ChartCardProps) {
   return (
-    <div className={`bg-waxe-card backdrop-blur-md border border-waxe-border rounded-2xl p-5 ${className}`}>
-      <div className="mb-4">
-        <h3 className="text-sm font-semibold text-waxe-text">{title}</h3>
-        {subtitle && <p className="text-xs text-waxe-text-muted mt-0.5">{subtitle}</p>}
+    <div className={`bg-waxe-card border-2 border-waxe-border rounded-none p-5 ${className}`}>
+      <div className="mb-4 flex items-baseline gap-2">
+        <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">{title}</h3>
+        {subtitle && (
+          <>
+            <span className="text-[10px] text-waxe-cool font-bold">{'>>'}</span>
+            <p className="text-[10px] text-waxe-text-muted uppercase tracking-[0.1em]">{subtitle}</p>
+          </>
+        )}
       </div>
       <div className="h-[240px]">
         <ResponsiveContainer width="100%" height="100%">

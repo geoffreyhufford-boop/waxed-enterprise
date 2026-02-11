@@ -11,9 +11,9 @@ const methodIcons: Record<string, string> = {
 }
 
 const chartTooltipStyle = {
-  contentStyle: { background: '#1a1a24', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', fontSize: '12px' },
-  labelStyle: { color: '#a0a0b0' },
-  itemStyle: { color: '#f0f0f5' },
+  contentStyle: { background: '#EEE9DF', border: '2px solid #2C3B4D', borderRadius: '0', fontSize: '10px', fontFamily: 'var(--font-mono)' },
+  labelStyle: { color: '#4A5B6D', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.1em', fontSize: '9px' },
+  itemStyle: { color: '#1B2632', fontFamily: 'var(--font-mono)' },
 }
 
 export default function POSPage() {
@@ -42,18 +42,18 @@ export default function POSPage() {
         <div className="lg:col-span-2">
           <ChartCard title="Today's Sales" subtitle="Hourly breakdown">
             <BarChart data={hourlySalesData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
-              <XAxis dataKey="hour" tick={{ fill: '#6a6a7a', fontSize: 12 }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fill: '#6a6a7a', fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(44,59,77,0.15)" />
+              <XAxis dataKey="hour" tick={{ fill: '#4A5B6D', fontSize: 11 }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fill: '#4A5B6D', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} />
               <Tooltip {...chartTooltipStyle} formatter={(value) => [`$${value}`, 'Sales']} />
-              <Bar dataKey="sales" fill="#c9a87c" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="sales" fill="#FFB162" radius={[2, 2, 0, 0]} />
             </BarChart>
           </ChartCard>
         </div>
 
         {/* Auto-Sync Status Panel */}
-        <div className="bg-waxe-card backdrop-blur-md border border-waxe-border rounded-2xl p-5">
-          <h3 className="text-sm font-semibold text-waxe-text mb-4">Auto-Sync Flow</h3>
+        <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5">
+          <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em] mb-4">Auto-Sync <span className="text-waxe-cool">{'>>'}</span> Flow</h3>
           <div className="space-y-0">
             {[
               { step: 'Square POS', status: 'Sale recorded', active: true },
@@ -63,8 +63,8 @@ export default function POSPage() {
             ].map((item, i) => (
               <div key={i}>
                 <div className="flex items-center gap-3 py-3">
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${
-                    item.active ? 'bg-[#7cb89a]/15 text-[#7cb89a] border border-[#7cb89a]/25' : 'bg-waxe-surface text-waxe-text-muted border border-waxe-border'
+                  <div className={`w-8 h-8 flex items-center justify-center text-xs font-bold ${
+                    item.active ? 'bg-waxe-text/10 text-waxe-text border border-waxe-text/20' : 'bg-waxe-surface text-waxe-text-muted border-2 border-waxe-border'
                   }`}>
                     {i + 1}
                   </div>
@@ -74,14 +74,14 @@ export default function POSPage() {
                   </div>
                 </div>
                 {i < 3 && (
-                  <div className="ml-4 h-4 border-l border-dashed border-[#7cb89a]/30" />
+                  <div className="ml-4 h-4 border-l border-dashed border-waxe-text/20" />
                 )}
               </div>
             ))}
           </div>
           <div className="mt-4 pt-4 border-t border-waxe-border">
             <p className="text-xs text-waxe-text-muted">Last full sync: 2 minutes ago</p>
-            <p className="text-xs text-[#7cb89a] mt-1">All systems operational</p>
+            <p className="text-xs text-waxe-text mt-1">All systems operational</p>
           </div>
         </div>
       </div>
@@ -105,9 +105,9 @@ export default function POSPage() {
             </td>
             <td className="px-4 py-3">
               {txn.synced ? (
-                <span className="text-xs text-[#7cb89a]">✓</span>
+                <span className="text-xs text-waxe-text">✓</span>
               ) : (
-                <span className="text-xs text-[#c9a87c]">⟳</span>
+                <span className="text-xs text-waxe-text-muted">⟳</span>
               )}
             </td>
           </tr>
