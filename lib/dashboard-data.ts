@@ -26,7 +26,7 @@ export interface InventoryRecord {
   title: string
   label: string
   year: number
-  condition: number // 1-10 scale: 10=sealed, 9=pristine, 8=excellent, 7=very good, 6=good, 5=fair, 4=worn, 3=rough, 2=damaged, 1=trashed
+  condition: number // 1-5 star scale: 5=mint, 4=excellent, 3=good, 2=fair, 1=poor
   price: number
   suggestedPrice?: number
   priceDelta?: number
@@ -49,7 +49,7 @@ export interface InventoryRecord {
   format: string             // '12"', '7"', '10"', '2x12"', '3x12"'
   speed: string              // '33 RPM', '45 RPM'
   // Sleeve & packaging
-  sleeveCondition: number    // 1-10 same scale as media
+  sleeveCondition: number    // 1-5 same star scale as media
   sleeveType: string         // 'Gatefold', 'Single', 'Box Set'
   innerSleeve?: string       // 'Original printed', 'Generic white', 'Poly-lined'
   inserts?: string[]         // ['Lyric sheet', 'OBI strip', 'Poster', etc.]
@@ -136,10 +136,10 @@ export interface GenreDemandPoint {
 
 export interface PriceTrendPoint {
   month: string
-  c10: number // sealed/mint
-  c9: number  // pristine
-  c7: number  // very good
-  c5: number  // fair
+  c5: number // 5★ mint
+  c4: number // 4★ excellent
+  c3: number // 3★ good
+  c2: number // 2★ fair
 }
 
 export interface RestockRecommendation {
@@ -183,6 +183,28 @@ export interface Conversation {
   lastTime: string
   unread: number
   messages: Message[]
+}
+
+export interface OrderItem {
+  recordId: string
+  artist: string
+  title: string
+  price: number
+  qty: number
+}
+
+export interface Order {
+  id: string
+  date: string
+  customer: { name: string; email: string; address: string }
+  items: OrderItem[]
+  total: number
+  status: 'pending' | 'processing' | 'packed' | 'shipped' | 'delivered'
+  shippingMethod: 'standard' | 'priority' | 'express'
+  trackingNumber?: string
+  carrier?: string
+  weight: string
+  labelPrinted: boolean
 }
 
 export interface GenreBreakdown {
@@ -232,104 +254,104 @@ export const featureStatuses: FeatureStatus[] = [
 
 export const inventoryRecords: InventoryRecord[] = [
   {
-    id: 'WX-001', artist: 'Aphex Twin', title: 'Selected Ambient Works 85-92', label: 'Apollo', year: 1992, condition: 9, price: 85.00, suggestedPrice: 92.00, priceDelta: 7, syncSource: 'discogs', status: 'active', genre: 'Ambient', inPrintQueue: false, hasPhoto: true, photoColor: '#1a2a3c', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/5f/b3/e0/5fb3e08d-c2cd-3da4-6ad7-c5dc61803683/cover.jpg/300x300bb.jpg',
+    id: 'WX-001', artist: 'Aphex Twin', title: 'Selected Ambient Works 85-92', label: 'Apollo', year: 1992, condition: 4, price: 85.00, suggestedPrice: 92.00, priceDelta: 7, syncSource: 'discogs', status: 'active', genre: 'Ambient', inPrintQueue: false, hasPhoto: true, photoColor: '#1a2a3c', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/5f/b3/e0/5fb3e08d-c2cd-3da4-6ad7-c5dc61803683/cover.jpg/300x300bb.jpg',
     pressing: '1st Press', countryOfPressing: 'UK', catalogNo: 'AMB LP 3922', matrixRunout: 'AMB3922-A1 MPO',
     vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
-    sleeveCondition: 8, sleeveType: 'Gatefold', innerSleeve: 'Generic white',
+    sleeveCondition: 4, sleeveType: 'Gatefold', innerSleeve: 'Generic white',
     mastering: 'AAA', pressingPlant: 'MPO',
     flawNotes: 'Light shelf wear on cover, vinyl plays clean throughout. Original Apollo/R&S pressing.',
     discogsMedian: 88, discogsLow: 45, discogsHigh: 320,
   },
   {
-    id: 'WX-002', artist: 'Basic Channel', title: 'BCD', label: 'Basic Channel', year: 1995, condition: 7, price: 120.00, suggestedPrice: 135.00, priceDelta: 15, syncSource: 'discogs', status: 'active', genre: 'Dub Techno', inPrintQueue: true, hasPhoto: true, photoColor: '#2a2a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music/y2005/m02/d25/h00/s05.zgibqflu.jpg/300x300bb.jpg',
+    id: 'WX-002', artist: 'Basic Channel', title: 'BCD', label: 'Basic Channel', year: 1995, condition: 3, price: 120.00, suggestedPrice: 135.00, priceDelta: 15, syncSource: 'discogs', status: 'active', genre: 'Dub Techno', inPrintQueue: true, hasPhoto: true, photoColor: '#2a2a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music/y2005/m02/d25/h00/s05.zgibqflu.jpg/300x300bb.jpg',
     pressing: '1st Press', countryOfPressing: 'Germany', catalogNo: 'BC-CD', matrixRunout: 'BC-CD A1',
     vinylWeight: '140g', vinylColor: 'Black', format: '12"', speed: '33 RPM',
-    sleeveCondition: 6, sleeveType: 'Single', innerSleeve: 'Generic white',
+    sleeveCondition: 3, sleeveType: 'Single', innerSleeve: 'Generic white',
     mastering: 'AAA', pressingPlant: 'Dubplates & Mastering',
     flawNotes: 'Minimal plain sleeve has edge wear. Vinyl has light marks but plays through. Hard to find original press.',
     discogsMedian: 130, discogsLow: 60, discogsHigh: 280,
   },
   {
-    id: 'WX-003', artist: 'Underworld', title: 'Dubnobasswithmyheadman', label: "Junior Boy's Own", year: 1994, condition: 10, price: 45.00, suggestedPrice: 48.00, priceDelta: 3, syncSource: 'shopify', status: 'active', genre: 'Techno', inPrintQueue: false, hasPhoto: true, photoColor: '#3a3a5a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/6b/ab/57/6bab57d0-7a4f-51fa-865f-cb0b4710c8cd/00602537908103.rgb.jpg/300x300bb.jpg',
+    id: 'WX-003', artist: 'Underworld', title: 'Dubnobasswithmyheadman', label: "Junior Boy's Own", year: 1994, condition: 5, price: 45.00, suggestedPrice: 48.00, priceDelta: 3, syncSource: 'shopify', status: 'active', genre: 'Techno', inPrintQueue: false, hasPhoto: true, photoColor: '#3a3a5a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/6b/ab/57/6bab57d0-7a4f-51fa-865f-cb0b4710c8cd/00602537908103.rgb.jpg/300x300bb.jpg',
     pressing: 'Reissue', countryOfPressing: 'UK', catalogNo: 'COLLECT005LP',
     vinylWeight: '180g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
-    sleeveCondition: 10, sleeveType: 'Gatefold', innerSleeve: 'Poly-lined', inserts: ['Download card'],
+    sleeveCondition: 5, sleeveType: 'Gatefold', innerSleeve: 'Poly-lined', inserts: ['Download card'],
     mastering: 'AAD', pressingPlant: 'Optimal',
     discogsMedian: 42, discogsLow: 28, discogsHigh: 75,
   },
   {
-    id: 'WX-004', artist: 'Burial', title: 'Untrue', label: 'Hyperdub', year: 2007, condition: 9, price: 48.00, suggestedPrice: 52.00, priceDelta: 4, syncSource: 'discogs', status: 'active', genre: 'Techno', inPrintQueue: false, hasPhoto: true, photoColor: '#1a1a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/9d/0f/1c/9d0f1c2b-2fae-d8ac-3920-ce9ec5bc85b5/7982.jpg/300x300bb.jpg',
+    id: 'WX-004', artist: 'Burial', title: 'Untrue', label: 'Hyperdub', year: 2007, condition: 4, price: 48.00, suggestedPrice: 52.00, priceDelta: 4, syncSource: 'discogs', status: 'active', genre: 'Techno', inPrintQueue: false, hasPhoto: true, photoColor: '#1a1a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/9d/0f/1c/9d0f1c2b-2fae-d8ac-3920-ce9ec5bc85b5/7982.jpg/300x300bb.jpg',
     pressing: '1st Press', countryOfPressing: 'UK', catalogNo: 'HDBCD002', matrixRunout: 'HDBLP002-A2',
     vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
-    sleeveCondition: 9, sleeveType: 'Gatefold', innerSleeve: 'Poly-lined',
+    sleeveCondition: 4, sleeveType: 'Gatefold', innerSleeve: 'Poly-lined',
     mastering: 'AAD', pressingPlant: 'The Vinyl Factory',
     discogsMedian: 50, discogsLow: 30, discogsHigh: 95,
   },
   {
-    id: 'WX-005', artist: 'Jeff Mills', title: 'Waveform Transmission Vol. 1', label: 'Tresor', year: 1992, condition: 6, price: 95.00, suggestedPrice: 110.00, priceDelta: 15, syncSource: 'manual', status: 'active', genre: 'Techno', inPrintQueue: true, hasPhoto: true, photoColor: '#0a0a0a',
+    id: 'WX-005', artist: 'Jeff Mills', title: 'Waveform Transmission Vol. 1', label: 'Tresor', year: 1992, condition: 3, price: 95.00, suggestedPrice: 110.00, priceDelta: 15, syncSource: 'manual', status: 'active', genre: 'Techno', inPrintQueue: true, hasPhoto: true, photoColor: '#0a0a0a',
     pressing: '1st Press', countryOfPressing: 'Germany', catalogNo: 'Tresor 9', matrixRunout: 'TR009-A',
     vinylWeight: '140g', vinylColor: 'Black', format: '3x12"', speed: '33 RPM',
-    sleeveCondition: 5, sleeveType: 'Single', innerSleeve: 'Generic white',
+    sleeveCondition: 2, sleeveType: 'Single', innerSleeve: 'Generic white',
     mastering: 'AAA', pressingPlant: 'Pallas',
     flawNotes: 'Cover has ring wear and edge scuffs. Original Tresor pressing. Vinyl has surface noise in quiet passages.',
     discogsMedian: 105, discogsLow: 45, discogsHigh: 350,
   },
   {
-    id: 'WX-006', artist: 'Boards of Canada', title: 'Music Has the Right to Children', label: 'Warp', year: 1998, condition: 7, price: 65.00, suggestedPrice: 68.00, priceDelta: 3, syncSource: 'shopify', status: 'reserved', genre: 'Ambient', inPrintQueue: true, hasPhoto: true, photoColor: '#2a3a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/b5/4c/c2/b54cc20d-03f5-f2c4-4a0d-9b51ad65af89/dj.txuslqgv.jpg/300x300bb.jpg',
+    id: 'WX-006', artist: 'Boards of Canada', title: 'Music Has the Right to Children', label: 'Warp', year: 1998, condition: 3, price: 65.00, suggestedPrice: 68.00, priceDelta: 3, syncSource: 'shopify', status: 'reserved', genre: 'Ambient', inPrintQueue: true, hasPhoto: true, photoColor: '#2a3a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/b5/4c/c2/b54cc20d-03f5-f2c4-4a0d-9b51ad65af89/dj.txuslqgv.jpg/300x300bb.jpg',
     pressing: '1st Press', countryOfPressing: 'UK', catalogNo: 'WARP LP 55', matrixRunout: 'WARPLP55 A2 MPO', discogsReleaseId: 'r28384',
     vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
-    sleeveCondition: 7, sleeveType: 'Gatefold', innerSleeve: 'Original printed',
+    sleeveCondition: 3, sleeveType: 'Gatefold', innerSleeve: 'Original printed',
     mastering: 'AAA', pressingPlant: 'MPO',
     flawNotes: 'Corner ding on bottom left, light shelf wear. Vinyl plays well with occasional light tick on Side C.',
     discogsMedian: 72, discogsLow: 35, discogsHigh: 200,
   },
   {
-    id: 'WX-007', artist: 'Drexciya', title: "Neptune's Lair", label: 'Tresor', year: 1999, condition: 10, price: 140.00, suggestedPrice: 160.00, priceDelta: 20, syncSource: 'discogs', status: 'active', genre: 'Electro', inPrintQueue: false, hasPhoto: true, photoColor: '#0a2a4a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/95/a4/3f/95a43f9d-4eb9-e5a9-ee64-910d3fb95e6c/3663729188892_3000.jpg/300x300bb.jpg',
+    id: 'WX-007', artist: 'Drexciya', title: "Neptune's Lair", label: 'Tresor', year: 1999, condition: 5, price: 140.00, suggestedPrice: 160.00, priceDelta: 20, syncSource: 'discogs', status: 'active', genre: 'Electro', inPrintQueue: false, hasPhoto: true, photoColor: '#0a2a4a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/95/a4/3f/95a43f9d-4eb9-e5a9-ee64-910d3fb95e6c/3663729188892_3000.jpg/300x300bb.jpg',
     pressing: '1st Press', countryOfPressing: 'Germany', catalogNo: 'Tresor 56', matrixRunout: 'TR056-A1', discogsReleaseId: 'r28901',
     vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
-    sleeveCondition: 10, sleeveType: 'Gatefold', innerSleeve: 'Original printed', inserts: ['Liner notes'],
+    sleeveCondition: 5, sleeveType: 'Gatefold', innerSleeve: 'Original printed', inserts: ['Liner notes'],
     mastering: 'AAA', pressingPlant: 'Pallas',
     discogsMedian: 155, discogsLow: 80, discogsHigh: 450,
   },
   {
-    id: 'WX-008', artist: 'Daft Punk', title: 'Homework', label: 'Virgin', year: 1997, condition: 8, price: 55.00, suggestedPrice: 58.00, priceDelta: 3, syncSource: 'discogs', status: 'active', genre: 'House', inPrintQueue: false, hasPhoto: true, photoColor: '#3a2a1a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/dc/68/45/dc684589-af57-6895-1177-4f2acbb93e47/190296240911.jpg/300x300bb.jpg',
+    id: 'WX-008', artist: 'Daft Punk', title: 'Homework', label: 'Virgin', year: 1997, condition: 4, price: 55.00, suggestedPrice: 58.00, priceDelta: 3, syncSource: 'discogs', status: 'active', genre: 'House', inPrintQueue: false, hasPhoto: true, photoColor: '#3a2a1a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/dc/68/45/dc684589-af57-6895-1177-4f2acbb93e47/190296240911.jpg/300x300bb.jpg',
     pressing: '1st Press', countryOfPressing: 'France', catalogNo: 'V 2821', matrixRunout: 'V2821 A1',
     vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
-    sleeveCondition: 8, sleeveType: 'Gatefold', innerSleeve: 'Original printed',
+    sleeveCondition: 4, sleeveType: 'Gatefold', innerSleeve: 'Original printed',
     mastering: 'AAD', pressingPlant: 'MPO',
     discogsMedian: 55, discogsLow: 30, discogsHigh: 120,
   },
   {
-    id: 'WX-009', artist: 'Orbital', title: 'Orbital 2', label: 'Internal', year: 1993, condition: 8, price: 38.00, suggestedPrice: 42.00, priceDelta: 4, syncSource: 'csv', status: 'active', genre: 'Techno', inPrintQueue: false, hasPhoto: true, photoColor: '#4a3a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/e0/5a/1f/e05a1f95-1c5a-cd76-52ef-0e72ac9d7726/639842823128.jpg/300x300bb.jpg',
+    id: 'WX-009', artist: 'Orbital', title: 'Orbital 2', label: 'Internal', year: 1993, condition: 4, price: 38.00, suggestedPrice: 42.00, priceDelta: 4, syncSource: 'csv', status: 'active', genre: 'Techno', inPrintQueue: false, hasPhoto: true, photoColor: '#4a3a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/e0/5a/1f/e05a1f95-1c5a-cd76-52ef-0e72ac9d7726/639842823128.jpg/300x300bb.jpg',
     pressing: '1st Press', countryOfPressing: 'UK', catalogNo: 'TRUCD 5', matrixRunout: 'TRULP5-A1',
     vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
-    sleeveCondition: 7, sleeveType: 'Gatefold', innerSleeve: 'Original printed',
+    sleeveCondition: 3, sleeveType: 'Gatefold', innerSleeve: 'Original printed',
     mastering: 'AAD',
     flawNotes: 'Light ring wear on cover. Vinyl clean with minor surface marks.',
     discogsMedian: 40, discogsLow: 20, discogsHigh: 85,
   },
   {
-    id: 'WX-010', artist: 'Robert Hood', title: 'Minimal Nation', label: 'M-Plant', year: 1994, condition: 6, price: 180.00, suggestedPrice: 200.00, priceDelta: 20, syncSource: 'discogs', status: 'active', genre: 'Techno', inPrintQueue: false, hasPhoto: true, photoColor: '#1a1a1a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/cd/12/ed/cd12ed3b-6879-74ce-18c5-18dd5c72cf34/mzi.ugxsyblg.jpg/300x300bb.jpg',
+    id: 'WX-010', artist: 'Robert Hood', title: 'Minimal Nation', label: 'M-Plant', year: 1994, condition: 3, price: 180.00, suggestedPrice: 200.00, priceDelta: 20, syncSource: 'discogs', status: 'active', genre: 'Techno', inPrintQueue: false, hasPhoto: true, photoColor: '#1a1a1a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/cd/12/ed/cd12ed3b-6879-74ce-18c5-18dd5c72cf34/mzi.ugxsyblg.jpg/300x300bb.jpg',
     pressing: '1st Press', countryOfPressing: 'US', catalogNo: 'M.PM5', matrixRunout: 'MPM5-A', discogsReleaseId: 'r9284',
     vinylWeight: '140g', vinylColor: 'Black', format: '3x12"', speed: '33 RPM',
-    sleeveCondition: 5, sleeveType: 'Single', innerSleeve: 'Generic white',
+    sleeveCondition: 2, sleeveType: 'Single', innerSleeve: 'Generic white',
     mastering: 'AAA',
     flawNotes: 'Plain sleeve has shelf wear and minor ring wear. Vinyl has surface noise. Extremely rare original M-Plant pressing.',
     discogsMedian: 195, discogsLow: 90, discogsHigh: 800,
   },
   {
-    id: 'WX-011', artist: 'Plastikman', title: 'Sheet One', label: 'NovaMute', year: 1993, condition: 9, price: 72.00, suggestedPrice: 78.00, priceDelta: 6, syncSource: 'manual', status: 'active', genre: 'Acid', inPrintQueue: false, hasPhoto: true, photoColor: '#2a2a3a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/1b/2d/ca/1b2dcad1-2b98-ddb8-2470-c515cc609b13/192641477133_Cover.jpg/300x300bb.jpg',
+    id: 'WX-011', artist: 'Plastikman', title: 'Sheet One', label: 'NovaMute', year: 1993, condition: 4, price: 72.00, suggestedPrice: 78.00, priceDelta: 6, syncSource: 'manual', status: 'active', genre: 'Acid', inPrintQueue: false, hasPhoto: true, photoColor: '#2a2a3a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/1b/2d/ca/1b2dcad1-2b98-ddb8-2470-c515cc609b13/192641477133_Cover.jpg/300x300bb.jpg',
     pressing: 'Reissue', countryOfPressing: 'UK', catalogNo: 'NoMu 22L',
     vinylWeight: '180g', vinylColor: 'Clear', format: '2x12"', speed: '33 RPM',
-    sleeveCondition: 9, sleeveType: 'Gatefold', innerSleeve: 'Poly-lined',
+    sleeveCondition: 4, sleeveType: 'Gatefold', innerSleeve: 'Poly-lined',
     mastering: 'AAD', pressingPlant: 'GZ Media',
     discogsMedian: 75, discogsLow: 40, discogsHigh: 130,
   },
   {
-    id: 'WX-012', artist: 'The KLF', title: 'Chill Out', label: 'KLF Communications', year: 1990, condition: 7, price: 68.00, suggestedPrice: 72.00, priceDelta: 4, syncSource: 'discogs', status: 'active', genre: 'Ambient', inPrintQueue: true, hasPhoto: true, photoColor: '#5a6a3a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/37/b5/53/37b5534a-a270-feff-710d-e82395e4d9dc/193483938530.jpg/300x300bb.jpg',
+    id: 'WX-012', artist: 'The KLF', title: 'Chill Out', label: 'KLF Communications', year: 1990, condition: 3, price: 68.00, suggestedPrice: 72.00, priceDelta: 4, syncSource: 'discogs', status: 'active', genre: 'Ambient', inPrintQueue: true, hasPhoto: true, photoColor: '#5a6a3a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/37/b5/53/37b5534a-a270-feff-710d-e82395e4d9dc/193483938530.jpg/300x300bb.jpg',
     pressing: '1st Press', countryOfPressing: 'UK', catalogNo: 'JAMS LP 5', matrixRunout: 'JAMSLP5 A1',
     vinylWeight: '120g', vinylColor: 'Black', format: '12"', speed: '33 RPM',
-    sleeveCondition: 6, sleeveType: 'Single', innerSleeve: 'Generic white',
+    sleeveCondition: 3, sleeveType: 'Single', innerSleeve: 'Generic white',
     mastering: 'AAA',
     flawNotes: 'Cover has light staining on back. Vinyl plays well with occasional tick. Original UK pressing.',
     discogsMedian: 70, discogsLow: 30, discogsHigh: 180,
@@ -436,13 +458,13 @@ export const genreDemandData: GenreDemandPoint[] = [
 ]
 
 export const priceTrendData: PriceTrendPoint[] = [
-  { month: 'Aug', c10: 48, c9: 35, c7: 22, c5: 14 },
-  { month: 'Sep', c10: 50, c9: 36, c7: 23, c5: 14 },
-  { month: 'Oct', c10: 52, c9: 38, c7: 24, c5: 15 },
-  { month: 'Nov', c10: 55, c9: 40, c7: 25, c5: 15 },
-  { month: 'Dec', c10: 58, c9: 42, c7: 26, c5: 16 },
-  { month: 'Jan', c10: 56, c9: 41, c7: 25, c5: 15 },
-  { month: 'Feb', c10: 60, c9: 43, c7: 27, c5: 16 },
+  { month: 'Aug', c5: 48, c4: 35, c3: 22, c2: 14 },
+  { month: 'Sep', c5: 50, c4: 36, c3: 23, c2: 14 },
+  { month: 'Oct', c5: 52, c4: 38, c3: 24, c2: 15 },
+  { month: 'Nov', c5: 55, c4: 40, c3: 25, c2: 15 },
+  { month: 'Dec', c5: 58, c4: 42, c3: 26, c2: 16 },
+  { month: 'Jan', c5: 56, c4: 41, c3: 25, c2: 15 },
+  { month: 'Feb', c5: 60, c4: 43, c3: 27, c2: 16 },
 ]
 
 export const restockRecommendations: RestockRecommendation[] = [
@@ -490,7 +512,7 @@ export const conversations: Conversation[] = [
     id: 'conv-1', customerName: 'Sarah Mitchell', lastMessage: 'Is the Aphex Twin still available?', lastTime: '2:15 PM', unread: 2,
     messages: [
       { id: 'm1', sender: 'customer', text: 'Hi! I saw the Aphex Twin — SAW 85-92 listing. Is it still available?', time: '2:10 PM' },
-      { id: 'm2', sender: 'dealer', text: 'Hey Sarah! Yes, it\'s still here. Condition 9, original Apollo pressing.', time: '2:12 PM' },
+      { id: 'm2', sender: 'dealer', text: 'Hey Sarah! Yes, it\'s still here. 4★ condition, original Apollo pressing.', time: '2:12 PM' },
       { id: 'm3', sender: 'customer', text: 'Amazing! Can I see a closer photo of the sleeve?', time: '2:13 PM' },
       { id: 'm4', sender: 'customer', text: 'Is the Aphex Twin still available?', time: '2:15 PM', linkedItem: 'WX-001' },
     ],
@@ -538,13 +560,11 @@ export const genreBreakdowns: GenreBreakdown[] = [
 ]
 
 export const conditionBreakdowns: ConditionBreakdown[] = [
-  { condition: '10 — Sealed', count: 98, percentage: 5 },
-  { condition: '9 — Pristine', count: 284, percentage: 15 },
-  { condition: '8 — Excellent', count: 512, percentage: 28 },
-  { condition: '7 — Very Good', count: 548, percentage: 30 },
-  { condition: '6 — Good', count: 246, percentage: 13 },
-  { condition: '5 — Fair', count: 110, percentage: 6 },
-  { condition: '4 or below', count: 49, percentage: 3 },
+  { condition: '★★★★★ Mint', count: 382, percentage: 20 },
+  { condition: '★★★★ Excellent', count: 796, percentage: 43 },
+  { condition: '★★★ Good', count: 456, percentage: 25 },
+  { condition: '★★ Fair', count: 159, percentage: 9 },
+  { condition: '★ Poor', count: 54, percentage: 3 },
 ]
 
 export const posQuickStats: QuickStat[] = [
@@ -552,4 +572,104 @@ export const posQuickStats: QuickStat[] = [
   { label: 'Transactions', value: '21', trend: '+5', trendUp: true },
   { label: 'Avg Transaction', value: '$67.60', trend: '+$8', trendUp: true },
   { label: 'Items Synced', value: '21/21', trend: '100%', trendUp: true },
+]
+
+export const orders: Order[] = [
+  {
+    id: 'ORD-1901', date: 'Feb 11, 2026', status: 'pending', shippingMethod: 'standard', weight: '0.8 lb', labelPrinted: false,
+    customer: { name: 'Lena Kowalski', email: 'lena.k@proton.me', address: '412 NW 23rd Ave, Portland, OR 97210' },
+    items: [
+      { recordId: 'WX-001', artist: 'Aphex Twin', title: 'Selected Ambient Works 85-92', price: 85.00, qty: 1 },
+      { recordId: 'WX-011', artist: 'Plastikman', title: 'Sheet One', price: 72.00, qty: 1 },
+    ],
+    total: 162.99,
+  },
+  {
+    id: 'ORD-1900', date: 'Feb 11, 2026', status: 'processing', shippingMethod: 'priority', weight: '0.5 lb', labelPrinted: true,
+    customer: { name: 'Marcus Chen', email: 'mchen@gmail.com', address: '88 Division St, Brooklyn, NY 11211' },
+    items: [
+      { recordId: 'WX-004', artist: 'Burial', title: 'Untrue', price: 48.00, qty: 1 },
+    ],
+    total: 55.99,
+  },
+  {
+    id: 'ORD-1899', date: 'Feb 10, 2026', status: 'packed', shippingMethod: 'express', weight: '1.2 lb', labelPrinted: true,
+    customer: { name: 'Sofia Ramirez', email: 'sofia.r@icloud.com', address: '1420 S Congress Ave, Austin, TX 78704' },
+    items: [
+      { recordId: 'WX-007', artist: 'Drexciya', title: "Neptune's Lair", price: 140.00, qty: 1 },
+      { recordId: 'WX-008', artist: 'Daft Punk', title: 'Homework', price: 55.00, qty: 1 },
+    ],
+    total: 207.99,
+  },
+  {
+    id: 'ORD-1898', date: 'Feb 10, 2026', status: 'shipped', shippingMethod: 'priority', weight: '0.9 lb', labelPrinted: true,
+    trackingNumber: '1Z999AA10123456784', carrier: 'UPS',
+    customer: { name: 'James Rodriguez', email: 'jrod@fastmail.com', address: '2200 Michigan Ave, Chicago, IL 60616' },
+    items: [
+      { recordId: 'WX-009', artist: 'Orbital', title: 'Orbital 2', price: 38.00, qty: 1 },
+      { recordId: 'WX-003', artist: 'Underworld', title: 'Dubnobasswithmyheadman', price: 45.00, qty: 1 },
+    ],
+    total: 90.99,
+  },
+  {
+    id: 'ORD-1897', date: 'Feb 9, 2026', status: 'shipped', shippingMethod: 'standard', weight: '0.5 lb', labelPrinted: true,
+    trackingNumber: '9400111899223100684717', carrier: 'USPS',
+    customer: { name: 'Yuki Tanaka', email: 'yuki.t@outlook.com', address: '540 Howard St, San Francisco, CA 94105' },
+    items: [
+      { recordId: 'WX-012', artist: 'The KLF', title: 'Chill Out', price: 68.00, qty: 1 },
+    ],
+    total: 73.99,
+  },
+  {
+    id: 'ORD-1896', date: 'Feb 9, 2026', status: 'delivered', shippingMethod: 'express', weight: '0.6 lb', labelPrinted: true,
+    trackingNumber: '1Z999AA10123456790', carrier: 'UPS',
+    customer: { name: 'Alex Petrov', email: 'apetrov@pm.me', address: '710 Peachtree St NE, Atlanta, GA 30308' },
+    items: [
+      { recordId: 'WX-005', artist: 'Jeff Mills', title: 'Waveform Transmission Vol. 1', price: 95.00, qty: 1 },
+    ],
+    total: 107.99,
+  },
+  {
+    id: 'ORD-1895', date: 'Feb 8, 2026', status: 'delivered', shippingMethod: 'priority', weight: '1.0 lb', labelPrinted: true,
+    trackingNumber: '9261290100130435082878', carrier: 'USPS',
+    customer: { name: 'Nina Okafor', email: 'nina.ok@hey.com', address: '345 Flatbush Ave, Brooklyn, NY 11238' },
+    items: [
+      { recordId: 'WX-002', artist: 'Basic Channel', title: 'BCD', price: 120.00, qty: 1 },
+      { recordId: 'WX-006', artist: 'Boards of Canada', title: 'Music Has the Right to Children', price: 65.00, qty: 1 },
+    ],
+    total: 192.99,
+  },
+  {
+    id: 'ORD-1894', date: 'Feb 8, 2026', status: 'pending', shippingMethod: 'standard', weight: '0.5 lb', labelPrinted: false,
+    customer: { name: 'Tomás Herrera', email: 'therrera@gmail.com', address: '1501 Vine St, Los Angeles, CA 90028' },
+    items: [
+      { recordId: 'WX-010', artist: 'Robert Hood', title: 'Minimal Nation', price: 180.00, qty: 1 },
+    ],
+    total: 185.99,
+  },
+  {
+    id: 'ORD-1893', date: 'Feb 7, 2026', status: 'delivered', shippingMethod: 'standard', weight: '0.7 lb', labelPrinted: true,
+    trackingNumber: '9400111899223100684731', carrier: 'USPS',
+    customer: { name: 'Elise Dumont', email: 'elise.d@laposte.net', address: '920 SW 6th Ave, Portland, OR 97204' },
+    items: [
+      { recordId: 'WX-008', artist: 'Daft Punk', title: 'Homework', price: 55.00, qty: 1 },
+    ],
+    total: 60.99,
+  },
+  {
+    id: 'ORD-1892', date: 'Feb 7, 2026', status: 'processing', shippingMethod: 'express', weight: '0.6 lb', labelPrinted: false,
+    customer: { name: 'Ryan Walsh', email: 'rwalsh@me.com', address: '800 Boylston St, Boston, MA 02199' },
+    items: [
+      { recordId: 'WX-004', artist: 'Burial', title: 'Untrue', price: 48.00, qty: 1 },
+      { recordId: 'WX-009', artist: 'Orbital', title: 'Orbital 2', price: 38.00, qty: 1 },
+    ],
+    total: 98.99,
+  },
+]
+
+export const fulfillmentStats: QuickStat[] = [
+  { label: 'To Ship', value: '5', trend: '+2', trendUp: false },
+  { label: 'Shipped Today', value: '3', trend: '+1', trendUp: true },
+  { label: 'Avg Ship Time', value: '1.4 days', trend: '-0.3d', trendUp: true },
+  { label: 'Pending Returns', value: '1' },
 ]

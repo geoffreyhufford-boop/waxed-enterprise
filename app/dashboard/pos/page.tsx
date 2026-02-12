@@ -71,7 +71,7 @@ export default function POSPage() {
                 <div className="flex items-center gap-3 shrink-0">
                   <div className="text-right">
                     <p className="text-sm font-bold text-waxe-text">${record.price.toFixed(2)}</p>
-                    <p className="text-[10px] text-waxe-text-muted">Cond: {record.condition}/10</p>
+                    <p className="text-[10px] text-waxe-text-muted">{'★'.repeat(record.condition)}{'☆'.repeat(5 - record.condition)}</p>
                   </div>
                   <StatusBadge status={record.status} />
                 </div>

@@ -9,6 +9,7 @@ const navItems = [
   { href: '/dashboard/inventory', label: 'Inventory', icon: '▤' },
   { href: '/dashboard/analytics', label: 'Analytics', icon: '◈' },
   { href: '/dashboard/pos', label: 'POS', icon: '◉' },
+  { href: '/dashboard/fulfillment', label: 'Fulfillment', icon: '▦' },
   { href: '/dashboard/messages', label: 'Messages', icon: '◻' },
 ]
 

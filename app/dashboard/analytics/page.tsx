@@ -148,10 +148,10 @@ export default function AnalyticsPage() {
                 <YAxis tick={{ fill: '#4A5B6D', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} />
                 <Tooltip {...chartTooltipStyle} formatter={(value) => [`$${value}`, '']} />
                 <Legend iconType="plainline" wrapperStyle={{ fontSize: '10px', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em', paddingTop: '8px' }} />
-                <Line type="monotone" dataKey="c10" stroke="#1B2632" strokeWidth={2} dot={false} name="10 — Sealed" />
-                <Line type="monotone" dataKey="c9" stroke="#2C3B4D" strokeWidth={2} dot={false} name="9 — Pristine" />
-                <Line type="monotone" dataKey="c7" stroke="#A35139" strokeWidth={2} dot={false} name="7 — Very Good" />
-                <Line type="monotone" dataKey="c5" stroke="#C9C1B1" strokeWidth={2} dot={false} name="5 — Fair" />
+                <Line type="monotone" dataKey="c5" stroke="#1B2632" strokeWidth={2} dot={false} name="★★★★★ Mint" />
+                <Line type="monotone" dataKey="c4" stroke="#2C3B4D" strokeWidth={2} dot={false} name="★★★★ Excellent" />
+                <Line type="monotone" dataKey="c3" stroke="#A35139" strokeWidth={2} dot={false} name="★★★ Good" />
+                <Line type="monotone" dataKey="c2" stroke="#C9C1B1" strokeWidth={2} dot={false} name="★★ Fair" />
               </LineChart>
             </ChartCard>
           </div>

@@ -26,8 +26,7 @@ function autoColor(str: string) {
 }
 
 const conditionLabels: Record<number, string> = {
-  10: 'Sealed', 9: 'Pristine', 8: 'Excellent', 7: 'Very Good',
-  6: 'Good', 5: 'Fair', 4: 'Worn', 3: 'Rough', 2: 'Damaged', 1: 'Trashed',
+  5: 'Mint', 4: 'Excellent', 3: 'Good', 2: 'Fair', 1: 'Poor',
 }
 
 export default function InventoryPage() {
@@ -99,8 +98,8 @@ export default function InventoryPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <FilterDropdown label="Genre" options={['All', 'Jazz', 'Rock', 'Hip-Hop', 'Electronic', 'Soul']} value={genreFilter} onChange={setGenreFilter} />
-        <FilterDropdown label="Condition" options={['All', '10', '9', '8', '7', '6', '5']} value={conditionFilter} onChange={setConditionFilter} />
+        <FilterDropdown label="Genre" options={['All', 'Techno', 'House', 'Ambient', 'Electro', 'Dub Techno', 'Acid']} value={genreFilter} onChange={setGenreFilter} />
+        <FilterDropdown label="Condition" options={['All', '5', '4', '3', '2', '1']} value={conditionFilter} onChange={setConditionFilter} />
         <FilterDropdown label="Status" options={['All', 'active', 'sold', 'reserved', 'pending']} value={statusFilter} onChange={setStatusFilter} />
         <div className="flex-1" />
         <button className="btn-secondary text-sm px-3 py-1.5" onClick={() => scrollToPanel(activePanel === 1 ? 0 : 1)}>
@@ -151,23 +150,16 @@ export default function InventoryPage() {
             </td>
             <td className="px-4 py-3">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-5 rounded bg-waxe-surface flex items-center justify-center">
-                  <span className={`text-xs font-bold ${
-                    record.condition >= 9 ? 'text-waxe-cond-9' :
-                    record.condition >= 7 ? 'text-waxe-cond-7' :
-                    record.condition >= 5 ? 'text-waxe-cond-5' :
-                    record.condition >= 3 ? 'text-waxe-cond-3' :
-                    'text-waxe-cond-1'
-                  }`}>{record.condition}</span>
-                </div>
-                <div className="w-10 h-1.5 bg-waxe-surface rounded-full overflow-hidden">
-                  <div className={`h-full rounded-full ${
-                    record.condition >= 9 ? 'bg-waxe-cond-9' :
-                    record.condition >= 7 ? 'bg-waxe-cond-7' :
-                    record.condition >= 5 ? 'bg-waxe-cond-5' :
-                    record.condition >= 3 ? 'bg-waxe-cond-3' :
-                    'bg-waxe-cond-1'
-                  }`} style={{ width: `${record.condition * 10}%` }} />
+                <div className="flex items-center gap-px">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <span key={star} className={`text-xs ${
+                      star <= record.condition
+                        ? record.condition >= 4 ? 'text-waxe-cond-9' :
+                          record.condition >= 3 ? 'text-waxe-cond-7' :
+                          'text-waxe-cond-5'
+                        : 'text-waxe-surface'
+                    }`}>★</span>
+                  ))}
                 </div>
               </div>
             </td>
@@ -408,32 +400,40 @@ export default function InventoryPage() {
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
                     <label className="text-xs text-waxe-text-muted mb-1.5 block">
-                      Media — {selectedRecord.condition}/10 ({conditionLabels[selectedRecord.condition] || 'Unknown'})
+                      Media — {conditionLabels[selectedRecord.condition] || 'Unknown'}
                     </label>
                     <div className="flex items-center gap-3">
-                      <input type="range" min="1" max="10" defaultValue={selectedRecord.condition} className="flex-1 accent-waxe-text" />
-                      <div className={`w-10 h-7 flex items-center justify-center text-sm font-bold ${
-                        selectedRecord.condition >= 9 ? 'bg-waxe-cond-9/15 text-waxe-cond-9' :
-                        selectedRecord.condition >= 7 ? 'bg-waxe-cond-7/15 text-waxe-cond-7' :
-                        selectedRecord.condition >= 5 ? 'bg-waxe-cond-5/15 text-waxe-cond-5' :
-                        selectedRecord.condition >= 3 ? 'bg-waxe-cond-3/15 text-waxe-cond-3' :
-                        'bg-waxe-cond-1/15 text-waxe-cond-1'
-                      }`}>{selectedRecord.condition}</div>
+                      <input type="range" min="1" max="5" defaultValue={selectedRecord.condition} className="flex-1 accent-waxe-text" />
+                      <div className="flex items-center gap-px">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <span key={star} className={`text-sm ${
+                            star <= selectedRecord.condition
+                              ? selectedRecord.condition >= 4 ? 'text-waxe-cond-9' :
+                                selectedRecord.condition >= 3 ? 'text-waxe-cond-7' :
+                                'text-waxe-cond-5'
+                              : 'text-waxe-surface'
+                          }`}>★</span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                   <div>
                     <label className="text-xs text-waxe-text-muted mb-1.5 block">
-                      Sleeve — {selectedRecord.sleeveCondition}/10 ({conditionLabels[selectedRecord.sleeveCondition] || 'Unknown'})
+                      Sleeve — {conditionLabels[selectedRecord.sleeveCondition] || 'Unknown'}
                     </label>
                     <div className="flex items-center gap-3">
-                      <input type="range" min="1" max="10" defaultValue={selectedRecord.sleeveCondition} className="flex-1 accent-waxe-text-secondary" />
-                      <div className={`w-10 h-7 flex items-center justify-center text-sm font-bold ${
-                        selectedRecord.sleeveCondition >= 9 ? 'bg-waxe-cond-9/15 text-waxe-cond-9' :
-                        selectedRecord.sleeveCondition >= 7 ? 'bg-waxe-cond-7/15 text-waxe-cond-7' :
-                        selectedRecord.sleeveCondition >= 5 ? 'bg-waxe-cond-5/15 text-waxe-cond-5' :
-                        selectedRecord.sleeveCondition >= 3 ? 'bg-waxe-cond-3/15 text-waxe-cond-3' :
-                        'bg-waxe-cond-1/15 text-waxe-cond-1'
-                      }`}>{selectedRecord.sleeveCondition}</div>
+                      <input type="range" min="1" max="5" defaultValue={selectedRecord.sleeveCondition} className="flex-1 accent-waxe-text-secondary" />
+                      <div className="flex items-center gap-px">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <span key={star} className={`text-sm ${
+                            star <= selectedRecord.sleeveCondition
+                              ? selectedRecord.sleeveCondition >= 4 ? 'text-waxe-cond-9' :
+                                selectedRecord.sleeveCondition >= 3 ? 'text-waxe-cond-7' :
+                                'text-waxe-cond-5'
+                              : 'text-waxe-surface'
+                          }`}>★</span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
