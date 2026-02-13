@@ -125,6 +125,50 @@ export interface RevenueDataPoint {
   orders: number
 }
 
+export interface ChannelRevenuePoint {
+  month: string
+  discogs: number
+  storefront: number
+  pos: number
+}
+
+export interface MarginDataPoint {
+  month: string
+  revenue: number
+  cost: number
+  margin: number
+  marginPct: number
+}
+
+export interface DaysOnShelfBucket {
+  range: string
+  count: number
+  value: number
+}
+
+export interface PriceVsMarketItem {
+  artist: string
+  title: string
+  yourPrice: number
+  discogsMedian: number
+  delta: number
+  deltaPct: number
+}
+
+export interface DeadStockSummary {
+  totalItems: number
+  totalValue: number
+  avgDaysListed: number
+  topGenre: string
+}
+
+export interface MissedSearch {
+  query: string
+  searchCount: number
+  lastSearched: string
+  available: boolean
+}
+
 export interface GenreDemandPoint {
   month: string
   techno: number
@@ -445,6 +489,68 @@ export const revenueData: RevenueDataPoint[] = [
   { month: 'Dec', revenue: 15600, orders: 192 },
   { month: 'Jan', revenue: 13200, orders: 164 },
   { month: 'Feb', revenue: 14230, orders: 186 },
+]
+
+export const channelRevenueData: ChannelRevenuePoint[] = [
+  { month: 'Aug', discogs: 3800, storefront: 2400, pos: 2000 },
+  { month: 'Sep', discogs: 4200, storefront: 2700, pos: 2200 },
+  { month: 'Oct', discogs: 4800, storefront: 3100, pos: 2500 },
+  { month: 'Nov', discogs: 5600, storefront: 4000, pos: 3200 },
+  { month: 'Dec', discogs: 6400, storefront: 5200, pos: 4000 },
+  { month: 'Jan', discogs: 5800, storefront: 4200, pos: 3200 },
+  { month: 'Feb', discogs: 6100, storefront: 4630, pos: 3500 },
+]
+
+export const marginData: MarginDataPoint[] = [
+  { month: 'Aug', revenue: 8200, cost: 4920, margin: 3280, marginPct: 40 },
+  { month: 'Sep', revenue: 9100, cost: 5280, margin: 3820, marginPct: 42 },
+  { month: 'Oct', revenue: 10400, cost: 5820, margin: 4580, marginPct: 44 },
+  { month: 'Nov', revenue: 12800, cost: 7040, margin: 5760, marginPct: 45 },
+  { month: 'Dec', revenue: 15600, cost: 8580, margin: 7020, marginPct: 45 },
+  { month: 'Jan', revenue: 13200, cost: 7260, margin: 5940, marginPct: 45 },
+  { month: 'Feb', revenue: 14230, cost: 7690, margin: 6540, marginPct: 46 },
+]
+
+export const daysOnShelfData: DaysOnShelfBucket[] = [
+  { range: '0–7d', count: 124, value: 4960 },
+  { range: '8–14d', count: 218, value: 8720 },
+  { range: '15–30d', count: 386, value: 15440 },
+  { range: '31–60d', count: 542, value: 21680 },
+  { range: '61–90d', count: 312, value: 12480 },
+  { range: '90+', count: 187, value: 9350 },
+]
+
+export const priceVsMarketData: PriceVsMarketItem[] = [
+  { artist: 'Robert Hood', title: 'Minimal Nation', yourPrice: 180, discogsMedian: 195, delta: -15, deltaPct: -8 },
+  { artist: 'Drexciya', title: "Neptune's Lair", yourPrice: 140, discogsMedian: 155, delta: -15, deltaPct: -10 },
+  { artist: 'Basic Channel', title: 'BCD', yourPrice: 120, discogsMedian: 130, delta: -10, deltaPct: -8 },
+  { artist: 'Jeff Mills', title: 'Waveform Transmission', yourPrice: 95, discogsMedian: 105, delta: -10, deltaPct: -10 },
+  { artist: 'Aphex Twin', title: 'SAW 85-92', yourPrice: 85, discogsMedian: 88, delta: -3, deltaPct: -3 },
+  { artist: 'Plastikman', title: 'Sheet One', yourPrice: 72, discogsMedian: 75, delta: -3, deltaPct: -4 },
+  { artist: 'The KLF', title: 'Chill Out', yourPrice: 68, discogsMedian: 70, delta: -2, deltaPct: -3 },
+  { artist: 'Boards of Canada', title: 'MHTRTC', yourPrice: 65, discogsMedian: 72, delta: -7, deltaPct: -10 },
+  { artist: 'Daft Punk', title: 'Homework', yourPrice: 55, discogsMedian: 55, delta: 0, deltaPct: 0 },
+  { artist: 'Burial', title: 'Untrue', yourPrice: 48, discogsMedian: 50, delta: -2, deltaPct: -4 },
+  { artist: 'Underworld', title: 'Dubnobasswithmyheadman', yourPrice: 45, discogsMedian: 42, delta: 3, deltaPct: 7 },
+  { artist: 'Orbital', title: 'Orbital 2', yourPrice: 38, discogsMedian: 40, delta: -2, deltaPct: -5 },
+]
+
+export const deadStockSummary: DeadStockSummary = {
+  totalItems: 187,
+  totalValue: 9350,
+  avgDaysListed: 128,
+  topGenre: 'Jazz',
+}
+
+export const missedSearches: MissedSearch[] = [
+  { query: 'Actress — Splazsh', searchCount: 18, lastSearched: '2 days ago', available: false },
+  { query: 'DJ Rashad — Double Cup', searchCount: 14, lastSearched: '1 day ago', available: false },
+  { query: 'Arca — Arca', searchCount: 12, lastSearched: '3 days ago', available: false },
+  { query: 'Andy Stott — Luxury Problems', searchCount: 11, lastSearched: 'today', available: false },
+  { query: 'Objekt — Flatland', searchCount: 9, lastSearched: '5 days ago', available: false },
+  { query: 'Helena Hauff — Qualm', searchCount: 8, lastSearched: '1 week ago', available: false },
+  { query: 'Levon Vincent — Fabric 63', searchCount: 7, lastSearched: '4 days ago', available: false },
+  { query: 'Ricardo Villalobos — Alcachofa', searchCount: 6, lastSearched: '2 days ago', available: false },
 ]
 
 export const genreDemandData: GenreDemandPoint[] = [

@@ -5,15 +5,19 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const navItems = [
-  { href: '/dashboard', label: 'Overview', icon: '◧' },
+  { href: '/dashboard', label: 'Overview', icon: '★' },
   { href: '/dashboard/inventory', label: 'Inventory', icon: '▤' },
+  { href: '/dashboard/restock', label: 'Restock', icon: '⟲' },
   { href: '/dashboard/analytics', label: 'Analytics', icon: '◈' },
   { href: '/dashboard/pos', label: 'POS', icon: '◉' },
   { href: '/dashboard/fulfillment', label: 'Fulfillment', icon: '▦' },
-  { href: '/dashboard/messages', label: 'Messages', icon: '◻' },
 ]
 
-const bottomNavItem = { href: '/dashboard/storefront', label: 'Storefront', icon: '◫' }
+const bottomNavItems = [
+  { href: '/dashboard/network', label: 'Network', icon: '◎' },
+  { href: '/dashboard/messages', label: 'Messages', icon: '◻' },
+  { href: '/dashboard/storefront', label: 'Storefront', icon: '◫' },
+]
 
 export default function Sidebar() {
   const pathname = usePathname()
@@ -46,15 +50,21 @@ export default function Sidebar() {
             </Link>
           ))}
         </div>
-        <div className="mt-auto pt-4 border-t-2 border-waxe-border">
-          <Link
-            href={bottomNavItem.href}
-            onClick={() => setMobileOpen(false)}
-            className={isActive(bottomNavItem.href) ? 'nav-item-active' : 'nav-item'}
-          >
-            <span className="text-sm w-5 text-center">{bottomNavItem.icon}</span>
-            <span>{bottomNavItem.label}</span>
-          </Link>
+        <div className="mt-auto">
+          {bottomNavItems.map((item) => (
+            <div key={item.href}>
+              <div className="mx-4 border-t border-waxe-border" />
+              <Link
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className={isActive(item.href) ? 'nav-item-active' : 'nav-item'}
+              >
+                <span className="text-sm w-5 text-center">{item.icon}</span>
+                <span>{item.label}</span>
+              </Link>
+            </div>
+          ))}
+          <div className="mx-4 border-t border-waxe-border" />
         </div>
       </div>
       <div className="p-4 border-t-2 border-waxe-border">

@@ -7,11 +7,13 @@ interface ChartCardProps {
   subtitle?: string
   children: React.ReactElement
   className?: string
+  action?: React.ReactNode
 }
 
-export default function ChartCard({ title, subtitle, children, className = '' }: ChartCardProps) {
+export default function ChartCard({ title, subtitle, children, className = '', action }: ChartCardProps) {
   return (
-    <div className={`bg-waxe-card border-2 border-waxe-border rounded-none p-5 ${className}`}>
+    <div className={`relative bg-waxe-card border-2 border-waxe-border rounded-none p-5 ${className}`}>
+      {action}
       <div className="mb-4 flex items-baseline gap-2">
         <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">{title}</h3>
         {subtitle && (

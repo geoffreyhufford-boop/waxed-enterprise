@@ -79,19 +79,43 @@
   .btn-primary {
     @apply inline-flex items-center justify-center px-6 py-3 text-[11px] font-black uppercase tracking-[0.15em]
            bg-waxe-text text-waxe-deep rounded-none border-2 border-waxe-text
-           hover:bg-waxe-warm hover:text-waxe-text hover:border-waxe-warm
            transition-none
-           focus:outline-none;
+           focus:outline-none cursor-pointer;
     font-family: var(--font-mono);
+    box-shadow: 2px 2px 0px var(--color-waxe-text-muted);
+  }
+
+  .btn-primary:hover {
+    @apply bg-waxe-warm text-waxe-text border-waxe-warm;
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
+
+  .btn-primary:disabled,
+  .btn-primary:disabled:hover {
+    box-shadow: none;
+    transform: none;
   }
 
   .btn-secondary {
     @apply inline-flex items-center justify-center px-6 py-3 text-[11px] font-black uppercase tracking-[0.15em]
            bg-transparent text-waxe-text border-2 border-waxe-text rounded-none
-           hover:bg-waxe-text hover:text-waxe-deep
            transition-none
-           focus:outline-none;
+           focus:outline-none cursor-pointer;
     font-family: var(--font-mono);
+    box-shadow: 2px 2px 0px var(--color-waxe-text-muted);
+  }
+
+  .btn-secondary:hover {
+    @apply bg-waxe-text text-waxe-deep;
+    box-shadow: none;
+    transform: translate(2px, 2px);
+  }
+
+  .btn-secondary:disabled,
+  .btn-secondary:disabled:hover {
+    box-shadow: none;
+    transform: none;
   }
 
   .btn-ghost {
