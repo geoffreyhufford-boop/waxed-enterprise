@@ -51,20 +51,21 @@ export default function Sidebar() {
           ))}
         </div>
         <div className="mt-auto">
-          {bottomNavItems.map((item) => (
-            <div key={item.href}>
-              <div className="mx-4 border-t border-waxe-border" />
+          {bottomNavItems.map((item, i) => (
+            <div key={item.href} className="relative">
+              {/* Divider line behind the link */}
+              <div className="absolute top-0 left-0 right-0 border-t border-waxe-border" />
               <Link
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className={isActive(item.href) ? 'nav-item-active' : 'nav-item'}
+                className={`relative z-10 ${isActive(item.href) ? 'nav-item-active' : 'nav-item'}`}
               >
                 <span className="text-sm w-5 text-center">{item.icon}</span>
                 <span>{item.label}</span>
               </Link>
             </div>
           ))}
-          <div className="mx-4 border-t border-waxe-border" />
+          <div className="border-t border-waxe-border" />
         </div>
       </div>
       <div className="p-4 border-t-2 border-waxe-border">
