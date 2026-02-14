@@ -14,6 +14,7 @@ const navItems = [
 ]
 
 const bottomNavItems = [
+  { href: '/dashboard/marketplace', label: 'Marketplace', icon: '◆' },
   { href: '/dashboard/network', label: 'Network', icon: '◎' },
   { href: '/dashboard/messages', label: 'Messages', icon: '◻' },
   { href: '/dashboard/storefront', label: 'Storefront', icon: '◫' },
@@ -33,7 +34,7 @@ export default function Sidebar() {
       <div className="px-4 pt-6 pb-5 border-b-2 border-waxe-border">
         <Link href="/" className="block">
           <img src="/waxed-logo.svg" alt="WAXED" className="w-8 h-8" />
-          <span className="block text-[8px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mt-1.5">{'>> '}Waxed Dealer Portal</span>
+          <span className="block text-[10px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mt-1.5">{'>> '}Waxed Dealer Portal</span>
         </Link>
       </div>
       <div className="flex-1 py-3 px-2 flex flex-col">
@@ -69,8 +70,8 @@ export default function Sidebar() {
         </div>
       </div>
       <div className="p-4 border-t-2 border-waxe-border">
-        <p className="text-[9px] font-black uppercase tracking-[0.1em] text-waxe-text">Wax & Groove</p>
-        <p className="text-[8px] uppercase tracking-[0.15em] text-waxe-text-muted mt-0.5">Enterprise / V1.0</p>
+        <p className="text-[11px] font-black uppercase tracking-[0.1em] text-waxe-text">Wax & Groove</p>
+        <p className="text-[10px] uppercase tracking-[0.15em] text-waxe-text-muted mt-0.5">Enterprise / V1.0</p>
       </div>
     </nav>
   )
