@@ -33,8 +33,8 @@ function MarketplaceListingCard({ listing }: { listing: MarketplaceListing }) {
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-bold text-waxe-text truncate">{listing.artist}</p>
-            <p className="text-[11px] text-waxe-text-muted truncate">{listing.title}</p>
+            <p className="text-sm font-bold text-waxe-text truncate">{listing.title}</p>
+            <p className="text-[11px] font-bold text-waxe-text-muted truncate">{listing.artist}</p>
             <p className="text-[9px] text-waxe-text-muted uppercase tracking-wider mt-1">
               {listing.label} &middot; {listing.year} &middot; {listing.format}
               &middot; {'★'.repeat(listing.condition)}{'☆'.repeat(5 - listing.condition)}
@@ -126,8 +126,8 @@ function RecommendationCard({ listing, reason, basedOn }: { listing: Marketplace
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-bold text-waxe-text truncate">{listing.artist}</p>
-            <p className="text-[11px] text-waxe-text-muted truncate">{listing.title}</p>
+            <p className="text-sm font-bold text-waxe-text truncate">{listing.title}</p>
+            <p className="text-[11px] font-bold text-waxe-text-muted truncate">{listing.artist}</p>
           </div>
           <p className="text-sm font-black font-mono text-waxe-text shrink-0">${listing.wholesalePrice.toFixed(2)}</p>
         </div>

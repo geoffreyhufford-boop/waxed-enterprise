@@ -145,8 +145,8 @@ export function CartDrawer() {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold text-waxe-text truncate">{item.listing.artist}</p>
-                    <p className="text-[11px] text-waxe-text-muted truncate">{item.listing.title}</p>
+                    <p className="text-sm font-bold text-waxe-text truncate">{item.listing.title}</p>
+                    <p className="text-[11px] font-bold text-waxe-text-muted truncate">{item.listing.artist}</p>
                     <p className="text-[10px] text-waxe-text-muted mt-0.5">
                       {item.listing.seller.name} &middot;
                       <span className="uppercase"> {item.listing.sellerType}</span>
