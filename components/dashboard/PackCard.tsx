@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import type { CuratedPack, PackRecord } from '@/lib/pack-data'
+import { calculateFees } from '@/lib/pack-data'
 import { StatusBadge } from '@/components/dashboard'
 
 // ─── Genre Color Bar ─────────────────────────────────────────
@@ -175,6 +176,14 @@ export default function PackCard({ pack, onListNetwork, onSellInStore }: PackCar
                 <span className="text-[9px] font-bold text-waxe-positive">(-{pack.discountPercent}%)</span>
               </div>
               <p className="text-[8px] text-waxe-text-muted mt-0.5">Generated {pack.generatedAt}</p>
+              {pack.status === 'listed_network' && (() => {
+                const { fee, sellerReceives, rate } = calculateFees(pack.packPrice, 1)
+                return (
+                  <p className="text-[8px] text-waxe-text-muted mt-1">
+                    WAXED fee: <span className="font-mono font-bold text-waxe-warm">${fee}</span> ({Math.round(rate * 100)}%) · You receive: <span className="font-mono font-bold text-waxe-positive">${sellerReceives}</span>
+                  </p>
+                )
+              })()}
             </div>
           </div>
 
@@ -193,7 +202,7 @@ export default function PackCard({ pack, onListNetwork, onSellInStore }: PackCar
                 <button onClick={() => setShowContents(true)} className="btn-ghost text-[9px] px-3 py-1.5 flex-1">View Contents</button>
               </>
             )}
-            {(pack.status === 'sold' || pack.status === 'swapped') && (
+            {pack.status === 'sold' && (
               <button onClick={() => setShowContents(true)} className="btn-ghost text-[9px] px-3 py-1.5 flex-1">View Contents</button>
             )}
           </div>

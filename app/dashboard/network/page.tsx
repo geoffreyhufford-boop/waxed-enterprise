@@ -4,8 +4,9 @@ import { useState, useRef, useMemo } from 'react'
 import { DashboardHeader, StatCard, StatusBadge, FilterDropdown, PackCard } from '@/components/dashboard'
 import { networkStores, networkTransactions } from '@/lib/network-data'
 import type { NetworkStore, NetworkTransaction } from '@/lib/network-data'
-import { curatedPacks, inboundPackRequests } from '@/lib/pack-data'
-import type { InboundPackRequest } from '@/lib/pack-data'
+import { curatedPacks, inboundPackRequests, networkPackListings, calculateFees } from '@/lib/pack-data'
+import type { InboundPackRequest, NetworkPackListing } from '@/lib/pack-data'
+import { PackArtworkGrid } from '@/components/dashboard/PackCard'
 
 // ─── Helpers ─────────────────────────────────────────────────
 
@@ -102,7 +103,7 @@ export default function NetworkPage() {
         <StatCard label="Network Stores" value="47" trend="+6 this month" trendUp={true} />
         <StatCard label="Your Packs" value={String(curatedPacks.length)} trend={`${curatedPacks.filter(p => p.status !== 'draft').length} listed`} trendUp={true} />
         <StatCard label="Inbound Requests" value={String(pendingRequests.length)} trend={`${inboundPackRequests.length} total`} trendUp={pendingRequests.length > 0} />
-        <StatCard label="Trade Volume" value={`$${tradeVolume}`} trend={`${totalTxns} completed`} trendUp={true} />
+        <StatCard label="Network Listings" value={String(networkPackListings.length)} trend="packs available" trendUp={true} />
       </div>
 
       {/* Panel tabs — directly above panels */}
@@ -161,19 +162,28 @@ export default function NetworkPage() {
               <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">
                 Packs & Inbound <span className="text-waxe-warm">{'>>'}</span> {pendingRequests.length} Pending Requests
               </h3>
-              <p className="text-[9px] text-waxe-text-muted mt-0.5">Your curated 25-record packs &middot; inbound pack requests from the network</p>
+              <p className="text-[9px] text-waxe-text-muted mt-0.5">Your packs for sale &middot; network packs to buy &middot; inbound requests</p>
             </div>
           </div>
 
           <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-4">
 
-            {/* Left: Your Packs */}
+            {/* Left: Your Packs + Network Packs */}
             <div className="lg:col-span-2 min-h-0 flex flex-col">
-              <p className="text-[9px] font-black uppercase tracking-[0.15em] text-waxe-text-muted mb-2">Your Packs</p>
               <div className="flex-1 min-h-0 overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
-                <div className="space-y-3">
+                {/* Your Packs */}
+                <p className="text-[9px] font-black uppercase tracking-[0.15em] text-waxe-text-muted mb-2">Your Packs</p>
+                <div className="space-y-3 mb-6">
                   {curatedPacks.map((pack) => (
                     <PackCard key={pack.id} pack={pack} />
+                  ))}
+                </div>
+
+                {/* Network Packs */}
+                <p className="text-[9px] font-black uppercase tracking-[0.15em] text-waxe-text-muted mb-2">Network Packs</p>
+                <div className="space-y-3">
+                  {networkPackListings.map((listing) => (
+                    <NetworkPackCard key={listing.id} listing={listing} />
                   ))}
                 </div>
               </div>
@@ -344,6 +354,56 @@ function InboundPackRequestCard({ request }: { request: InboundPackRequest }) {
           <button className="btn-ghost text-[9px] px-3 py-1">Decline</button>
         </div>
       )}
+    </div>
+  )
+}
+
+// ─── Network Pack Card (packs from other stores) ────────────
+
+const genreColors: Record<string, string> = {
+  Jazz: '#2C3B4D', House: '#3D7A4F', Ambient: '#4A5B6D', Techno: '#1B2632',
+  Disco: '#FFB162', 'R&B': '#A35139', Soul: '#C04040', Electronic: '#2C3B4D',
+  Funk: '#A35139', Garage: '#3D7A4F',
+}
+
+function NetworkPackCard({ listing }: { listing: NetworkPackListing }) {
+  const { pack, store } = listing
+  const barColor = genreColors[pack.genre] || '#2C3B4D'
+  const { fee, sellerReceives, shipping, buyerPays, rate } = calculateFees(pack.packPrice, 1)
+
+  return (
+    <div className="bg-waxe-card border-2 border-waxe-border rounded-none overflow-hidden">
+      <div className="h-1" style={{ backgroundColor: barColor }} />
+      <div className="p-5">
+        <div className="flex items-start gap-4 mb-3">
+          <PackArtworkGrid records={pack.records} />
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1">
+              <p className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em] truncate">{pack.name}</p>
+              <StatusBadge status={pack.status} />
+            </div>
+            <p className="text-[9px] text-waxe-text-muted">
+              {pack.genre} &middot; {pack.records.length} records &middot; Avg {'★'.repeat(Math.round(pack.avgCondition))}{'☆'.repeat(5 - Math.round(pack.avgCondition))}
+            </p>
+            <p className="text-[9px] text-waxe-text-secondary mt-0.5">
+              {store.name} &middot; {store.location} &middot; Trust: {store.trustScore}
+            </p>
+            <div className="flex items-center gap-2 mt-1.5">
+              <span className="text-[10px] text-waxe-text-muted line-through font-mono">${pack.totalValue}</span>
+              <span className="text-[11px] font-black text-waxe-text font-mono">${pack.packPrice}</span>
+              <span className="text-[9px] font-bold text-waxe-positive">(-{pack.discountPercent}%)</span>
+            </div>
+            <p className="text-[8px] text-waxe-text-muted mt-1">
+              WAXED fee: <span className="font-mono font-bold text-waxe-warm">${fee}</span> ({Math.round(rate * 100)}%) · Shipping: <span className="font-mono">${shipping}</span> · Total: <span className="font-mono font-bold text-waxe-text">${buyerPays}</span>
+            </p>
+          </div>
+        </div>
+
+        <div className="flex gap-2 border-t border-waxe-border pt-3">
+          <button className="btn-primary text-[9px] px-3 py-1.5 flex-1">Buy Pack</button>
+          <button className="btn-secondary text-[9px] px-3 py-1.5 flex-1">View Contents</button>
+        </div>
+      </div>
     </div>
   )
 }

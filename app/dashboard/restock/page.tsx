@@ -1,10 +1,11 @@
 'use client'
 
 import { useState, useRef, useMemo } from 'react'
-import { DashboardHeader, StatCard, DataTable, FilterDropdown, PackSwapCard, StatusBadge } from '@/components/dashboard'
+import { DashboardHeader, StatCard, DataTable, FilterDropdown, StatusBadge } from '@/components/dashboard'
 import { networkStores, networkRecords, deadStockItems, wantListItems } from '@/lib/restock-data'
 import type { NetworkRecord, NetworkStore } from '@/lib/restock-data'
-import { packSwapProposals } from '@/lib/pack-data'
+import { packPurchases } from '@/lib/pack-data'
+import type { PackPurchase } from '@/lib/pack-data'
 
 // ─── Record Request Modal ────────────────────────────────────
 
@@ -181,13 +182,13 @@ export default function RestockPage() {
       <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
         <StatCard label="Stores in Network" value="47" trend="+6 this month" trendUp={true} />
         <StatCard label="Dead Stock Items" value={String(deadStockItems.filter(d => d.daysInStock >= 60).length)} trend="60+ days sitting" trendUp={false} />
-        <StatCard label="Pack Swaps" value={String(packSwapProposals.length)} trend={`${packSwapProposals.filter(p => p.status === 'pending').length} pending`} trendUp={true} />
+        <StatCard label="Pack Orders" value={String(packPurchases.length)} trend={`${packPurchases.filter(p => p.status !== 'completed').length} active`} trendUp={true} />
         <StatCard label="Customer Wants" value={String(wantListItems.length)} trend={`${wantListItems.filter(w => w.networkAvailable > 0).length} available in network`} trendUp={true} />
       </div>
 
       {/* Panel tabs — directly above panels */}
       <div className="shrink-0 flex gap-1.5 pb-3 mb-3 w-fit border-b-2 border-waxe-border pr-4">
-        {['Marketplace', 'Intelligence', 'Pack Swaps'].map((label, i) => (
+        {['Marketplace', 'Intelligence', 'Orders'].map((label, i) => (
           <button
             key={label}
             onClick={() => scrollToPanel(i)}
@@ -432,27 +433,21 @@ export default function RestockPage() {
           </div>
         </div>
 
-        {/* ── Panel 3: Pack Swaps ── */}
+        {/* ── Panel 3: Orders ── */}
         <div className="snap-start shrink-0 w-[92%] flex flex-col gap-4 min-h-0">
 
           <div className="shrink-0 flex items-center justify-between">
             <div>
               <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">
-                Pack Swaps <span className="text-waxe-cool">{'>>'}</span> {packSwapProposals.filter((s) => s.status === 'pending').length} Pending
+                Pack Orders <span className="text-waxe-cool">{'>>'}</span> {packPurchases.filter((p) => p.status !== 'completed').length} Active
               </h3>
-              <p className="text-[9px] text-waxe-text-muted mt-0.5">25-record pack-for-pack swap proposals across your network</p>
+              <p className="text-[9px] text-waxe-text-muted mt-0.5">Buy/sell order history across your dealer network</p>
             </div>
-            <button className="btn-ghost text-[10px]">Refresh Analysis</button>
           </div>
 
-          <div className="flex-1 min-h-0 overflow-y-auto space-y-4 pr-1" style={{ scrollbarWidth: 'thin' }}>
-            {packSwapProposals.map((proposal) => (
-              <PackSwapCard
-                key={proposal.id}
-                proposal={proposal}
-                onAccept={(id) => console.log('Accept:', id)}
-                onDecline={(id) => console.log('Decline:', id)}
-              />
+          <div className="flex-1 min-h-0 overflow-y-auto space-y-3 pr-1" style={{ scrollbarWidth: 'thin' }}>
+            {packPurchases.map((order) => (
+              <PurchaseCard key={order.id} order={order} />
             ))}
           </div>
         </div>
@@ -483,6 +478,58 @@ export default function RestockPage() {
           onClose={() => setSelectedRecord(null)}
         />
       )}
+    </div>
+  )
+}
+
+// ─── Purchase Card (inline) ─────────────────────────────────
+
+function PurchaseCard({ order }: { order: PackPurchase }) {
+  const isSale = order.type === 'sale'
+
+  return (
+    <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-4">
+      <div className="flex items-start justify-between mb-3">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className={`text-[8px] font-black uppercase tracking-wider px-2 py-0.5 border ${
+              isSale ? 'border-waxe-positive/40 text-waxe-positive bg-waxe-positive/5' : 'border-waxe-cool/40 text-waxe-cool bg-waxe-cool/5'
+            }`}>
+              {isSale ? 'You Sold' : 'You Bought'}
+            </span>
+            <StatusBadge status={order.status} />
+          </div>
+          <p className="text-sm font-black text-waxe-text">{order.pack.name}</p>
+          <p className="text-[9px] text-waxe-text-muted">
+            {order.pack.genre} &middot; {order.pack.recordCount} records &middot; {order.counterparty.name}, {order.counterparty.location}
+          </p>
+        </div>
+        <p className="text-[8px] text-waxe-text-muted">{order.createdAt}</p>
+      </div>
+
+      {/* Fee breakdown */}
+      <div className="bg-waxe-surface border border-waxe-border p-3 grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div>
+          <p className="text-[8px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-0.5">Pack Price</p>
+          <p className="text-sm font-black text-waxe-text font-mono">${order.pack.packPrice}</p>
+        </div>
+        <div>
+          <p className="text-[8px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-0.5">WAXED Fee</p>
+          <p className="text-sm font-black text-waxe-warm font-mono">${order.waxedFee}</p>
+        </div>
+        <div>
+          <p className="text-[8px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-0.5">Shipping</p>
+          <p className="text-sm font-black text-waxe-text font-mono">${order.shipping}</p>
+        </div>
+        <div>
+          <p className="text-[8px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-0.5">
+            {isSale ? 'You Receive' : 'You Pay'}
+          </p>
+          <p className={`text-sm font-black font-mono ${isSale ? 'text-waxe-positive' : 'text-waxe-text'}`}>
+            ${isSale ? order.sellerReceives : order.buyerPays}
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

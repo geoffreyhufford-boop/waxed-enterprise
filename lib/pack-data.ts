@@ -1,6 +1,6 @@
 // ─── Type Definitions ────────────────────────────────────────
 
-export type PackStatus = 'draft' | 'listed_network' | 'listed_storefront' | 'listed_instore' | 'sold' | 'swapped'
+export type PackStatus = 'draft' | 'listed_network' | 'listed_storefront' | 'listed_instore' | 'sold'
 
 export interface PackRecord {
   artist: string
@@ -28,17 +28,23 @@ export interface CuratedPack {
   slowMoverCount: number
 }
 
-export interface PackSwapProposal {
+export interface NetworkPackListing {
   id: string
-  status: 'pending' | 'accepted' | 'declined'
-  storeA: { name: string; location: string }
-  storeB: { name: string; location: string }
-  packYouSend: CuratedPack
-  packYouReceive: CuratedPack
-  valueDelta: number
-  mismatchScore: number
-  marketSavings: number
-  reasoning: string
+  store: { name: string; location: string; trustScore: number }
+  pack: CuratedPack
+  listedAt: string
+}
+
+export interface PackPurchase {
+  id: string
+  type: 'sale' | 'purchase'
+  pack: { name: string; genre: string; recordCount: number; packPrice: number }
+  counterparty: { name: string; location: string }
+  waxedFee: number
+  sellerReceives: number
+  shipping: number
+  buyerPays: number
+  status: 'pending' | 'confirmed' | 'shipped' | 'completed'
   createdAt: string
 }
 
@@ -52,6 +58,22 @@ export interface InboundPackRequest {
   status: 'pending' | 'accepted' | 'declined' | 'countered'
   requestedAt: string
   message?: string
+}
+
+// ─── Fee Constants & Calculator ─────────────────────────────
+
+export const WAXED_FEE_STANDARD = 0.08  // 8% for 1-2 packs
+export const WAXED_FEE_BULK = 0.03      // 3% for 3+ packs (75+ records)
+export const BULK_THRESHOLD = 3          // packs
+export const SHIPPING_PER_PACK = 17      // ~$17 per 25-record pack
+
+export function calculateFees(packPrice: number, packCount: number) {
+  const rate = packCount >= BULK_THRESHOLD ? WAXED_FEE_BULK : WAXED_FEE_STANDARD
+  const fee = Math.round(packPrice * rate)
+  const sellerReceives = packPrice - fee
+  const shipping = packCount * SHIPPING_PER_PACK
+  const buyerPays = packPrice + shipping
+  return { rate, fee, sellerReceives, shipping, buyerPays }
 }
 
 // ─── Fill Helper ─────────────────────────────────────────────
@@ -199,7 +221,7 @@ export const curatedPacks: CuratedPack[] = [
     discountPercent: 15,
     status: 'draft',
     generatedAt: '1 day ago',
-    generationReason: 'House duplicate copies and slow movers. You have 2x of 8 titles — bundling spares into a swap-ready pack.',
+    generationReason: 'House duplicate copies and slow movers. You have 2x of 8 titles — bundling spares into a network-ready pack.',
     avgCondition: 3.5,
     deadStockCount: 4,
     slowMoverCount: 10,
@@ -221,7 +243,7 @@ export const curatedPacks: CuratedPack[] = [
   },
 ]
 
-// ─── Counterparty Packs (for swap proposals) ────────────────
+// ─── Network Pack Listings (from other stores) ──────────────
 
 const technoFeatured: PackRecord[] = [
   { artist: 'Aphex Twin', title: 'Selected Ambient Works 85-92', genre: 'Techno', condition: 5, marketValue: 65, photoColor: '#1B2632', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/5f/b3/e0/5fb3e08d-c2cd-3da4-6ad7-c5dc61803683/cover.jpg/300x300bb.jpg' },
@@ -285,66 +307,158 @@ const discoCompact: CompactRecord[] = [
   ['First Choice', 'Armed and Extremely Dangerous', 3, 22],
 ]
 
-const bpmTechnoPack: CuratedPack = {
-  id: 'pack-bpm-001',
-  name: 'Berlin Techno Vault Vol. 1',
-  genre: 'Techno',
-  records: fillPack('Techno', technoFeatured, technoCompact, '#1B2632'),
-  totalValue: 1280,
-  packPrice: 1088,
-  discountPercent: 15,
-  status: 'listed_network',
-  generatedAt: '4 hours ago',
-  generationReason: 'BPM Supply rotating excess techno from recent warehouse acquisition.',
-  avgCondition: 3.6,
-  deadStockCount: 5,
-  slowMoverCount: 7,
-}
+const soulFeatured: PackRecord[] = [
+  { artist: 'Marvin Gaye', title: 'What\'s Going On', genre: 'Soul', condition: 4, marketValue: 55, photoColor: '#A35139' },
+  { artist: 'Stevie Wonder', title: 'Innervisions', genre: 'Soul', condition: 5, marketValue: 48, photoColor: '#C04040' },
+  { artist: 'Curtis Mayfield', title: 'Superfly', genre: 'Soul', condition: 4, marketValue: 42, photoColor: '#3D7A4F' },
+  { artist: 'Al Green', title: 'Let\'s Stay Together', genre: 'Soul', condition: 3, marketValue: 38, photoColor: '#2C3B4D' },
+  { artist: 'Donny Hathaway', title: 'Live', genre: 'Soul', condition: 4, marketValue: 52, photoColor: '#1B2632' },
+]
 
-const cdDiscoPack: CuratedPack = {
-  id: 'pack-cd-001',
-  name: 'Disco & Boogie Classics Vol. 1',
-  genre: 'Disco',
-  records: fillPack('Disco', discoFeatured, discoCompact, '#FFB162'),
-  totalValue: 920,
-  packPrice: 782,
-  discountPercent: 15,
-  status: 'listed_network',
-  generatedAt: '1 day ago',
-  generationReason: 'Crate Diggers Union clearing disco surplus — Chicago market skews house/footwork.',
-  avgCondition: 3.5,
-  deadStockCount: 4,
-  slowMoverCount: 8,
-}
+const soulCompact: CompactRecord[] = [
+  ['Otis Redding', 'Otis Blue', 4, 45],
+  ['Sam Cooke', 'Live at the Harlem Square Club', 3, 38],
+  ['Isaac Hayes', 'Hot Buttered Soul', 4, 42],
+  ['Bill Withers', 'Still Bill', 3, 35],
+  ['Bobby Womack', 'Understanding', 4, 32],
+  ['The Temptations', 'Cloud Nine', 3, 28],
+  ['Aretha Franklin', 'Spirit in the Dark', 4, 40],
+  ['The Isley Brothers', 'The Heat Is On', 3, 30],
+  ['Sly & the Family Stone', 'There\'s a Riot Goin\' On', 4, 48],
+  ['Gil Scott-Heron', 'Pieces of a Man', 3, 35],
+  ['Roy Ayers', 'Everybody Loves the Sunshine', 4, 42],
+  ['Earth, Wind & Fire', 'That\'s the Way of the World', 3, 32],
+  ['D\'Angelo', 'Voodoo', 4, 38],
+  ['Erykah Badu', 'Baduizm', 3, 30],
+  ['Lauryn Hill', 'The Miseducation of Lauryn Hill', 4, 45],
+  ['Maxwell', 'Urban Hang Suite', 3, 28],
+  ['Musiq Soulchild', 'Aijuswanaseing', 4, 25],
+  ['Jill Scott', 'Who Is Jill Scott?', 3, 30],
+  ['Anita Baker', 'Rapture', 4, 35],
+  ['Luther Vandross', 'Never Too Much', 3, 28],
+]
 
-// ─── Pack Swap Proposals ─────────────────────────────────────
-
-export const packSwapProposals: PackSwapProposal[] = [
+export const networkPackListings: NetworkPackListing[] = [
   {
-    id: 'pswap-001',
-    status: 'pending',
-    storeA: { name: 'Wax & Groove', location: 'Your Store' },
-    storeB: { name: 'BPM Supply', location: 'Berlin, DE' },
-    packYouSend: curatedPacks[0],   // Jazz Essentials
-    packYouReceive: bpmTechnoPack,  // Berlin Techno Vault
-    valueDelta: 26,
-    mismatchScore: 94,
-    marketSavings: 340,
-    reasoning: 'Your jazz inventory is 3x overweight vs. local demand while techno searches are up 40% this quarter. BPM Supply has the reverse problem — Berlin\'s jazz scene is growing and their techno surplus needs clearing. Pack-for-pack swap resolves genre imbalance on both sides and nets you +$26 in market value. Saves $340 vs. sourcing these 25 techno titles individually on Discogs.',
-    createdAt: '2 hours ago',
+    id: 'npl-001',
+    store: { name: 'BPM Supply', location: 'Berlin, DE', trustScore: 96 },
+    pack: {
+      id: 'pack-bpm-001',
+      name: 'Berlin Techno Vault Vol. 1',
+      genre: 'Techno',
+      records: fillPack('Techno', technoFeatured, technoCompact, '#1B2632'),
+      totalValue: 1280,
+      packPrice: 1088,
+      discountPercent: 15,
+      status: 'listed_network',
+      generatedAt: '4 hours ago',
+      generationReason: 'BPM Supply rotating excess techno from recent warehouse acquisition.',
+      avgCondition: 3.6,
+      deadStockCount: 5,
+      slowMoverCount: 7,
+    },
+    listedAt: '4 hours ago',
   },
   {
-    id: 'pswap-002',
-    status: 'pending',
-    storeA: { name: 'Wax & Groove', location: 'Your Store' },
-    storeB: { name: 'Crate Diggers Union', location: 'Chicago, IL' },
-    packYouSend: curatedPacks[2],   // Ambient Landscapes
-    packYouReceive: cdDiscoPack,    // Disco & Boogie Classics
-    valueDelta: -26,
-    mismatchScore: 78,
-    marketSavings: 185,
-    reasoning: 'Ambient demand is declining into summer while disco/boogie is entering peak season. Crate Diggers has strong ambient demand from Portland transplants in Wicker Park. Your disco section has been empty for weeks and customer requests are piling up. The -$26 value gap is offset by $185 in market savings and better genre-to-demand alignment.',
-    createdAt: '1 day ago',
+    id: 'npl-002',
+    store: { name: 'Crate Diggers Union', location: 'Chicago, IL', trustScore: 91 },
+    pack: {
+      id: 'pack-cd-001',
+      name: 'Disco & Boogie Classics Vol. 1',
+      genre: 'Disco',
+      records: fillPack('Disco', discoFeatured, discoCompact, '#FFB162'),
+      totalValue: 920,
+      packPrice: 782,
+      discountPercent: 15,
+      status: 'listed_network',
+      generatedAt: '1 day ago',
+      generationReason: 'Crate Diggers Union clearing disco surplus — Chicago market skews house/footwork.',
+      avgCondition: 3.5,
+      deadStockCount: 4,
+      slowMoverCount: 8,
+    },
+    listedAt: '1 day ago',
+  },
+  {
+    id: 'npl-003',
+    store: { name: 'Vinyl Soul', location: 'Atlanta, GA', trustScore: 88 },
+    pack: {
+      id: 'pack-vs-001',
+      name: 'Southern Soul Essentials Vol. 1',
+      genre: 'Soul',
+      records: fillPack('Soul', soulFeatured, soulCompact, '#A35139'),
+      totalValue: 1050,
+      packPrice: 892,
+      discountPercent: 15,
+      status: 'listed_network',
+      generatedAt: '2 days ago',
+      generationReason: 'Atlanta market shifted to hip-hop and R&B — classic soul moving slower. Great condition lot.',
+      avgCondition: 3.6,
+      deadStockCount: 5,
+      slowMoverCount: 8,
+    },
+    listedAt: '2 days ago',
+  },
+  {
+    id: 'npl-004',
+    store: { name: 'Wax Temple', location: 'Tokyo, JP', trustScore: 94 },
+    pack: {
+      id: 'pack-wt-001',
+      name: 'Deep House Selections Vol. 1',
+      genre: 'House',
+      records: fillPack('House', houseFeatured, houseCompact, '#3D7A4F'),
+      totalValue: 1100,
+      packPrice: 935,
+      discountPercent: 15,
+      status: 'listed_network',
+      generatedAt: '12 hours ago',
+      generationReason: 'Wax Temple downsizing US house section — Japanese market prefers techno and city pop.',
+      avgCondition: 3.5,
+      deadStockCount: 3,
+      slowMoverCount: 9,
+    },
+    listedAt: '12 hours ago',
+  },
+]
+
+// ─── Pack Purchases (completed/pending orders) ──────────────
+
+export const packPurchases: PackPurchase[] = [
+  {
+    id: 'po-001',
+    type: 'sale',
+    pack: { name: 'Funk & Breaks Vol. 2', genre: 'Funk', recordCount: 25, packPrice: 890 },
+    counterparty: { name: 'Deep Groove Records', location: 'Brooklyn, NY' },
+    waxedFee: 71,
+    sellerReceives: 819,
+    shipping: 17,
+    buyerPays: 907,
+    status: 'shipped',
+    createdAt: '2 days ago',
+  },
+  {
+    id: 'po-002',
+    type: 'purchase',
+    pack: { name: 'UK Garage Essentials Vol. 1', genre: 'Garage', recordCount: 25, packPrice: 1150 },
+    counterparty: { name: 'Plastic People Records', location: 'London, UK' },
+    waxedFee: 92,
+    sellerReceives: 1058,
+    shipping: 17,
+    buyerPays: 1167,
+    status: 'confirmed',
+    createdAt: '3 days ago',
+  },
+  {
+    id: 'po-003',
+    type: 'sale',
+    pack: { name: 'Jazz Essentials Vol. 1', genre: 'Jazz', recordCount: 25, packPrice: 1062 },
+    counterparty: { name: 'Ambient Works', location: 'Portland, OR' },
+    waxedFee: 85,
+    sellerReceives: 977,
+    shipping: 17,
+    buyerPays: 1079,
+    status: 'completed',
+    createdAt: '1 week ago',
   },
 ]
 
