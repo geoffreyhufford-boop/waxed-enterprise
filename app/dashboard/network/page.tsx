@@ -107,12 +107,12 @@ export default function NetworkPage() {
       </div>
 
       {/* Panel tabs — directly above panels */}
-      <div className="shrink-0 flex gap-1.5 pb-3 mb-3 w-fit border-b-2 border-waxe-border pr-4">
+      <div className="shrink-0 flex gap-1.5 pb-3 mb-3 w-fit border-b border-waxe-border pr-4">
         {['Directory', 'Packs', 'History'].map((label, i) => (
           <button
             key={label}
             onClick={() => scrollToPanel(i)}
-            className={`text-[9px] font-bold uppercase tracking-[0.1em] px-3 py-1.5 border-2 ${
+            className={`text-[10px] font-bold uppercase tracking-[0.1em] px-3 py-1.5 border ${
               activePanel === i
                 ? 'bg-waxe-text text-waxe-deep border-waxe-text'
                 : 'text-waxe-text-muted border-waxe-border hover:text-waxe-text'
@@ -141,7 +141,7 @@ export default function NetworkPage() {
             />
             <FilterDropdown label="Genre" options={allGenres} value={genreFilter} onChange={setGenreFilter} />
             <FilterDropdown label="Sort" options={sortOptions} value={sortBy} onChange={setSortBy} />
-            <span className="text-[10px] text-waxe-text-muted ml-auto font-mono">{filteredStores.length} stores</span>
+            <span className="text-[11px] text-waxe-text-muted ml-auto font-mono">{filteredStores.length} stores</span>
           </div>
 
           {/* Store Grid */}
@@ -160,9 +160,9 @@ export default function NetworkPage() {
           <div className="shrink-0 flex items-center justify-between">
             <div>
               <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">
-                Packs & Inbound <span className="text-waxe-warm">{'>>'}</span> {pendingRequests.length} Pending Requests
+                Packs & Inbound <span className="text-waxe-warm">{'>>'}</span> <span className="hatch-inline mx-1" /> {pendingRequests.length} Pending Requests
               </h3>
-              <p className="text-[9px] text-waxe-text-muted mt-0.5">Your packs for sale &middot; network packs to buy &middot; inbound requests</p>
+              <p className="text-[10px] text-waxe-text-muted mt-0.5">Your packs for sale &middot; network packs to buy &middot; inbound requests</p>
             </div>
           </div>
 
@@ -172,7 +172,10 @@ export default function NetworkPage() {
             <div className="lg:col-span-2 min-h-0 flex flex-col">
               <div className="flex-1 min-h-0 overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
                 {/* Your Packs */}
-                <p className="text-[9px] font-black uppercase tracking-[0.15em] text-waxe-text-muted mb-2">Your Packs</p>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="designation-tag">Your Packs</span>
+                  <span className="hatch-inline flex-1" style={{ width: 'auto' }} />
+                </div>
                 <div className="space-y-3 mb-6">
                   {curatedPacks.map((pack) => (
                     <PackCard key={pack.id} pack={pack} />
@@ -180,7 +183,11 @@ export default function NetworkPage() {
                 </div>
 
                 {/* Network Packs */}
-                <p className="text-[9px] font-black uppercase tracking-[0.15em] text-waxe-text-muted mb-2">Network Packs</p>
+                <div className="hatch-divider-strong mb-3" />
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="designation-tag">Network Packs</span>
+                  <span className="hatch-inline flex-1" style={{ width: 'auto' }} />
+                </div>
                 <div className="space-y-3">
                   {networkPackListings.map((listing) => (
                     <NetworkPackCard key={listing.id} listing={listing} />
@@ -191,7 +198,10 @@ export default function NetworkPage() {
 
             {/* Right: Inbound Pack Requests */}
             <div className="lg:col-span-1 min-h-0 flex flex-col">
-              <p className="text-[9px] font-black uppercase tracking-[0.15em] text-waxe-text-muted mb-2">Inbound Requests</p>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="designation-tag">Inbound Requests</span>
+                <span className="hatch-inline flex-1" style={{ width: 'auto' }} />
+              </div>
               <div className="flex-1 min-h-0 overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
                 <div className="space-y-2">
                   {inboundPackRequests.map((req) => (
@@ -210,30 +220,42 @@ export default function NetworkPage() {
           <div className="shrink-0 flex items-center justify-between">
             <div>
               <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">
-                Transaction History <span className="text-waxe-cool">{'>>'}</span> {totalTxns} Completed
+                Transaction History <span className="text-waxe-cool">{'>>'}</span> <span className="hatch-inline mx-1" /> {totalTxns} Completed
               </h3>
-              <p className="text-[9px] text-waxe-text-muted mt-0.5">All B2B trades across your dealer network</p>
+              <p className="text-[10px] text-waxe-text-muted mt-0.5">All B2B trades across your dealer network</p>
             </div>
-            <button className="btn-ghost text-[10px]">Export CSV</button>
+            <button className="btn-ghost text-[11px]">Export CSV</button>
           </div>
 
           {/* Mini Stats */}
           <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-3">
-            <div className="bg-waxe-card border-2 border-waxe-border p-3">
-              <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-1">Total Txns</p>
-              <p className="text-xl font-black text-waxe-text font-mono">{totalTxns}</p>
+            <div className="bg-waxe-card border-2 border-waxe-border p-3 clip-stat accent-strip-left scanline">
+              <div className="relative z-10">
+                <p className="designation-tag mb-1">Total Txns</p>
+                <div className="hatch-inline mb-1.5" style={{ width: '32px' }} />
+                <p className="text-xl font-black text-waxe-text font-mono">{totalTxns}</p>
+              </div>
             </div>
-            <div className="bg-waxe-card border-2 border-waxe-border p-3">
-              <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-1">Value Moved</p>
-              <p className="text-xl font-black text-waxe-text font-mono">${valueMoved}</p>
+            <div className="bg-waxe-card border-2 border-waxe-border p-3 clip-stat accent-strip-left scanline">
+              <div className="relative z-10">
+                <p className="designation-tag mb-1">Value Moved</p>
+                <div className="hatch-inline mb-1.5" style={{ width: '32px' }} />
+                <p className="text-xl font-black text-waxe-text font-mono">${valueMoved}</p>
+              </div>
             </div>
-            <div className="bg-waxe-card border-2 border-waxe-border p-3">
-              <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-1">Avg Value</p>
-              <p className="text-xl font-black text-waxe-text font-mono">${avgValue}</p>
+            <div className="bg-waxe-card border-2 border-waxe-border p-3 clip-stat accent-strip-left scanline">
+              <div className="relative z-10">
+                <p className="designation-tag mb-1">Avg Value</p>
+                <div className="hatch-inline mb-1.5" style={{ width: '32px' }} />
+                <p className="text-xl font-black text-waxe-text font-mono">${avgValue}</p>
+              </div>
             </div>
-            <div className="bg-waxe-card border-2 border-waxe-border p-3">
-              <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-1">Top Partner</p>
-              <p className="text-sm font-black text-waxe-text truncate">{topPartner}</p>
+            <div className="bg-waxe-card border-2 border-waxe-border p-3 clip-stat accent-strip-left scanline">
+              <div className="relative z-10">
+                <p className="designation-tag mb-1">Top Partner</p>
+                <div className="hatch-inline mb-1.5" style={{ width: '32px' }} />
+                <p className="text-sm font-black text-waxe-text truncate">{topPartner}</p>
+              </div>
             </div>
           </div>
 
@@ -272,33 +294,34 @@ export default function NetworkPage() {
 
 function StoreCard({ store }: { store: NetworkStore }) {
   return (
-    <div className="bg-waxe-card border-2 border-waxe-border p-4">
+    <div className="bg-waxe-card border-2 border-waxe-border p-4 clip-card">
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <div className="min-w-0">
           <p className="text-sm font-black text-waxe-text truncate">{store.name}</p>
-          <p className="text-[10px] text-waxe-text-muted">{store.location}</p>
+          <p className="text-[11px] text-waxe-text-muted">{store.location}</p>
         </div>
         <div className="shrink-0 text-right">
-          <p className="text-[10px] font-black text-waxe-text font-mono">{store.trustScore}</p>
-          <p className="text-[8px] text-waxe-text-muted uppercase tracking-wider">Trust</p>
+          <p className="designation-tag">Trust</p>
+          <p className="text-lg font-black text-waxe-text font-mono leading-none mt-0.5">{store.trustScore}</p>
         </div>
       </div>
 
       {/* Trust bar */}
-      <div className="w-full h-1.5 bg-waxe-border mb-3 overflow-hidden">
+      <div className="w-full h-1.5 bg-waxe-border mb-2 overflow-hidden">
         <div className={`h-full ${trustColor(store.trustScore)}`} style={{ width: `${store.trustScore}%` }} />
       </div>
+      <div className="hatch-divider mb-3" />
 
       {/* Genre tags */}
       <div className="flex flex-wrap gap-1 mb-3">
         {store.specialtyGenres.map((g) => (
-          <span key={g} className="text-[8px] font-bold uppercase tracking-wider px-2 py-0.5 border border-waxe-border text-waxe-text-muted">{g}</span>
+          <span key={g} className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 border border-waxe-border text-waxe-text-muted">{g}</span>
         ))}
       </div>
 
       {/* Stats row */}
-      <div className="flex items-center gap-3 mb-3 text-[9px] text-waxe-text-muted">
+      <div className="flex items-center gap-3 mb-3 text-[10px] text-waxe-text-muted">
         <span className="font-mono">{store.completedSwaps} swaps</span>
         <span>&middot;</span>
         <span>{store.responseTime}</span>
@@ -308,9 +331,9 @@ function StoreCard({ store }: { store: NetworkStore }) {
 
       {/* Actions */}
       <div className="flex gap-2">
-        <button className="btn-secondary text-[9px] px-3 py-1.5 flex-1">View Catalog</button>
-        <button className="btn-secondary text-[9px] px-3 py-1.5 flex-1">Message</button>
-        <button className="btn-primary text-[9px] px-3 py-1.5 flex-1">Propose Swap</button>
+        <button className="btn-secondary text-[10px] px-3 py-1.5 flex-1">View Catalog</button>
+        <button className="btn-secondary text-[10px] px-3 py-1.5 flex-1">Message</button>
+        <button className="btn-primary text-[10px] px-3 py-1.5 flex-1">Propose Swap</button>
       </div>
     </div>
   )
@@ -320,38 +343,38 @@ function StoreCard({ store }: { store: NetworkStore }) {
 
 function InboundPackRequestCard({ request }: { request: InboundPackRequest }) {
   return (
-    <div className="bg-waxe-card border-2 border-waxe-border p-3">
+    <div className="bg-waxe-card border-2 border-waxe-border p-3 clip-card">
       <div className="flex items-center gap-2 mb-1.5">
         <p className="text-sm font-bold text-waxe-text truncate">{request.requestedPackName}</p>
         <StatusBadge status={request.status} />
       </div>
 
-      <span className="text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 border border-waxe-border text-waxe-text-muted">{request.requestedGenre}</span>
+      <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 border border-waxe-border text-waxe-text-muted">{request.requestedGenre}</span>
 
       {/* Requesting store */}
       <div className="flex items-center gap-2 mt-2">
-        <span className="text-[9px] font-bold text-waxe-text-secondary">{request.fromStore.name}</span>
-        <span className="text-[9px] text-waxe-text-muted">{request.fromStore.location}</span>
+        <span className="text-[10px] font-bold text-waxe-text-secondary">{request.fromStore.name}</span>
+        <span className="text-[10px] text-waxe-text-muted">{request.fromStore.location}</span>
       </div>
-      <span className="text-[8px] text-waxe-text-muted font-mono">Trust: {request.fromStore.trustScore}</span>
+      <span className="text-[10px] text-waxe-text-muted font-mono">Trust: {request.fromStore.trustScore}</span>
 
       {/* Message quote */}
       {request.message && (
-        <p className="text-[9px] text-waxe-text-secondary mt-1.5 leading-relaxed italic">&ldquo;{request.message}&rdquo;</p>
+        <p className="text-[10px] text-waxe-text-secondary mt-1.5 leading-relaxed italic">&ldquo;{request.message}&rdquo;</p>
       )}
 
       {/* Price + timestamp */}
       <div className="flex items-center gap-3 mt-2">
         <span className="text-[11px] font-black text-waxe-text font-mono">${request.offeredPrice}</span>
-        <span className="text-[8px] text-waxe-text-muted">{request.requestedAt}</span>
+        <span className="text-[10px] text-waxe-text-muted">{request.requestedAt}</span>
       </div>
 
       {/* Actions */}
       {request.status === 'pending' && (
         <div className="flex gap-2 mt-2.5">
-          <button className="btn-primary text-[9px] px-3 py-1 flex-1">Accept</button>
-          <button className="btn-secondary text-[9px] px-3 py-1">Counter</button>
-          <button className="btn-ghost text-[9px] px-3 py-1">Decline</button>
+          <button className="btn-primary text-[10px] px-3 py-1 flex-1">Accept</button>
+          <button className="btn-secondary text-[10px] px-3 py-1">Counter</button>
+          <button className="btn-ghost text-[10px] px-3 py-1">Decline</button>
         </div>
       )}
     </div>
@@ -361,8 +384,8 @@ function InboundPackRequestCard({ request }: { request: InboundPackRequest }) {
 // ─── Network Pack Card (packs from other stores) ────────────
 
 const genreColors: Record<string, string> = {
-  Jazz: '#2C3B4D', House: '#3D7A4F', Ambient: '#4A5B6D', Techno: '#1B2632',
-  Disco: '#FFB162', 'R&B': '#A35139', Soul: '#C04040', Electronic: '#2C3B4D',
+  Jazz: '#2A4058', House: '#3D7A4F', Ambient: '#546878', Techno: '#0A0E14',
+  Disco: '#E89A40', 'R&B': '#A35139', Soul: '#C04040', Electronic: '#2A4058',
   Funk: '#A35139', Garage: '#3D7A4F',
 }
 
@@ -372,7 +395,7 @@ function NetworkPackCard({ listing }: { listing: NetworkPackListing }) {
   const { fee, sellerReceives, shipping, buyerPays, rate } = calculateFees(pack.packPrice, 1)
 
   return (
-    <div className="bg-waxe-card border-2 border-waxe-border rounded-none overflow-hidden">
+    <div className="bg-waxe-card border-2 border-waxe-border rounded-none overflow-hidden clip-card">
       <div className="h-1" style={{ backgroundColor: barColor }} />
       <div className="p-5">
         <div className="flex items-start gap-4 mb-3">
@@ -382,26 +405,26 @@ function NetworkPackCard({ listing }: { listing: NetworkPackListing }) {
               <p className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em] truncate">{pack.name}</p>
               <StatusBadge status={pack.status} />
             </div>
-            <p className="text-[9px] text-waxe-text-muted">
+            <p className="text-[10px] text-waxe-text-muted">
               {pack.genre} &middot; {pack.records.length} records &middot; Avg {'★'.repeat(Math.round(pack.avgCondition))}{'☆'.repeat(5 - Math.round(pack.avgCondition))}
             </p>
-            <p className="text-[9px] text-waxe-text-secondary mt-0.5">
+            <p className="text-[10px] text-waxe-text-secondary mt-0.5">
               {store.name} &middot; {store.location} &middot; Trust: {store.trustScore}
             </p>
             <div className="flex items-center gap-2 mt-1.5">
-              <span className="text-[10px] text-waxe-text-muted line-through font-mono">${pack.totalValue}</span>
+              <span className="text-[11px] text-waxe-text-muted line-through font-mono">${pack.totalValue}</span>
               <span className="text-[11px] font-black text-waxe-text font-mono">${pack.packPrice}</span>
-              <span className="text-[9px] font-bold text-waxe-positive">(-{pack.discountPercent}%)</span>
+              <span className="text-[10px] font-bold text-waxe-positive">(-{pack.discountPercent}%)</span>
             </div>
-            <p className="text-[8px] text-waxe-text-muted mt-1">
+            <p className="text-[10px] text-waxe-text-muted mt-1">
               WAXED fee: <span className="font-mono font-bold text-waxe-warm">${fee}</span> ({Math.round(rate * 100)}%) · Shipping: <span className="font-mono">${shipping}</span> · Total: <span className="font-mono font-bold text-waxe-text">${buyerPays}</span>
             </p>
           </div>
         </div>
 
         <div className="flex gap-2 border-t border-waxe-border pt-3">
-          <button className="btn-primary text-[9px] px-3 py-1.5 flex-1">Buy Pack</button>
-          <button className="btn-secondary text-[9px] px-3 py-1.5 flex-1">View Contents</button>
+          <button className="btn-primary text-[10px] px-3 py-1.5 flex-1">Buy Pack</button>
+          <button className="btn-secondary text-[10px] px-3 py-1.5 flex-1">View Contents</button>
         </div>
       </div>
     </div>
@@ -412,10 +435,10 @@ function NetworkPackCard({ listing }: { listing: NetworkPackListing }) {
 
 function TransactionRow({ transaction }: { transaction: NetworkTransaction }) {
   return (
-    <div className="bg-waxe-card border-2 border-waxe-border p-3">
+    <div className="bg-waxe-card border-2 border-waxe-border p-3 clip-stat accent-strip-left">
       <div className="flex items-start gap-3">
         {/* Type badge */}
-        <span className={`shrink-0 text-[8px] font-black uppercase tracking-wider px-2 py-1 border ${typeColor(transaction.type)}`}>
+        <span className={`shrink-0 text-[10px] font-black uppercase tracking-wider px-2 py-1 border clip-badge ${typeColor(transaction.type)}`}>
           {transaction.type}
         </span>
 
@@ -424,13 +447,13 @@ function TransactionRow({ transaction }: { transaction: NetworkTransaction }) {
           {/* Counterparty */}
           <div className="flex items-center gap-2 mb-1">
             <p className="text-sm font-bold text-waxe-text">{transaction.counterparty.name}</p>
-            <span className="text-[9px] text-waxe-text-muted">{transaction.counterparty.location}</span>
+            <span className="text-[10px] text-waxe-text-muted">{transaction.counterparty.location}</span>
           </div>
 
           {/* Records with arrows */}
           <div className="space-y-0.5">
             {transaction.records.map((rec, i) => (
-              <div key={i} className="flex items-center gap-2 text-[10px]">
+              <div key={i} className="flex items-center gap-2 text-[11px]">
                 <span className={`font-mono font-bold ${rec.direction === 'sent' ? 'text-waxe-negative' : 'text-waxe-positive'}`}>
                   {rec.direction === 'sent' ? '↑' : '↓'}
                 </span>
@@ -445,7 +468,7 @@ function TransactionRow({ transaction }: { transaction: NetworkTransaction }) {
           <p className={`text-sm font-black font-mono ${transaction.netValue >= 0 ? 'text-waxe-positive' : 'text-waxe-negative'}`}>
             {transaction.netValue >= 0 ? '+' : ''}${transaction.netValue}
           </p>
-          <p className="text-[8px] text-waxe-text-muted mt-0.5">{transaction.completedAt}</p>
+          <p className="text-[10px] text-waxe-text-muted mt-0.5">{transaction.completedAt}</p>
         </div>
       </div>
     </div>

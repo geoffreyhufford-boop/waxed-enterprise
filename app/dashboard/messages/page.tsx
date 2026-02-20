@@ -21,7 +21,7 @@ export default function MessagesPage() {
         subtitle={`${conversations.reduce((sum, c) => sum + c.unread, 0)} unread messages`}
       />
 
-      <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-0 rounded-none border-2 border-waxe-border overflow-hidden">
+      <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-0 rounded-none border-2 border-waxe-border overflow-hidden clip-card">
         {/* Left: Conversation List */}
         <div className="lg:col-span-1 border-r border-waxe-border bg-waxe-card/30 flex flex-col">
           <div className="p-3 border-b border-waxe-border">
@@ -48,15 +48,16 @@ export default function MessagesPage() {
         {/* Right: Active Chat */}
         <div className="lg:col-span-2 flex flex-col bg-waxe-deep/50">
           {/* Chat Header */}
-          <div className="px-6 py-4 border-b border-waxe-border flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-waxe-cool/15 flex items-center justify-center text-xs font-bold text-waxe-cool">
+          <div className="px-6 py-4 border-b border-waxe-border flex items-center justify-between scanline">
+            <div className="relative z-10 flex items-center gap-3">
+              <div className="glyph-box" style={{ width: '36px', height: '36px', fontSize: '12px', borderRadius: '50%' }}>
                 {active.customerName.split(' ').map(n => n[0]).join('')}
               </div>
               <div>
                 <p className="text-sm font-semibold text-waxe-text">{active.customerName}</p>
                 <p className="text-xs text-waxe-text-muted">Last active: {active.lastTime}</p>
               </div>
+              <span className="hatch-inline ml-2" />
             </div>
           </div>
 
@@ -69,9 +70,9 @@ export default function MessagesPage() {
                     {msg.text}
                   </div>
                   <div className={`flex items-center gap-2 mt-1 ${msg.sender === 'dealer' ? 'justify-end' : 'justify-start'}`}>
-                    <span className="text-[10px] text-waxe-text-muted">{msg.time}</span>
+                    <span className="text-[11px] text-waxe-text-muted">{msg.time}</span>
                     {msg.linkedItem && (
-                      <span className="text-[10px] text-waxe-cool font-mono">⟁ {msg.linkedItem}</span>
+                      <span className="text-[11px] text-waxe-cool font-mono">⟁ {msg.linkedItem}</span>
                     )}
                   </div>
                 </div>

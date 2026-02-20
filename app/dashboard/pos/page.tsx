@@ -45,10 +45,10 @@ export default function POSPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {/* Quick Record Lookup */}
-        <div className="lg:col-span-2 bg-waxe-card border-2 border-waxe-border rounded-none p-5 flex flex-col">
+        <div className="lg:col-span-2 bg-waxe-card border-2 border-waxe-border rounded-none p-5 flex flex-col clip-card">
           <div className="flex items-center justify-between mb-4 shrink-0">
-            <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Quick Lookup <span className="text-waxe-cool">{'>>'}</span></h3>
-            <span className="text-[10px] text-waxe-text-muted uppercase tracking-[0.1em]">search to check price or ring up</span>
+            <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Quick Lookup <span className="text-waxe-cool">{'>>'}</span> <span className="hatch-inline ml-1" /></h3>
+            <span className="text-[11px] text-waxe-text-muted uppercase tracking-[0.1em]">search to check price or ring up</span>
           </div>
           <input
             type="text"
@@ -65,13 +65,13 @@ export default function POSPage() {
                   <span className="text-xs font-mono text-waxe-text-muted shrink-0">{record.id}</span>
                   <div className="min-w-0">
                     <p className="text-sm font-medium text-waxe-text truncate">{record.artist} — {record.title}</p>
-                    <p className="text-[10px] text-waxe-text-muted">{record.genre} · {record.label} · {record.year}</p>
+                    <p className="text-[11px] text-waxe-text-muted">{record.genre} · {record.label} · {record.year}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
                   <div className="text-right">
                     <p className="text-sm font-bold text-waxe-text">${record.price.toFixed(2)}</p>
-                    <p className="text-[10px] text-waxe-text-muted">{'★'.repeat(record.condition)}{'☆'.repeat(5 - record.condition)}</p>
+                    <p className="text-[11px] text-waxe-text-muted">{'★'.repeat(record.condition)}{'☆'.repeat(5 - record.condition)}</p>
                   </div>
                   <StatusBadge status={record.status} />
                 </div>
@@ -84,8 +84,8 @@ export default function POSPage() {
         </div>
 
         {/* Auto-Sync Status Panel */}
-        <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5 flex flex-col">
-          <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em] mb-4 shrink-0">Auto-Sync <span className="text-waxe-cool">{'>>'}</span> Flow</h3>
+        <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5 flex flex-col clip-card">
+          <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em] mb-4 shrink-0">Auto-Sync <span className="text-waxe-cool">{'>>'}</span> <span className="hatch-inline mx-1" /> Flow</h3>
           <div className="flex-1 flex flex-col justify-between">
             <div className="space-y-0">
               {[
@@ -96,9 +96,9 @@ export default function POSPage() {
               ].map((item, i) => (
                 <div key={i}>
                   <div className="flex items-center gap-3 py-3">
-                    <div className={`w-8 h-8 flex items-center justify-center text-xs font-bold ${
-                      item.active ? 'bg-waxe-text/10 text-waxe-text border border-waxe-text/20' : 'bg-waxe-surface text-waxe-text-muted border-2 border-waxe-border'
-                    }`}>
+                    <div className={`glyph-box ${
+                      item.active ? 'border-waxe-warm text-waxe-warm' : ''
+                    }`} style={{ width: '32px', height: '32px', fontSize: '12px' }}>
                       {i + 1}
                     </div>
                     <div>
@@ -133,7 +133,7 @@ export default function POSPage() {
             <td className="px-4 py-3 text-sm font-medium text-waxe-text">${txn.total.toFixed(2)}</td>
             <td className="px-4 py-3">
               <span className="flex items-center gap-1.5 text-sm text-waxe-text-secondary">
-                <span className="text-xs">{methodIcons[txn.method]}</span>
+                <span className="glyph-box-sm">{methodIcons[txn.method]}</span>
                 <span className="capitalize">{txn.method}</span>
               </span>
             </td>

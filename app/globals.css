@@ -1,7 +1,80 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Palette: MP072 ── */
+  /* ── Base tokens (dark default, overridden by class) ── */
+  --color-waxe-deep: #0A0E14;
+  --color-waxe-base: #0A0E14;
+  --color-waxe-surface: #162030;
+  --color-waxe-card: #111B26;
+  --color-waxe-card-solid: #111B26;
+  --color-waxe-border: #2A4058;
+  --color-waxe-border-hover: #4A6878;
+
+  /* Text — warm cream on dark */
+  --color-waxe-text: #D8D0C4;
+  --color-waxe-text-secondary: #A0B0BE;
+  --color-waxe-text-muted: #546878;
+
+  /* Accent — MAGI amber + rust */
+  --color-waxe-warm: #E89A40;
+  --color-waxe-warm-hover: #D4893D;
+  --color-waxe-cool: #A35139;
+  --color-waxe-cool-muted: #2A4058;
+
+  /* Semantic — money / condition */
+  --color-waxe-positive: #3D8A55;
+  --color-waxe-negative: #D04545;
+  --color-waxe-cond-10: #3D8A55;
+  --color-waxe-cond-9: #3D8A55;
+  --color-waxe-cond-7: #7A9040;
+  --color-waxe-cond-5: #C4A040;
+  --color-waxe-cond-3: #C47035;
+  --color-waxe-cond-1: #D04545;
+
+  /* Legacy aliases */
+  --color-waxed-black: #D8D0C4;
+  --color-waxed-dark: #0A0E14;
+  --color-waxed-card: #111B26;
+  --color-waxed-border: #2A4058;
+  --color-waxed-muted: #546878;
+  --color-waxed-text: #D8D0C4;
+  --color-waxed-text-secondary: #A0B0BE;
+  --color-waxed-text-muted: #546878;
+  --color-waxed-olive: #2A4058;
+  --color-waxed-olive-hover: #4A6878;
+  --color-waxed-olive-muted: #546878;
+  --color-waxed-sold: #A35139;
+  --color-waxed-active: #E89A40;
+
+  /* Font */
+  --font-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* ── Mecha-HUD: Chamfer Tokens ── */
+  --clip-corner-sm: 10px;
+  --clip-corner-md: 16px;
+  --clip-corner-lg: 22px;
+
+  /* ── Mecha-HUD: Pattern Colors ── */
+  --color-waxe-hatch: rgba(208, 200, 184, 0.10);
+  --color-waxe-hatch-strong: rgba(208, 200, 184, 0.22);
+  --color-waxe-scanline: rgba(100, 180, 180, 0.04);
+
+  /* ── Mecha-HUD: Boot Screen Tokens ── */
+  --color-boot-bg: #0A0E14;
+  --color-boot-panel: #111B26;
+  --color-boot-border: #2A4058;
+  --color-boot-border-active: #E89A40;
+  --color-boot-text: #D8D0C4;
+  --color-boot-text-muted: #546878;
+  --color-boot-accent: #E89A40;
+  --color-boot-positive: #3D7A4F;
+  --color-boot-scanline: rgba(100, 180, 180, 0.03);
+  --color-boot-hatch: rgba(208, 200, 184, 0.015);
+  --color-boot-logo-filter: brightness(0) invert(0.85);
+}
+
+/* ── Light Mode (cream) ── */
+:root.light {
   --color-waxe-deep: #EEE9DF;
   --color-waxe-base: #EEE9DF;
   --color-waxe-surface: #DED8CC;
@@ -9,45 +82,41 @@
   --color-waxe-card-solid: #EEE9DF;
   --color-waxe-border: #2C3B4D;
   --color-waxe-border-hover: #1B2632;
-
-  /* Text — deep navy */
   --color-waxe-text: #1B2632;
   --color-waxe-text-secondary: #2C3B4D;
   --color-waxe-text-muted: #4A5B6D;
-
-  /* Accent — warm orange + rust */
-  --color-waxe-warm: #FFB162;
-  --color-waxe-warm-hover: #E89A4D;
-  --color-waxe-cool: #A35139;
+  --color-waxe-warm: #D4893D;
+  --color-waxe-warm-hover: #C07A30;
   --color-waxe-cool-muted: #C9C1B1;
-
-  /* Semantic — money / condition */
   --color-waxe-positive: #3D7A4F;
   --color-waxe-negative: #C04040;
-  --color-waxe-cond-10: #2D7A3E;
-  --color-waxe-cond-9: #3D7A4F;
-  --color-waxe-cond-7: #7A8A3D;
-  --color-waxe-cond-5: #C9A23D;
-  --color-waxe-cond-3: #C06A30;
-  --color-waxe-cond-1: #C04040;
-
-  /* Legacy aliases */
+  --color-waxe-hatch: rgba(44, 59, 77, 0.28);
+  --color-waxe-hatch-strong: rgba(44, 59, 77, 0.50);
+  --color-waxe-scanline: rgba(44, 59, 77, 0.07);
   --color-waxed-black: #1B2632;
   --color-waxed-dark: #EEE9DF;
   --color-waxed-card: #EEE9DF;
   --color-waxed-border: #2C3B4D;
-  --color-waxed-muted: #C9C1B1;
   --color-waxed-text: #1B2632;
   --color-waxed-text-secondary: #2C3B4D;
   --color-waxed-text-muted: #4A5B6D;
   --color-waxed-olive: #2C3B4D;
   --color-waxed-olive-hover: #1B2632;
   --color-waxed-olive-muted: #4A5B6D;
-  --color-waxed-sold: #A35139;
-  --color-waxed-active: #FFB162;
+  --color-waxed-active: #D4893D;
 
-  /* Font */
-  --font-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  /* Boot screen — cream variant */
+  --color-boot-bg: #EEE9DF;
+  --color-boot-panel: #DED8CC;
+  --color-boot-border: #2C3B4D;
+  --color-boot-border-active: #D4893D;
+  --color-boot-text: #1B2632;
+  --color-boot-text-muted: #4A5B6D;
+  --color-boot-accent: #D4893D;
+  --color-boot-positive: #3D7A4F;
+  --color-boot-scanline: rgba(44, 59, 77, 0.03);
+  --color-boot-hatch: rgba(44, 59, 77, 0.015);
+  --color-boot-logo-filter: none;
 }
 
 @layer base {
@@ -76,6 +145,291 @@
     @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
   }
 
+  /* ── Mecha-HUD: Clip-Path Utilities ── */
+
+  .clip-card {
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+  }
+
+  .clip-card-bl {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  }
+
+  .clip-card-tr-bl {
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  }
+
+  .clip-stat {
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  }
+
+  .clip-badge {
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%);
+    padding-right: 14px;
+  }
+
+  .clip-badge-left {
+    clip-path: polygon(8px 0, 100% 0, 100% 100%, 8px 100%, 0 50%);
+    padding-left: 14px;
+  }
+
+  .clip-modal {
+    clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+  }
+
+  /* ── Mecha-HUD: Hatching Dividers ── */
+
+  .hatch-divider {
+    height: 10px;
+    width: 100%;
+    background: repeating-linear-gradient(
+      0deg,
+      var(--color-waxe-hatch),
+      var(--color-waxe-hatch) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  }
+
+  .hatch-divider-strong {
+    height: 10px;
+    width: 100%;
+    background: repeating-linear-gradient(
+      0deg,
+      var(--color-waxe-hatch-strong),
+      var(--color-waxe-hatch-strong) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  }
+
+  /* ── Mecha-HUD: Corner Marks ── */
+
+  .corner-marks {
+    position: relative;
+  }
+
+  .corner-marks::before,
+  .corner-marks::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+  }
+
+  .corner-marks::before {
+    top: 4px;
+    left: 4px;
+    border-left: 2px solid var(--color-waxe-border);
+    border-top: 2px solid var(--color-waxe-border);
+  }
+
+  .corner-marks::after {
+    bottom: 4px;
+    right: 4px;
+    border-right: 2px solid var(--color-waxe-border);
+    border-bottom: 2px solid var(--color-waxe-border);
+  }
+
+  /* ── Mecha-HUD: Scanline ── */
+
+  .scanline {
+    position: relative;
+  }
+
+  .scanline::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      var(--color-waxe-scanline) 3px,
+      var(--color-waxe-scanline) 4px
+    );
+  }
+
+  /* ── Mecha-HUD: Glyph Containers ── */
+
+  .glyph-box {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--color-waxe-border);
+    background: var(--color-waxe-surface);
+    font-size: 12px;
+    line-height: 1;
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  .glyph-box-sm {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    border-width: 1.5px;
+    background: var(--color-waxe-surface);
+  }
+
+  .nav-item-active .glyph-box {
+    border-color: var(--color-waxe-warm);
+    color: var(--color-waxe-warm);
+    background: rgba(255, 177, 98, 0.15);
+    clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px));
+  }
+
+  .nav-item .glyph-box {
+    background: transparent;
+    border-color: var(--color-waxe-text-muted);
+    color: var(--color-waxe-text-muted);
+    clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px));
+  }
+
+  .nav-item:hover .glyph-box {
+    border-color: var(--color-waxe-border);
+    color: var(--color-waxe-text);
+  }
+
+  /* ── Mecha-HUD: Inline Hatching ── */
+
+  .hatch-inline {
+    display: inline-block;
+    width: 48px;
+    height: 8px;
+    vertical-align: middle;
+    background: repeating-linear-gradient(
+      0deg,
+      var(--color-waxe-hatch),
+      var(--color-waxe-hatch) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  }
+
+  .hatch-inline-lg {
+    width: 80px;
+  }
+
+  .hatch-inline-strong {
+    background: repeating-linear-gradient(
+      0deg,
+      var(--color-waxe-hatch-strong),
+      var(--color-waxe-hatch-strong) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  }
+
+  /* ── Mecha-HUD: Accent Strips (inset shadow — composable with ::before/::after) ── */
+
+  .accent-strip-left {
+    box-shadow: inset 5px 0 0 var(--color-waxe-warm);
+  }
+
+  .accent-strip-left.accent-cool {
+    box-shadow: inset 5px 0 0 var(--color-waxe-cool);
+  }
+
+  .accent-strip-left.accent-positive {
+    box-shadow: inset 5px 0 0 var(--color-waxe-positive);
+  }
+
+  .accent-strip-left.accent-negative {
+    box-shadow: inset 5px 0 0 var(--color-waxe-negative);
+  }
+
+  /* ── Mecha-HUD: Designation Tags ── */
+
+  .designation-tag {
+    font-size: 9px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-waxe-text-muted);
+    font-family: var(--font-mono);
+    line-height: 1;
+  }
+
+  /* ── Mecha-HUD: Compound Badges ── */
+
+  .badge-compound {
+    display: inline-flex;
+    align-items: stretch;
+    font-family: var(--font-mono);
+    line-height: 1;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+  }
+
+  .badge-compound-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    font-size: 9px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    background: var(--color-waxe-text);
+    color: var(--color-waxe-deep);
+  }
+
+  .badge-compound-code {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    border: 2px solid var(--color-waxe-border);
+    border-left: none;
+    color: var(--color-waxe-text);
+  }
+
+  .badge-compound-warm .badge-compound-label {
+    background: var(--color-waxe-warm);
+    color: var(--color-waxe-text);
+  }
+
+  .badge-compound-cool .badge-compound-label {
+    background: var(--color-waxe-cool);
+    color: var(--color-waxe-deep);
+  }
+
+  /* ── Mecha-HUD: Angular Cut ── */
+
+  .skew-box {
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+  }
+
+  .skew-box-strong {
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+
+  /* ── Mecha-HUD: Arrow Terminator ── */
+
+  .arrow-term::after {
+    content: '▸';
+    margin-left: 6px;
+    font-size: 12px;
+  }
+
+  /* ── Mecha-HUD: Hatch Background ── */
+
+  .hatch-bg {
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 6px,
+      var(--color-waxe-scanline) 6px,
+      var(--color-waxe-scanline) 7px
+    );
+  }
+
+  /* ── Buttons ── */
+
   .btn-primary {
     @apply inline-flex items-center justify-center px-6 py-3 text-[11px] font-black uppercase tracking-[0.15em]
            bg-waxe-text text-waxe-deep rounded-none border-2 border-waxe-text
@@ -83,6 +437,7 @@
            focus:outline-none cursor-pointer;
     font-family: var(--font-mono);
     box-shadow: 2px 2px 0px var(--color-waxe-text-muted);
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
   }
 
   .btn-primary:hover {
@@ -104,6 +459,7 @@
            focus:outline-none cursor-pointer;
     font-family: var(--font-mono);
     box-shadow: 2px 2px 0px var(--color-waxe-text-muted);
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
   }
 
   .btn-secondary:hover {
@@ -126,17 +482,32 @@
     font-family: var(--font-mono);
   }
 
+  /* ── Cards ── */
+
   .card {
     @apply bg-waxe-card border-2 border-waxe-border rounded-none p-6;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
   }
 
   .value-card {
     @apply bg-waxe-card border-2 border-waxe-border rounded-none p-6;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
   }
 
   .stat-card {
-    @apply bg-waxe-card border-2 border-waxe-border rounded-none p-5;
+    @apply bg-waxe-card border-2 border-waxe-border rounded-none px-3 py-2;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+    box-shadow: inset 5px 0 0 var(--color-waxe-warm);
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 4px,
+      var(--color-waxe-scanline) 4px,
+      var(--color-waxe-scanline) 5px
+    );
   }
+
+  /* ── Form Elements ── */
 
   .input-field {
     @apply w-full px-3 py-2.5 text-sm rounded-none
@@ -156,13 +527,13 @@
   }
 
   .label-text {
-    @apply block text-[10px] font-black text-waxe-text uppercase tracking-[0.15em] mb-2;
+    @apply block text-[11px] font-black text-waxe-text uppercase tracking-[0.15em] mb-2;
     font-family: var(--font-mono);
   }
 
   .pill {
-    @apply inline-flex items-center px-3 py-1 text-[10px] font-black uppercase tracking-[0.1em]
-           border-2 border-waxe-border rounded-none
+    @apply inline-flex items-center px-3 py-1 text-[11px] font-black uppercase tracking-[0.1em]
+           border border-waxe-border rounded-none
            text-waxe-text;
     font-family: var(--font-mono);
   }
@@ -179,7 +550,8 @@
     font-family: var(--font-mono);
   }
 
-  /* Dashboard navigation */
+  /* ── Dashboard Navigation ── */
+
   .nav-item {
     @apply flex items-center gap-3 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.15em] rounded-none
            text-waxe-text-muted
@@ -192,12 +564,14 @@
     @apply flex items-center gap-3 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.15em] rounded-none
            bg-waxe-text text-waxe-deep;
     font-family: var(--font-mono);
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
   }
 
-  /* Dashboard table */
+  /* ── Dashboard Table ── */
+
   .table-header {
-    @apply text-left px-4 py-3 text-[10px] font-bold text-waxe-text-secondary uppercase tracking-[0.15em]
-           bg-waxe-surface border-b-2 border-waxe-border;
+    @apply text-left px-4 py-3 text-[11px] font-bold text-waxe-text-secondary uppercase tracking-[0.15em]
+           bg-waxe-surface border-b border-waxe-border;
     font-family: var(--font-mono);
   }
 
@@ -205,18 +579,22 @@
     @apply px-4 py-3 text-sm text-waxe-text whitespace-nowrap;
   }
 
-  /* Dashboard messages */
+  /* ── Dashboard Messages ── */
+
   .message-inbound {
     @apply max-w-[75%] px-4 py-2.5 rounded-none text-sm
-           bg-waxe-surface border-2 border-waxe-border text-waxe-text;
+           bg-waxe-surface border border-waxe-border text-waxe-text;
+    clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 10px);
   }
 
   .message-outbound {
     @apply max-w-[75%] px-4 py-2.5 rounded-none text-sm
-           bg-waxe-text text-waxe-deep border-2 border-waxe-text;
+           bg-waxe-text text-waxe-deep border border-waxe-text;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
   }
 
-  /* Dashboard tabs */
+  /* ── Dashboard Tabs ── */
+
   .tab-item {
     @apply px-4 py-2 text-[11px] font-bold uppercase tracking-[0.15em] rounded-none
            text-waxe-text-muted
@@ -229,9 +607,24 @@
     @apply px-4 py-2 text-[11px] font-bold uppercase tracking-[0.15em] rounded-none
            text-waxe-text border-b-2 border-waxe-warm;
     font-family: var(--font-mono);
+    position: relative;
+    background-image: linear-gradient(
+      to top,
+      var(--color-waxe-scanline) 0px,
+      var(--color-waxe-scanline) 1px,
+      transparent 1px,
+      transparent 3px,
+      var(--color-waxe-scanline) 3px,
+      var(--color-waxe-scanline) 4px,
+      transparent 4px
+    );
+    background-size: 100% 8px;
+    background-position: bottom;
+    background-repeat: no-repeat;
   }
 
-  /* Arrow separator utility */
+  /* ── Arrow Separator ── */
+
   .arrow-sep::before {
     content: '\2192';
     @apply mx-2 text-waxe-text-muted;

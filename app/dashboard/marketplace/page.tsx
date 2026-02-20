@@ -18,7 +18,7 @@ function MarketplaceListingCard({ listing }: { listing: MarketplaceListing }) {
   }
 
   return (
-    <div className="border-2 border-waxe-border bg-waxe-card flex flex-col">
+    <div className="border-2 border-waxe-border bg-waxe-card flex flex-col clip-card">
       <div className="p-4 flex-1">
         {/* Artwork + info + price */}
         <div className="flex gap-3 mb-3">
@@ -52,8 +52,8 @@ function MarketplaceListingCard({ listing }: { listing: MarketplaceListing }) {
         {/* Seller + availability in one row */}
         <div className="flex items-center gap-2 flex-wrap">
           <span className={`text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-none ${
-            listing.sellerType === 'label' ? 'bg-waxe-text text-waxe-deep' :
-            listing.sellerType === 'distributor' ? 'bg-waxe-cool text-waxe-deep' :
+            listing.sellerType === 'label' ? 'bg-waxe-text text-waxe-deep clip-badge' :
+            listing.sellerType === 'distributor' ? 'bg-waxe-cool text-waxe-deep clip-badge' :
             'border border-waxe-border text-waxe-text-muted'
           }`}>
             {listing.sellerType}
@@ -112,7 +112,7 @@ function RecommendationCard({ listing, reason, basedOn }: { listing: Marketplace
   }
 
   return (
-    <div className="border-2 border-waxe-border bg-waxe-card min-w-[260px] max-w-[300px] shrink-0 snap-start flex flex-col">
+    <div className="border-2 border-waxe-border bg-waxe-card min-w-[260px] max-w-[300px] shrink-0 snap-start flex flex-col clip-card">
       <div className="p-3 flex-1">
         <div className="flex gap-2.5 mb-2">
           <div

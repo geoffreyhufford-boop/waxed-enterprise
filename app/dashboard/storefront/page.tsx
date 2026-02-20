@@ -50,14 +50,14 @@ export default function StorefrontPage() {
         {/* ── Left: Live Storefront Preview ── */}
         <div className="lg:col-span-3 min-h-0 flex flex-col">
           {/* Browser chrome */}
-          <div className="shrink-0 bg-waxe-surface px-3 py-2 flex items-center gap-2 border-2 border-b-0 border-waxe-border">
+          <div className="shrink-0 bg-waxe-surface px-3 py-2 flex items-center gap-2 border-2 border-b-0 border-waxe-border scanline">
             <div className="flex gap-1">
               <div className="w-2 h-2 rounded-full bg-waxe-negative/40" />
               <div className="w-2 h-2 rounded-full bg-waxe-warm/50" />
               <div className="w-2 h-2 rounded-full bg-waxe-positive/40" />
             </div>
             <div className="flex-1 text-center">
-              <span className="text-[10px] text-waxe-text-muted font-mono">{storefrontConfig.url}</span>
+              <span className="text-[11px] text-waxe-text-muted font-mono">{storefrontConfig.url}</span>
             </div>
           </div>
 
@@ -67,22 +67,22 @@ export default function StorefrontPage() {
             {/* Nav bar */}
             <div className="flex items-center justify-between px-6 py-3 border-b" style={{ borderColor: '#E5E5E5' }}>
               <div className="flex items-center gap-4">
-                <span className="text-[10px] font-medium" style={{ color: '#888' }}>Vinyl</span>
-                <span className="text-[10px] font-medium" style={{ color: '#888' }}>New Arrivals</span>
-                <span className="text-[10px] font-medium" style={{ color: '#888' }}>Genres</span>
+                <span className="text-[11px] font-medium" style={{ color: '#888' }}>Vinyl</span>
+                <span className="text-[11px] font-medium" style={{ color: '#888' }}>New Arrivals</span>
+                <span className="text-[11px] font-medium" style={{ color: '#888' }}>Genres</span>
               </div>
-              <div className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] text-white font-bold" style={{ background: storefrontConfig.accentColor }}>
+              <div className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] text-white font-bold" style={{ background: storefrontConfig.accentColor }}>
                 {storefrontConfig.logoText}
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-[10px]" style={{ color: '#888' }}>♡</span>
-                <span className="text-[10px]" style={{ color: '#888' }}>☰</span>
+                <span className="text-[11px]" style={{ color: '#888' }}>♡</span>
+                <span className="text-[11px]" style={{ color: '#888' }}>☰</span>
               </div>
             </div>
 
             {/* Hero section */}
             <div className="px-6 pt-6 pb-2">
-              <p className="text-[10px] leading-relaxed mb-3" style={{ color: '#999', maxWidth: '60%' }}>
+              <p className="text-[11px] leading-relaxed mb-3" style={{ color: '#999', maxWidth: '60%' }}>
                 {storefrontConfig.description}
               </p>
               <h1 className="font-black tracking-tighter leading-[0.85]" style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', color: '#111' }}>
@@ -90,14 +90,14 @@ export default function StorefrontPage() {
                   <span key={i} className="block">{word}</span>
                 ))}
               </h1>
-              <button className="mt-4 px-4 py-1.5 text-[10px] font-bold text-white rounded-full" style={{ background: storefrontConfig.accentColor }}>
+              <button className="mt-4 px-4 py-1.5 text-[11px] font-bold text-white rounded-full" style={{ background: storefrontConfig.accentColor }}>
                 Go to e-shop
               </button>
             </div>
 
             {/* Marquee strips */}
             <div className="border-y overflow-hidden" style={{ borderColor: '#E5E5E5' }}>
-              <div className="py-2 px-4 flex items-center gap-3 whitespace-nowrap text-[10px]" style={{ color: '#555' }}>
+              <div className="py-2 px-4 flex items-center gap-3 whitespace-nowrap text-[11px]" style={{ color: '#555' }}>
                 {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, i) => (
                   <span key={i} className="flex items-center gap-1.5">
                     <span className="underline font-medium" style={{ color: '#111' }}>{item.text}</span>
@@ -108,7 +108,7 @@ export default function StorefrontPage() {
               </div>
             </div>
             <div className="border-b overflow-hidden" style={{ borderColor: '#E5E5E5' }}>
-              <div className="py-2 px-4 flex items-center gap-3 whitespace-nowrap text-[10px]" style={{ color: '#555' }}>
+              <div className="py-2 px-4 flex items-center gap-3 whitespace-nowrap text-[11px]" style={{ color: '#555' }}>
                 {[...marqueeItems2, ...marqueeItems2].map((item, i) => (
                   <span key={i} className="flex items-center gap-1.5">
                     {item.icon && <span>{item.icon}</span>}
@@ -119,7 +119,7 @@ export default function StorefrontPage() {
               </div>
             </div>
             <div className="border-b overflow-hidden" style={{ borderColor: '#E5E5E5' }}>
-              <div className="py-2 px-4 flex items-center gap-3 whitespace-nowrap text-[10px]" style={{ color: '#555' }}>
+              <div className="py-2 px-4 flex items-center gap-3 whitespace-nowrap text-[11px]" style={{ color: '#555' }}>
                 {[...marqueeItems3, ...marqueeItems3].map((item, i) => (
                   <span key={i} className="flex items-center gap-1.5">
                     {item.icon && <span>{item.icon}</span>}
@@ -137,8 +137,8 @@ export default function StorefrontPage() {
                   <h2 className={`font-black ${si === 0 ? 'text-xl' : 'text-base'}`} style={{ color: storefrontConfig.accentColor }}>
                     {shelf.name} {si === 0 && <span className="text-xs">({'\u266B'})</span>}
                   </h2>
-                  <span className="text-[10px]" style={{ color: '#999' }}>{shelf.recordCount} records</span>
-                  <span className="ml-auto text-[10px] underline" style={{ color: '#666' }}>View all →</span>
+                  <span className="text-[11px]" style={{ color: '#999' }}>{shelf.recordCount} records</span>
+                  <span className="ml-auto text-[11px] underline" style={{ color: '#666' }}>View all →</span>
                 </div>
                 <div className={`grid gap-2 ${si === 0 ? 'grid-cols-4' : 'grid-cols-3'}`}>
                   {(si === 0 ? featuredRecords : shelf.records.map(r => recordMap[r.id]).filter(Boolean)).map((record) => (
@@ -152,8 +152,8 @@ export default function StorefrontPage() {
                           </div>
                         )}
                       </div>
-                      <p className="text-[9px] truncate" style={{ color: '#333' }}>{record.artist} — {record.title}</p>
-                      <p className="text-[9px] font-medium" style={{ color: '#111' }}>${record.price.toFixed(2)}</p>
+                      <p className="text-[11px] truncate" style={{ color: '#333' }}>{record.artist} — {record.title}</p>
+                      <p className="text-[11px] font-medium" style={{ color: '#111' }}>${record.price.toFixed(2)}</p>
                     </div>
                   ))}
                 </div>
@@ -171,7 +171,7 @@ export default function StorefrontPage() {
                 <blockquote className="text-sm font-black italic leading-tight mb-3 uppercase" style={{ color: storefrontConfig.accentColor }}>
                   &laquo;This isn&apos;t merely a store where you can purchase records, it&apos;s a sanctuary for true vinyl aficionados&raquo;
                 </blockquote>
-                <p className="text-[10px]" style={{ color: '#999' }}>— Store Owner</p>
+                <p className="text-[11px]" style={{ color: '#999' }}>— Store Owner</p>
               </div>
             </div>
 
@@ -191,8 +191,12 @@ export default function StorefrontPage() {
         <div className="lg:col-span-2 min-h-0 overflow-y-auto space-y-4">
 
           {/* Customization */}
-          <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5">
-            <h2 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em] mb-4">Customize</h2>
+          <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5 clip-card corner-marks">
+            <div className="flex items-center gap-2 mb-2">
+              <h2 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Customize</h2>
+              <span className="hatch-inline-lg hatch-inline-strong flex-1" style={{ width: 'auto' }} />
+            </div>
+            <div className="hatch-divider mb-4" />
             <div className="space-y-3">
               <div>
                 <label className="label-text">Store Name</label>
@@ -211,14 +215,14 @@ export default function StorefrontPage() {
                   <label className="label-text">Primary</label>
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 border-2 border-waxe-border" style={{ background: storefrontConfig.primaryColor }} />
-                    <span className="text-[10px] font-mono text-waxe-text-muted">{storefrontConfig.primaryColor}</span>
+                    <span className="text-[11px] font-mono text-waxe-text-muted">{storefrontConfig.primaryColor}</span>
                   </div>
                 </div>
                 <div>
                   <label className="label-text">Accent</label>
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 border-2 border-waxe-border" style={{ background: storefrontConfig.accentColor }} />
-                    <span className="text-[10px] font-mono text-waxe-text-muted">{storefrontConfig.accentColor}</span>
+                    <span className="text-[11px] font-mono text-waxe-text-muted">{storefrontConfig.accentColor}</span>
                   </div>
                 </div>
               </div>
@@ -226,11 +230,15 @@ export default function StorefrontPage() {
           </div>
 
           {/* Shelves */}
-          <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Shelves</h2>
+          <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5 clip-card">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <h2 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Shelves</h2>
+                <span className="hatch-inline-lg hatch-inline-strong flex-1" style={{ width: 'auto' }} />
+              </div>
               <button className="btn-ghost text-xs">+ Add</button>
             </div>
+            <div className="hatch-divider mb-3" />
             <div className="space-y-2">
               {shelves.map((shelf, i) => (
                 <ShelfCard
@@ -245,11 +253,15 @@ export default function StorefrontPage() {
           </div>
 
           {/* Selected shelf records */}
-          <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">{activeShelf.name}</h2>
+          <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5 clip-card">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <h2 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">{activeShelf.name}</h2>
+                <span className="hatch-inline flex-1" style={{ width: 'auto' }} />
+              </div>
               <button className="btn-ghost text-xs">+ Add</button>
             </div>
+            <div className="hatch-divider mb-3" />
             <div className="space-y-1">
               {activeShelf.records.map((record) => (
                 <div key={record.id} className="flex items-center justify-between py-2 px-2 hover:bg-waxe-surface/30 transition-colors">
@@ -258,14 +270,14 @@ export default function StorefrontPage() {
                       {artworkMap[record.id] ? (
                         <img src={artworkMap[record.id]} alt="" className="w-full h-full object-cover" />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-[10px] font-bold text-waxe-text-muted">
+                        <div className="w-full h-full flex items-center justify-center text-[11px] font-bold text-waxe-text-muted">
                           {record.artist.split(' ').pop()?.charAt(0)}
                         </div>
                       )}
                     </div>
                     <div className="min-w-0">
                       <p className="text-xs text-waxe-text truncate">{record.artist}</p>
-                      <p className="text-[10px] text-waxe-text-muted truncate">{record.title}</p>
+                      <p className="text-[11px] text-waxe-text-muted truncate">{record.title}</p>
                     </div>
                   </div>
                   <button

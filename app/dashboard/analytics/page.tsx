@@ -10,9 +10,9 @@ import {
 } from '@/lib/dashboard-data'
 
 const chartTooltipStyle = {
-  contentStyle: { background: '#EEE9DF', border: '2px solid #2C3B4D', borderRadius: '0', fontSize: '10px', fontFamily: 'var(--font-mono)' },
-  labelStyle: { color: '#4A5B6D', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.1em', fontSize: '9px' },
-  itemStyle: { color: '#1B2632', fontFamily: 'var(--font-mono)' },
+  contentStyle: { background: '#111B26', border: '2px solid #2A4058', borderRadius: '0', fontSize: '10px', fontFamily: 'var(--font-mono)' },
+  labelStyle: { color: '#546878', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.1em', fontSize: '9px' },
+  itemStyle: { color: '#D8D0C4', fontFamily: 'var(--font-mono)' },
 }
 
 export default function AnalyticsPage() {
@@ -55,12 +55,12 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Panel tabs — directly above panels */}
-      <div className="shrink-0 flex gap-1.5 pb-3 mb-3 w-fit border-b-2 border-waxe-border pr-4">
+      <div className="shrink-0 flex gap-1.5 pb-3 mb-3 w-fit border-b border-waxe-border pr-4">
         {['Sales', 'Inventory', 'Restock'].map((label, i) => (
           <button
             key={label}
             onClick={() => scrollToPanel(i)}
-            className={`text-[9px] font-bold uppercase tracking-[0.1em] px-3 py-1.5 border-2 ${
+            className={`text-[11px] font-bold uppercase tracking-[0.1em] px-3 py-1.5 border ${
               activePanel === i
                 ? 'bg-waxe-text text-waxe-deep border-waxe-text'
                 : 'text-waxe-text-muted border-waxe-border hover:text-waxe-text'
@@ -88,9 +88,9 @@ export default function AnalyticsPage() {
                     <YAxis tick={{ fill: '#4A5B6D', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
                     <Tooltip {...chartTooltipStyle} formatter={(value) => [`$${Number(value).toLocaleString()}`, '']} />
                     <Legend iconType="plainline" wrapperStyle={{ fontSize: '10px', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em', paddingTop: '8px' }} />
-                    <Bar dataKey="discogs" fill="#1B2632" name="Discogs" radius={[2, 2, 0, 0]} />
+                    <Bar dataKey="discogs" fill="#162030" name="Discogs" radius={[2, 2, 0, 0]} />
                     <Bar dataKey="storefront" fill="#A35139" name="Storefront" radius={[2, 2, 0, 0]} />
-                    <Bar dataKey="pos" fill="#FFB162" name="POS" radius={[2, 2, 0, 0]} />
+                    <Bar dataKey="pos" fill="#E89A40" name="POS" radius={[2, 2, 0, 0]} />
                   </BarChart>
                 )
               })()}
@@ -103,16 +103,16 @@ export default function AnalyticsPage() {
                 <YAxis tick={{ fill: '#4A5B6D', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
                 <Tooltip {...chartTooltipStyle} formatter={(value, name) => [`$${Number(value).toLocaleString()}`, name === 'margin' ? 'Margin' : name === 'cost' ? 'COGS' : String(name)]} />
                 <Bar dataKey="cost" stackId="1" fill="#2C3B4D" name="COGS" radius={[0, 0, 0, 0]} />
-                <Bar dataKey="margin" stackId="1" fill="#FFB162" name="Margin" radius={[2, 2, 0, 0]} />
+                <Bar dataKey="margin" stackId="1" fill="#E89A40" name="Margin" radius={[2, 2, 0, 0]} />
               </BarChart>
             </ChartCard>
           </div>
 
           {/* Sidebar — Genre breakdown */}
           <div className="flex flex-col gap-4 min-h-0">
-            <div className="relative flex-1 min-h-0 bg-waxe-card border-2 border-waxe-border rounded-none flex flex-col">
+            <div className="relative flex-1 min-h-0 bg-waxe-card border-2 border-waxe-border rounded-none flex flex-col clip-card">
               <PinButton widgetId="analytics-revenue-by-genre" />
-              <h3 className="shrink-0 px-5 pt-5 pb-3 text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Revenue <span className="text-waxe-cool">{'>>'}</span> By Genre</h3>
+              <h3 className="shrink-0 px-5 pt-5 pb-3 text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Revenue <span className="text-waxe-cool">{'>>'}</span> <span className="hatch-inline mx-1" /> By Genre</h3>
               <div className="flex-1 min-h-0 overflow-y-auto px-5 pb-5 space-y-3">
                 {genreBreakdowns.map((g) => (
                   <div key={g.genre}>
@@ -124,7 +124,7 @@ export default function AnalyticsPage() {
                       <div className="flex-1 h-2 bg-waxe-surface overflow-hidden">
                         <div className="h-full bg-waxe-warm" style={{ width: `${g.percentage}%` }} />
                       </div>
-                      <span className="text-[10px] text-waxe-text-muted w-10 shrink-0 text-right font-mono">{g.percentage}%</span>
+                      <span className="text-[11px] text-waxe-text-muted w-10 shrink-0 text-right font-mono">{g.percentage}%</span>
                     </div>
                   </div>
                 ))}
@@ -132,14 +132,14 @@ export default function AnalyticsPage() {
             </div>
 
             {/* Channel split summary */}
-            <div className="relative shrink-0 bg-waxe-card border-2 border-waxe-border rounded-none p-5">
+            <div className="relative shrink-0 bg-waxe-card border-2 border-waxe-border rounded-none p-5 clip-card">
               <PinButton widgetId="analytics-channel-split" />
-              <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em] mb-4">Channel <span className="text-waxe-cool">{'>>'}</span> Split</h3>
+              <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em] mb-4">Channel <span className="text-waxe-cool">{'>>'}</span> <span className="hatch-inline mx-1" /> Split</h3>
               <div className="space-y-3">
                 {[
-                  { name: 'Discogs', pct: 43, color: '#1B2632' },
+                  { name: 'Discogs', pct: 43, color: '#162030' },
                   { name: 'Storefront', pct: 33, color: '#A35139' },
-                  { name: 'In-store', pct: 24, color: '#FFB162' },
+                  { name: 'In-store', pct: 24, color: '#E89A40' },
                 ].map((ch) => (
                   <div key={ch.name} className="flex items-center gap-2">
                     <div className="w-2 h-2 shrink-0" style={{ backgroundColor: ch.color }} />
@@ -164,7 +164,7 @@ export default function AnalyticsPage() {
                 <Tooltip {...chartTooltipStyle} formatter={(value, name) => [name === 'count' ? `${value} items` : `$${Number(value).toLocaleString()}`, name === 'count' ? 'Items' : 'Value']} />
                 <Bar dataKey="count" radius={[2, 2, 0, 0]}>
                   {daysOnShelfData.map((entry, index) => (
-                    <Cell key={index} fill={index >= 4 ? '#A35139' : index >= 3 ? '#C9C1B1' : '#1B2632'} />
+                    <Cell key={index} fill={index >= 4 ? '#A35139' : index >= 3 ? '#C9C1B1' : '#162030'} />
                   ))}
                 </Bar>
               </BarChart>
@@ -177,8 +177,8 @@ export default function AnalyticsPage() {
                 <YAxis type="category" dataKey="artist" tick={{ fill: '#4A5B6D', fontSize: 9 }} axisLine={false} tickLine={false} width={90} />
                 <Tooltip {...chartTooltipStyle} formatter={(value) => [`$${value}`, '']} />
                 <Legend iconType="plainline" wrapperStyle={{ fontSize: '10px', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.05em', paddingTop: '8px' }} />
-                <Bar dataKey="yourPrice" fill="#1B2632" barSize={6} name="Your Price" radius={[0, 2, 2, 0]} />
-                <Bar dataKey="discogsMedian" fill="#FFB162" barSize={6} name="Discogs Median" radius={[0, 2, 2, 0]} />
+                <Bar dataKey="yourPrice" fill="#162030" barSize={6} name="Your Price" radius={[0, 2, 2, 0]} />
+                <Bar dataKey="discogsMedian" fill="#E89A40" barSize={6} name="Discogs Median" radius={[0, 2, 2, 0]} />
               </BarChart>
             </ChartCard>
           </div>
@@ -186,10 +186,10 @@ export default function AnalyticsPage() {
           {/* Sidebar — Dead stock + condition */}
           <div className="flex flex-col gap-4 min-h-0">
             {/* Dead stock alert */}
-            <div className="relative shrink-0 bg-waxe-card border-2 border-waxe-border rounded-none p-5">
+            <div className="relative shrink-0 bg-waxe-card border-2 border-waxe-border rounded-none p-5 clip-card corner-marks accent-strip-left accent-negative">
               <PinButton widgetId="analytics-dead-stock" />
               <div className="mb-4">
-                <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Dead Stock <span className="text-waxe-cool">{'>>'}</span> 90+ Days</h3>
+                <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Dead Stock <span className="text-waxe-cool">{'>>'}</span> <span className="hatch-inline mx-1" /> 90+ Days</h3>
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between items-baseline">
@@ -212,9 +212,9 @@ export default function AnalyticsPage() {
             </div>
 
             {/* Condition distribution */}
-            <div className="relative flex-1 min-h-0 bg-waxe-card border-2 border-waxe-border rounded-none flex flex-col">
+            <div className="relative flex-1 min-h-0 bg-waxe-card border-2 border-waxe-border rounded-none flex flex-col clip-card">
               <PinButton widgetId="analytics-condition" />
-              <h3 className="shrink-0 px-5 pt-5 pb-3 text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Condition <span className="text-waxe-cool">{'>>'}</span> Distribution</h3>
+              <h3 className="shrink-0 px-5 pt-5 pb-3 text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Condition <span className="text-waxe-cool">{'>>'}</span> <span className="hatch-inline mx-1" /> Distribution</h3>
               <div className="flex-1 min-h-0 overflow-y-auto px-5 pb-5 space-y-3">
                 {conditionBreakdowns.map((c) => (
                   <div key={c.condition}>
@@ -226,7 +226,7 @@ export default function AnalyticsPage() {
                       <div className="flex-1 h-2 bg-waxe-surface overflow-hidden">
                         <div className="h-full bg-waxe-text" style={{ width: `${c.percentage}%` }} />
                       </div>
-                      <span className="text-[10px] text-waxe-text-muted w-10 shrink-0 text-right font-mono">{c.percentage}%</span>
+                      <span className="text-[11px] text-waxe-text-muted w-10 shrink-0 text-right font-mono">{c.percentage}%</span>
                     </div>
                   </div>
                 ))}
@@ -245,8 +245,8 @@ export default function AnalyticsPage() {
                   <XAxis dataKey="week" tick={{ fill: '#4A5B6D', fontSize: 11 }} axisLine={false} tickLine={false} />
                   <YAxis tick={{ fill: '#4A5B6D', fontSize: 11 }} axisLine={false} tickLine={false} />
                   <Tooltip {...chartTooltipStyle} />
-                  <Bar dataKey="sold" fill="#FFB162" radius={[2, 2, 0, 0]} name="Sold" />
-                  <Bar dataKey="added" fill="#1B2632" radius={[2, 2, 0, 0]} name="Added" />
+                  <Bar dataKey="sold" fill="#E89A40" radius={[2, 2, 0, 0]} name="Sold" />
+                  <Bar dataKey="added" fill="#162030" radius={[2, 2, 0, 0]} name="Added" />
                 </BarChart>
               </ChartCard>
             </div>
@@ -284,22 +284,22 @@ export default function AnalyticsPage() {
 
           {/* Sidebar — Missed searches */}
           <div className="flex flex-col gap-4 min-h-0">
-            <div className="relative flex-1 min-h-0 bg-waxe-card border-2 border-waxe-border rounded-none flex flex-col">
+            <div className="relative flex-1 min-h-0 bg-waxe-card border-2 border-waxe-border rounded-none flex flex-col clip-card">
               <PinButton widgetId="analytics-missed-searches" />
               <div className="shrink-0 px-5 pt-5 pb-1">
-                <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Missed <span className="text-waxe-cool">{'>>'}</span> Searches</h3>
+                <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Missed <span className="text-waxe-cool">{'>>'}</span> <span className="hatch-inline mx-1" /> Searches</h3>
               </div>
-              <p className="shrink-0 px-5 pb-3 text-[10px] text-waxe-text-muted">What buyers searched for that you don&apos;t carry</p>
+              <p className="shrink-0 px-5 pb-3 text-[11px] text-waxe-text-muted">What buyers searched for that you don&apos;t carry</p>
               <div className="flex-1 min-h-0 overflow-y-auto px-5 pb-5 space-y-3">
                 {missedSearches.map((s) => (
                   <div key={s.query} className="flex items-start justify-between gap-2 py-1.5 border-b border-waxe-border/30 last:border-0">
                     <div className="min-w-0">
                       <p className="text-xs text-waxe-text font-medium truncate">{s.query}</p>
-                      <p className="text-[10px] text-waxe-text-muted">{s.lastSearched}</p>
+                      <p className="text-[11px] text-waxe-text-muted">{s.lastSearched}</p>
                     </div>
                     <div className="shrink-0 text-right">
                       <p className="text-sm font-bold text-waxe-warm font-mono">{s.searchCount}</p>
-                      <p className="text-[9px] text-waxe-text-muted uppercase">searches</p>
+                      <p className="text-[11px] text-waxe-text-muted uppercase">searches</p>
                     </div>
                   </div>
                 ))}

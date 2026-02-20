@@ -108,7 +108,7 @@ export default function FulfillmentPage() {
               <td className="px-4 py-3 text-sm text-waxe-text-secondary max-w-[220px] truncate">{itemSummary(order)}</td>
               <td className="px-4 py-3 text-sm font-medium text-waxe-text">${order.total.toFixed(2)}</td>
               <td className="px-4 py-3">
-                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 ${shippingMethodStyle[order.shippingMethod]}`}>
+                <span className={`text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 ${shippingMethodStyle[order.shippingMethod]}`}>
                   {shippingMethodLabel[order.shippingMethod]}
                 </span>
               </td>
@@ -131,7 +131,7 @@ export default function FulfillmentPage() {
       {selectedOrder && (
         <div className="fixed inset-0 z-50 flex items-start justify-center pt-[5vh]">
           <div className="absolute inset-0 bg-waxe-text/40" onClick={() => setSelectedOrder(null)} />
-          <div className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-waxe-base border-2 border-waxe-border rounded-none shadow-xl">
+          <div className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto bg-waxe-base border-2 border-waxe-border rounded-none shadow-xl clip-modal">
             {/* Header */}
             <div className="sticky top-0 bg-waxe-base border-b border-waxe-border p-5 z-10">
               <div className="flex items-center justify-between">
@@ -150,7 +150,11 @@ export default function FulfillmentPage() {
             <div className="p-5 space-y-5">
               {/* Customer */}
               <div className="bg-waxe-surface/30 rounded-none p-4">
-                <h3 className="text-[10px] font-black text-waxe-text uppercase tracking-[0.1em] mb-3">Customer</h3>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="designation-tag">Customer</span>
+                  <span className="hatch-inline flex-1" style={{ width: 'auto' }} />
+                </div>
+                <div className="hatch-divider mb-3" />
                 <div className="space-y-1.5">
                   <p className="text-sm font-medium text-waxe-text">{selectedOrder.customer.name}</p>
                   <p className="text-xs text-waxe-text-secondary">{selectedOrder.customer.email}</p>
@@ -160,12 +164,16 @@ export default function FulfillmentPage() {
 
               {/* Items */}
               <div className="bg-waxe-surface/30 rounded-none p-4">
-                <h3 className="text-[10px] font-black text-waxe-text uppercase tracking-[0.1em] mb-3">Items</h3>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="designation-tag">Items</span>
+                  <span className="hatch-inline flex-1" style={{ width: 'auto' }} />
+                </div>
+                <div className="hatch-divider mb-3" />
                 <div className="space-y-3">
                   {selectedOrder.items.map((item) => (
                     <div key={item.recordId} className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-waxe-deep flex items-center justify-center text-[10px] font-bold text-waxe-text-muted">
+                        <div className="w-10 h-10 bg-waxe-deep flex items-center justify-center text-[11px] font-bold text-waxe-text-muted">
                           {item.artist.split(' ').pop()?.slice(0, 2).toUpperCase()}
                         </div>
                         <div>
@@ -175,7 +183,7 @@ export default function FulfillmentPage() {
                       </div>
                       <div className="text-right">
                         <p className="text-sm font-medium text-waxe-text">${item.price.toFixed(2)}</p>
-                        <p className="text-[10px] text-waxe-text-muted">Qty: {item.qty}</p>
+                        <p className="text-[11px] text-waxe-text-muted">Qty: {item.qty}</p>
                       </div>
                     </div>
                   ))}
@@ -188,11 +196,15 @@ export default function FulfillmentPage() {
 
               {/* Shipping */}
               <div className="bg-waxe-surface/30 rounded-none p-4">
-                <h3 className="text-[10px] font-black text-waxe-text uppercase tracking-[0.1em] mb-3">Shipping</h3>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="designation-tag">Shipping</span>
+                  <span className="hatch-inline flex-1" style={{ width: 'auto' }} />
+                </div>
+                <div className="hatch-divider mb-3" />
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs text-waxe-text-muted mb-1 block">Method</label>
-                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 ${shippingMethodStyle[selectedOrder.shippingMethod]}`}>
+                    <span className={`text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 ${shippingMethodStyle[selectedOrder.shippingMethod]}`}>
                       {shippingMethodLabel[selectedOrder.shippingMethod]}
                     </span>
                   </div>

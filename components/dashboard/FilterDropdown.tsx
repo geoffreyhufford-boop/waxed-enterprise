@@ -27,10 +27,10 @@ export default function FilterDropdown({ label, options, value, onChange }: Filt
         onClick={() => setOpen(!open)}
         className={`pill ${value !== 'All' ? 'pill-active' : ''} cursor-pointer hover:border-waxe-border-hover transition-colors`}
       >
-        {label}: {value} <span className="ml-1 text-[10px]">▾</span>
+        {label}: {value} <span className="ml-1 text-[11px]">▾</span>
       </button>
       {open && (
-        <div className="absolute top-full mt-1 left-0 z-40 min-w-[140px] bg-waxe-surface border border-waxe-border rounded-none py-1 shadow-xl">
+        <div className="absolute top-full mt-1 left-0 z-40 min-w-[140px] bg-waxe-surface border border-waxe-border rounded-none py-1 shadow-xl clip-card">
           {options.map((opt) => (
             <button
               key={opt}

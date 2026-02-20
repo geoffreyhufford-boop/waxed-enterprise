@@ -30,7 +30,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function(){var t=localStorage.getItem('waxe-theme');
+          if(t==='light'){document.documentElement.classList.remove('dark');document.documentElement.classList.add('light')}})()
+        `}} />
+      </head>
       <body className="min-h-screen">
         {children}
       </body>

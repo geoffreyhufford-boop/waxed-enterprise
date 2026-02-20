@@ -24,7 +24,7 @@ export default function MessageThread({ conversation, isActive, onClick }: Messa
         <div className="flex items-center gap-2">
           <span className="text-xs text-waxe-text-muted">{conversation.lastTime}</span>
           {conversation.unread > 0 && (
-            <span className="w-5 h-5 rounded-full bg-waxe-warm flex items-center justify-center text-[10px] font-bold text-waxe-deep">
+            <span className="w-5 h-5 rounded-full bg-waxe-warm flex items-center justify-center text-[11px] font-bold text-waxe-deep">
               {conversation.unread}
             </span>
           )}
