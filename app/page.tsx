@@ -16,7 +16,7 @@ import {
 
 export default function Home() {
   const router = useRouter()
-  useEffect(() => { router.replace('/dashboard') }, [router])
+  // useEffect(() => { router.replace('/dashboard') }, [router])
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
