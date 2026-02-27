@@ -497,14 +497,7 @@
   .stat-card {
     @apply bg-waxe-card border-2 border-waxe-border rounded-none px-3 py-2;
     clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
-    box-shadow: inset 5px 0 0 var(--color-waxe-warm);
-    background-image: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 4px,
-      var(--color-waxe-scanline) 4px,
-      var(--color-waxe-scanline) 5px
-    );
+    box-shadow: inset 3px 0 0 var(--color-waxe-warm);
   }
 
   /* ── Form Elements ── */

@@ -1,6 +1,7 @@
 'use client'
 
-import { DashboardHeader, StatCard } from '@/components/dashboard'
+import { useState } from 'react'
+import { DashboardHeader, StatCard, DateRangeSelector, SalesChannelFilter } from '@/components/dashboard'
 import { quickStats } from '@/lib/dashboard-data'
 import { usePinnedWidgets } from '@/lib/use-pinned-widgets'
 import { widgetRegistry } from '@/lib/widget-registry'
@@ -51,6 +52,8 @@ function SortableWidget({ widget }: { widget: WidgetDef }) {
 }
 
 export default function OverviewPage() {
+  const [dateRange, setDateRange] = useState('Last 30 Days')
+  const [channel, setChannel] = useState('All Channels')
   const { pinned, reorder } = usePinnedWidgets()
 
   const widgets = pinned
@@ -83,7 +86,11 @@ export default function OverviewPage() {
         title="Overview"
         subtitle="Wax & Groove Records — Enterprise Plan"
         actions={
-          <button className="btn-primary text-sm px-4 py-2">+ Add Record</button>
+          <div className="flex gap-2 items-center">
+            <SalesChannelFilter value={channel} onChange={setChannel} />
+            <DateRangeSelector presets={['Today', 'Last 7 Days', 'Last 30 Days', 'This Quarter', 'This Year']} value={dateRange} onChange={setDateRange} />
+            <button className="btn-primary text-sm px-4 py-2">+ Add Record</button>
+          </div>
         }
       />
 

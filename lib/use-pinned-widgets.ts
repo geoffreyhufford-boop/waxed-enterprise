@@ -5,6 +5,7 @@ import { useSyncExternalStore, useCallback } from 'react'
 const STORAGE_KEY = 'waxed-pinned-widgets'
 
 const DEFAULT_PINS = [
+  'overview-getting-started',
   'overview-revenue-chart',
   'overview-top-sellers',
   'overview-activity-feed',

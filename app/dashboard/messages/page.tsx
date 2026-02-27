@@ -2,24 +2,57 @@
 
 import { useState } from 'react'
 import { DashboardHeader, MessageThread } from '@/components/dashboard'
-import { conversations } from '@/lib/dashboard-data'
+import { conversations, networkConversations } from '@/lib/dashboard-data'
 
 export default function MessagesPage() {
+  const [activeTab, setActiveTab] = useState<'marketplace' | 'network'>('marketplace')
   const [activeConv, setActiveConv] = useState(0)
   const [search, setSearch] = useState('')
-  const active = conversations[activeConv]
+  const [showCompose, setShowCompose] = useState(false)
 
-  const filteredConversations = conversations.filter((c) =>
+  const allConversations = activeTab === 'marketplace' ? conversations : networkConversations
+  const active = allConversations[activeConv] || allConversations[0]
+
+  const filteredConversations = allConversations.filter((c) =>
     c.customerName.toLowerCase().includes(search.toLowerCase()) ||
     c.lastMessage.toLowerCase().includes(search.toLowerCase())
   )
+
+  const totalUnread = conversations.reduce((sum, c) => sum + c.unread, 0) +
+    networkConversations.reduce((sum, c) => sum + c.unread, 0)
 
   return (
     <div className="flex flex-col flex-1 min-h-0">
       <DashboardHeader
         title="Messages"
-        subtitle={`${conversations.reduce((sum, c) => sum + c.unread, 0)} unread messages`}
+        subtitle={`${totalUnread} unread messages`}
+        actions={
+          <button className="btn-primary text-sm px-4 py-2" onClick={() => setShowCompose(true)}>+ Compose</button>
+        }
       />
+
+      {/* Tab bar */}
+      <div className="shrink-0 flex gap-1.5 pb-3 mb-3 w-fit border-b border-waxe-border pr-4">
+        {([
+          { key: 'marketplace' as const, label: 'Marketplace', count: conversations.reduce((s, c) => s + c.unread, 0) },
+          { key: 'network' as const, label: 'Network', count: networkConversations.reduce((s, c) => s + c.unread, 0) },
+        ]).map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => { setActiveTab(tab.key); setActiveConv(0) }}
+            className={`text-[11px] font-bold uppercase tracking-[0.1em] px-3 py-1.5 border ${
+              activeTab === tab.key
+                ? 'bg-waxe-text text-waxe-deep border-waxe-text'
+                : 'text-waxe-text-muted border-waxe-border hover:text-waxe-text'
+            }`}
+          >
+            {tab.label}
+            {tab.count > 0 && (
+              <span className="ml-1.5 inline-flex items-center justify-center w-5 h-5 text-[11px] font-bold bg-waxe-warm text-waxe-deep">{tab.count}</span>
+            )}
+          </button>
+        ))}
+      </div>
 
       <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-0 rounded-none border-2 border-waxe-border overflow-hidden clip-card">
         {/* Left: Conversation List */}
@@ -34,12 +67,12 @@ export default function MessagesPage() {
             />
           </div>
           <div className="flex-1 overflow-y-auto">
-            {filteredConversations.map((conv, i) => (
+            {filteredConversations.map((conv) => (
               <MessageThread
                 key={conv.id}
                 conversation={conv}
-                isActive={conversations.indexOf(conv) === activeConv}
-                onClick={() => setActiveConv(conversations.indexOf(conv))}
+                isActive={allConversations.indexOf(conv) === activeConv}
+                onClick={() => setActiveConv(allConversations.indexOf(conv))}
               />
             ))}
           </div>
@@ -72,7 +105,7 @@ export default function MessagesPage() {
                   <div className={`flex items-center gap-2 mt-1 ${msg.sender === 'dealer' ? 'justify-end' : 'justify-start'}`}>
                     <span className="text-[11px] text-waxe-text-muted">{msg.time}</span>
                     {msg.linkedItem && (
-                      <span className="text-[11px] text-waxe-cool font-mono">⟁ {msg.linkedItem}</span>
+                      <span className="text-[11px] text-waxe-cool font-mono">&#x27C1; {msg.linkedItem}</span>
                     )}
                   </div>
                 </div>
@@ -93,6 +126,33 @@ export default function MessagesPage() {
           </div>
         </div>
       </div>
+
+      {/* Compose Modal */}
+      {showCompose && (
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh]">
+          <div className="absolute inset-0 bg-waxe-text/40" onClick={() => setShowCompose(false)} />
+          <div className="relative w-full max-w-lg bg-waxe-base border-2 border-waxe-border rounded-none shadow-xl clip-modal p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-black text-waxe-text uppercase tracking-tight">New Message</h2>
+              <button onClick={() => setShowCompose(false)} className="text-waxe-text-muted hover:text-waxe-text text-lg">&times;</button>
+            </div>
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs font-medium text-waxe-text-muted uppercase tracking-wider mb-1.5 block">To:</label>
+                <input type="text" className="input-field" placeholder="Customer or store name..." autoFocus />
+              </div>
+              <div>
+                <label className="text-xs font-medium text-waxe-text-muted uppercase tracking-wider mb-1.5 block">Message:</label>
+                <textarea className="input-field min-h-[100px] resize-y" placeholder="Type your message..." />
+              </div>
+              <div className="flex justify-end gap-2 pt-2">
+                <button className="btn-secondary text-sm px-4 py-2" onClick={() => setShowCompose(false)}>Cancel</button>
+                <button className="btn-primary text-sm px-4 py-2" onClick={() => setShowCompose(false)}>Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

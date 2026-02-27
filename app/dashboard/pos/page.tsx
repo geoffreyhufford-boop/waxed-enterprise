@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { DashboardHeader, StatCard, StatusBadge, DataTable } from '@/components/dashboard'
+import { DashboardHeader, StatCard, StatusBadge, DataTable, DateRangeSelector } from '@/components/dashboard'
 import { transactions, posQuickStats, inventoryRecords } from '@/lib/dashboard-data'
 
 const methodIcons: Record<string, string> = {
@@ -14,6 +14,7 @@ const quickLookupResults = inventoryRecords.slice(0, 5)
 
 export default function POSPage() {
   const [lookupQuery, setLookupQuery] = useState('')
+  const [dateRange, setDateRange] = useState('Today')
 
   const lookupResults = lookupQuery
     ? inventoryRecords.filter(r => {
@@ -30,6 +31,7 @@ export default function POSPage() {
         actions={
           <div className="flex items-center gap-3">
             <StatusBadge status="connected" label="Square Connected" />
+            <DateRangeSelector presets={['Today', 'This Week', 'This Month']} value={dateRange} onChange={setDateRange} />
             <button className="btn-secondary text-sm px-4 py-2">Sync Now</button>
           </div>
         }

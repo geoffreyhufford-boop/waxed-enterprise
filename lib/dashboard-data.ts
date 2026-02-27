@@ -243,8 +243,9 @@ export interface Order {
   customer: { name: string; email: string; address: string }
   items: OrderItem[]
   total: number
-  status: 'pending' | 'processing' | 'packed' | 'shipped' | 'delivered'
-  shippingMethod: 'standard' | 'priority' | 'express'
+  status: 'processing' | 'unfulfilled' | 'label_printed' | 'in_transit' | 'delivered'
+  shippingMethod: 'standard' | 'priority' | 'pickup'
+  orderType: 'b2b' | 'd2c'
   trackingNumber?: string
   carrier?: string
   weight: string
@@ -270,13 +271,21 @@ export interface VelocityDataPoint {
   added: number
 }
 
+export interface Crate {
+  id: string
+  name: string
+  type: 'manual' | 'smart' | 'dead_stock'
+  records: string[]
+  createdAt: string
+}
+
 // ─── Mock Data ───────────────────────────────────────────────
 
 export const quickStats: QuickStat[] = [
-  { label: 'Total Listings', value: '2,847', trend: '+124', trendUp: true },
-  { label: 'Orders This Month', value: '186', trend: '+23%', trendUp: true },
-  { label: 'Revenue (MTD)', value: '$14,230', trend: '+18%', trendUp: true },
-  { label: 'POS Sales Today', value: '$1,420', trend: '+$340', trendUp: true },
+  { label: 'Total Sales', value: '$42,860', trend: '+18%', trendUp: true },
+  { label: 'Orders Count', value: '186', trend: '+23%', trendUp: true },
+  { label: 'Items Sold', value: '312', trend: '+44', trendUp: true },
+  { label: 'Orders to Fulfill', value: '5', trend: '+2', trendUp: false },
 ]
 
 export const integrations: Integration[] = [
@@ -400,6 +409,14 @@ export const inventoryRecords: InventoryRecord[] = [
     flawNotes: 'Cover has light staining on back. Vinyl plays well with occasional tick. Original UK pressing.',
     discogsMedian: 70, discogsLow: 30, discogsHigh: 180,
   },
+]
+
+export const crates: Crate[] = [
+  { id: 'crate-all', name: 'All Inventory', type: 'smart', records: [], createdAt: '2025-01-01' },
+  { id: 'crate-dead', name: 'Dead Stock', type: 'dead_stock', records: ['WX-006', 'WX-012'], createdAt: '2025-01-01' },
+  { id: 'crate-new', name: 'New Arrivals', type: 'manual', records: ['WX-003', 'WX-004', 'WX-011'], createdAt: '2026-02-01' },
+  { id: 'crate-techno', name: 'Techno Essentials', type: 'manual', records: ['WX-003', 'WX-004', 'WX-005', 'WX-009', 'WX-010'], createdAt: '2026-01-15' },
+  { id: 'crate-rare', name: 'Rare Pressings', type: 'manual', records: ['WX-002', 'WX-005', 'WX-007', 'WX-010'], createdAt: '2026-01-20' },
 ]
 
 export const catalogResults: CatalogResult[] = [
@@ -656,6 +673,31 @@ export const conversations: Conversation[] = [
   },
 ]
 
+export const networkConversations: Conversation[] = [
+  {
+    id: 'nconv-1', customerName: 'BPM Supply', lastMessage: 'We have 3 copies of the Jeff Mills you wanted', lastTime: '11:30 AM', unread: 1,
+    messages: [
+      { id: 'nm1', sender: 'customer', text: 'Hey, we just got in a collection with some Tresor pressings. Interested?', time: '11:15 AM' },
+      { id: 'nm2', sender: 'dealer', text: 'Absolutely! Looking for Waveform Transmission and anything Surgeon.', time: '11:20 AM' },
+      { id: 'nm3', sender: 'customer', text: 'We have 3 copies of the Jeff Mills you wanted', time: '11:30 AM' },
+    ],
+  },
+  {
+    id: 'nconv-2', customerName: 'Crate Diggers Union', lastMessage: 'Pack shipped — tracking sent', lastTime: 'Yesterday', unread: 0,
+    messages: [
+      { id: 'nm4', sender: 'dealer', text: 'Chicago house pack is ready. 12 records, mostly Trax and DJ International.', time: 'Yesterday' },
+      { id: 'nm5', sender: 'customer', text: 'Pack shipped — tracking sent', time: 'Yesterday' },
+    ],
+  },
+  {
+    id: 'nconv-3', customerName: 'Deep Groove Records', lastMessage: 'Deal — swapping 3 jazz for 2 techno', lastTime: '2 days ago', unread: 0,
+    messages: [
+      { id: 'nm6', sender: 'customer', text: 'Interested in your Blue Train and Monk pressings. We can trade Detroit techno.', time: '2 days ago' },
+      { id: 'nm7', sender: 'dealer', text: 'Deal — swapping 3 jazz for 2 techno', time: '2 days ago' },
+    ],
+  },
+]
+
 export const genreBreakdowns: GenreBreakdown[] = [
   { genre: 'Techno', count: 482, revenue: 4820, percentage: 32 },
   { genre: 'House', count: 398, revenue: 3580, percentage: 22 },
@@ -677,12 +719,12 @@ export const posQuickStats: QuickStat[] = [
   { label: 'Sales Today', value: '$1,420', trend: '+$340', trendUp: true },
   { label: 'Transactions', value: '21', trend: '+5', trendUp: true },
   { label: 'Avg Transaction', value: '$67.60', trend: '+$8', trendUp: true },
-  { label: 'Items Synced', value: '21/21', trend: '100%', trendUp: true },
+  { label: 'Items Sold', value: '21', trend: '+5', trendUp: true },
 ]
 
 export const orders: Order[] = [
   {
-    id: 'ORD-1901', date: 'Feb 11, 2026', status: 'pending', shippingMethod: 'standard', weight: '0.8 lb', labelPrinted: false,
+    id: 'ORD-1901', date: 'Feb 11, 2026', status: 'unfulfilled', shippingMethod: 'standard', weight: '0.8 lb', labelPrinted: false, orderType: 'd2c',
     customer: { name: 'Lena Kowalski', email: 'lena.k@proton.me', address: '412 NW 23rd Ave, Portland, OR 97210' },
     items: [
       { recordId: 'WX-001', artist: 'Aphex Twin', title: 'Selected Ambient Works 85-92', price: 85.00, qty: 1 },
@@ -691,7 +733,7 @@ export const orders: Order[] = [
     total: 162.99,
   },
   {
-    id: 'ORD-1900', date: 'Feb 11, 2026', status: 'processing', shippingMethod: 'priority', weight: '0.5 lb', labelPrinted: true,
+    id: 'ORD-1900', date: 'Feb 11, 2026', status: 'processing', shippingMethod: 'priority', weight: '0.5 lb', labelPrinted: true, orderType: 'd2c',
     customer: { name: 'Marcus Chen', email: 'mchen@gmail.com', address: '88 Division St, Brooklyn, NY 11211' },
     items: [
       { recordId: 'WX-004', artist: 'Burial', title: 'Untrue', price: 48.00, qty: 1 },
@@ -699,7 +741,7 @@ export const orders: Order[] = [
     total: 55.99,
   },
   {
-    id: 'ORD-1899', date: 'Feb 10, 2026', status: 'packed', shippingMethod: 'express', weight: '1.2 lb', labelPrinted: true,
+    id: 'ORD-1899', date: 'Feb 10, 2026', status: 'label_printed', shippingMethod: 'pickup', weight: '1.2 lb', labelPrinted: true, orderType: 'b2b',
     customer: { name: 'Sofia Ramirez', email: 'sofia.r@icloud.com', address: '1420 S Congress Ave, Austin, TX 78704' },
     items: [
       { recordId: 'WX-007', artist: 'Drexciya', title: "Neptune's Lair", price: 140.00, qty: 1 },
@@ -708,7 +750,7 @@ export const orders: Order[] = [
     total: 207.99,
   },
   {
-    id: 'ORD-1898', date: 'Feb 10, 2026', status: 'shipped', shippingMethod: 'priority', weight: '0.9 lb', labelPrinted: true,
+    id: 'ORD-1898', date: 'Feb 10, 2026', status: 'in_transit', shippingMethod: 'priority', weight: '0.9 lb', labelPrinted: true, orderType: 'd2c',
     trackingNumber: '1Z999AA10123456784', carrier: 'UPS',
     customer: { name: 'James Rodriguez', email: 'jrod@fastmail.com', address: '2200 Michigan Ave, Chicago, IL 60616' },
     items: [
@@ -718,7 +760,7 @@ export const orders: Order[] = [
     total: 90.99,
   },
   {
-    id: 'ORD-1897', date: 'Feb 9, 2026', status: 'shipped', shippingMethod: 'standard', weight: '0.5 lb', labelPrinted: true,
+    id: 'ORD-1897', date: 'Feb 9, 2026', status: 'in_transit', shippingMethod: 'standard', weight: '0.5 lb', labelPrinted: true, orderType: 'd2c',
     trackingNumber: '9400111899223100684717', carrier: 'USPS',
     customer: { name: 'Yuki Tanaka', email: 'yuki.t@outlook.com', address: '540 Howard St, San Francisco, CA 94105' },
     items: [
@@ -727,7 +769,7 @@ export const orders: Order[] = [
     total: 73.99,
   },
   {
-    id: 'ORD-1896', date: 'Feb 9, 2026', status: 'delivered', shippingMethod: 'express', weight: '0.6 lb', labelPrinted: true,
+    id: 'ORD-1896', date: 'Feb 9, 2026', status: 'delivered', shippingMethod: 'pickup', weight: '0.6 lb', labelPrinted: true, orderType: 'b2b',
     trackingNumber: '1Z999AA10123456790', carrier: 'UPS',
     customer: { name: 'Alex Petrov', email: 'apetrov@pm.me', address: '710 Peachtree St NE, Atlanta, GA 30308' },
     items: [
@@ -736,7 +778,7 @@ export const orders: Order[] = [
     total: 107.99,
   },
   {
-    id: 'ORD-1895', date: 'Feb 8, 2026', status: 'delivered', shippingMethod: 'priority', weight: '1.0 lb', labelPrinted: true,
+    id: 'ORD-1895', date: 'Feb 8, 2026', status: 'delivered', shippingMethod: 'priority', weight: '1.0 lb', labelPrinted: true, orderType: 'd2c',
     trackingNumber: '9261290100130435082878', carrier: 'USPS',
     customer: { name: 'Nina Okafor', email: 'nina.ok@hey.com', address: '345 Flatbush Ave, Brooklyn, NY 11238' },
     items: [
@@ -746,7 +788,7 @@ export const orders: Order[] = [
     total: 192.99,
   },
   {
-    id: 'ORD-1894', date: 'Feb 8, 2026', status: 'pending', shippingMethod: 'standard', weight: '0.5 lb', labelPrinted: false,
+    id: 'ORD-1894', date: 'Feb 8, 2026', status: 'unfulfilled', shippingMethod: 'standard', weight: '0.5 lb', labelPrinted: false, orderType: 'd2c',
     customer: { name: 'Tomás Herrera', email: 'therrera@gmail.com', address: '1501 Vine St, Los Angeles, CA 90028' },
     items: [
       { recordId: 'WX-010', artist: 'Robert Hood', title: 'Minimal Nation', price: 180.00, qty: 1 },
@@ -754,7 +796,7 @@ export const orders: Order[] = [
     total: 185.99,
   },
   {
-    id: 'ORD-1893', date: 'Feb 7, 2026', status: 'delivered', shippingMethod: 'standard', weight: '0.7 lb', labelPrinted: true,
+    id: 'ORD-1893', date: 'Feb 7, 2026', status: 'delivered', shippingMethod: 'standard', weight: '0.7 lb', labelPrinted: true, orderType: 'd2c',
     trackingNumber: '9400111899223100684731', carrier: 'USPS',
     customer: { name: 'Elise Dumont', email: 'elise.d@laposte.net', address: '920 SW 6th Ave, Portland, OR 97204' },
     items: [
@@ -763,7 +805,7 @@ export const orders: Order[] = [
     total: 60.99,
   },
   {
-    id: 'ORD-1892', date: 'Feb 7, 2026', status: 'processing', shippingMethod: 'express', weight: '0.6 lb', labelPrinted: false,
+    id: 'ORD-1892', date: 'Feb 7, 2026', status: 'processing', shippingMethod: 'pickup', weight: '0.6 lb', labelPrinted: false, orderType: 'b2b',
     customer: { name: 'Ryan Walsh', email: 'rwalsh@me.com', address: '800 Boylston St, Boston, MA 02199' },
     items: [
       { recordId: 'WX-004', artist: 'Burial', title: 'Untrue', price: 48.00, qty: 1 },
@@ -774,8 +816,8 @@ export const orders: Order[] = [
 ]
 
 export const fulfillmentStats: QuickStat[] = [
-  { label: 'To Ship', value: '5', trend: '+2', trendUp: false },
-  { label: 'Shipped Today', value: '3', trend: '+1', trendUp: true },
-  { label: 'Avg Ship Time', value: '1.4 days', trend: '-0.3d', trendUp: true },
-  { label: 'Pending Returns', value: '1' },
+  { label: 'Unfulfilled Orders', value: '5', trend: '+2', trendUp: false },
+  { label: 'Orders Shipped', value: '3', trend: '+1', trendUp: true },
+  { label: 'Items Ordered', value: '14', trend: '+3', trendUp: true },
+  { label: 'Avg Time to Fulfillment', value: '1.4d', trend: '-0.3d', trendUp: true },
 ]

@@ -29,6 +29,11 @@ const statusStyles: Record<string, string> = {
   processing: 'bg-waxe-cool text-waxe-deep',
   packed: 'bg-waxe-text text-waxe-deep',
   delivered: 'bg-waxe-positive text-waxe-deep',
+  unfulfilled: 'bg-waxe-warm text-waxe-text',
+  label_printed: 'bg-waxe-text text-waxe-deep',
+  in_transit: 'bg-waxe-cool text-waxe-deep',
+  b2b: 'bg-waxe-cool text-waxe-deep',
+  d2c: 'bg-waxe-surface text-waxe-text',
 }
 
 interface StatusBadgeProps {
@@ -37,7 +42,7 @@ interface StatusBadgeProps {
 }
 
 export default function StatusBadge({ status, label }: StatusBadgeProps) {
-  const display = label || status.replace('_', ' ')
+  const display = label || status.replaceAll('_', ' ')
   return (
     <span className={`inline-flex items-center clip-badge px-2.5 py-0.5 text-[11px] font-black uppercase tracking-[0.2em] rounded-none ${statusStyles[status] || 'bg-waxe-surface text-waxe-text-muted'}`}>
       {display}

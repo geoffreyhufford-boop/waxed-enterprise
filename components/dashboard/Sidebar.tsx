@@ -7,16 +7,11 @@ import { useTheme } from '@/lib/theme-context'
 
 const navItems = [
   { href: '/dashboard', label: 'Overview', icon: '★' },
+  { href: '/dashboard/orders', label: 'Orders', icon: '▦' },
   { href: '/dashboard/inventory', label: 'Inventory', icon: '▤' },
-  { href: '/dashboard/restock', label: 'Restock', icon: '⟲' },
+  { href: '/dashboard/marketplace', label: 'Marketplace', icon: '◆' },
   { href: '/dashboard/analytics', label: 'Analytics', icon: '◈' },
   { href: '/dashboard/pos', label: 'POS', icon: '◉' },
-  { href: '/dashboard/fulfillment', label: 'Fulfillment', icon: '▦' },
-]
-
-const bottomNavItems = [
-  { href: '/dashboard/marketplace', label: 'Marketplace', icon: '◆' },
-  { href: '/dashboard/network', label: 'Network', icon: '◎' },
   { href: '/dashboard/messages', label: 'Messages', icon: '◻' },
   { href: '/dashboard/storefront', label: 'Storefront', icon: '◫' },
 ]
@@ -41,11 +36,7 @@ export default function Sidebar() {
       </div>
       <div className="hatch-divider-strong" />
       <div className="flex-1 py-2 px-2 flex flex-col">
-        <div className="px-2 pt-2 pb-1.5 flex items-center gap-2">
-          <span className="designation-tag skew-box px-2 py-0.5 bg-waxe-surface border border-waxe-border"><span>Nav // Primary</span></span>
-          <span className="hatch-inline flex-1" style={{ width: 'auto' }} />
-        </div>
-        <div className="space-y-0.5">
+        <div className="space-y-0.5 mt-1">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -57,25 +48,6 @@ export default function Sidebar() {
               <span>{item.label}</span>
             </Link>
           ))}
-        </div>
-        <div className="mt-auto">
-          <div className="hatch-divider-strong mb-1.5" />
-          <div className="px-2 pb-1.5 flex items-center gap-2">
-            <span className="designation-tag skew-box px-2 py-0.5 bg-waxe-surface border border-waxe-border"><span>Nav // Tools</span></span>
-            <span className="hatch-inline flex-1" style={{ width: 'auto' }} />
-          </div>
-          {bottomNavItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setMobileOpen(false)}
-              className={isActive(item.href) ? 'nav-item-active' : 'nav-item'}
-            >
-              <span className="glyph-box">{item.icon}</span>
-              <span>{item.label}</span>
-            </Link>
-          ))}
-          <div className="hatch-divider-strong mt-1.5" />
         </div>
       </div>
       <div className="p-4 scanline relative">

@@ -6,6 +6,7 @@ import {
   OverviewChannelBreakdown,
   OverviewConnectedServices,
   OverviewGenreBreakdown,
+  OverviewGettingStarted,
   AnalyticsRevenueByChannel,
   AnalyticsMarginTrend,
   AnalyticsDaysOnShelf,
@@ -77,6 +78,13 @@ export const widgetRegistry: Record<string, WidgetDef> = {
     size: 'lg',
     render: () => <OverviewGenreBreakdown />,
   },
+  'overview-getting-started': {
+    id: 'overview-getting-started',
+    label: 'Getting Started',
+    source: 'Overview',
+    size: 'sm',
+    render: () => <OverviewGettingStarted />,
+  },
   'analytics-revenue-by-channel': {
     id: 'analytics-revenue-by-channel',
     label: 'Revenue by Channel',
@@ -100,7 +108,7 @@ export const widgetRegistry: Record<string, WidgetDef> = {
   },
   'analytics-dead-stock': {
     id: 'analytics-dead-stock',
-    label: 'Dead Stock',
+    label: 'Dead or Stale Inventory',
     source: 'Analytics',
     size: 'sm',
     render: () => <AnalyticsDeadStock />,
