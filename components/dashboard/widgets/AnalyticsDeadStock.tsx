@@ -9,7 +9,7 @@ export default function AnalyticsDeadStock() {
       <PinButton widgetId="analytics-dead-stock" />
       <div className="mb-2 shrink-0">
         <div className="flex items-center gap-2">
-          <h3 className="text-[11px] font-semibold text-waxe-text">Dead Stock → 90+ Days</h3>
+          <h3 className="text-[11px] font-semibold text-waxe-text">Aged Inventory → 90+ Days</h3>
           <span className="hatch-inline flex-1 mr-10" style={{ width: 'auto' }} />
         </div>
       </div>

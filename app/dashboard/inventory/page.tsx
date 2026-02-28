@@ -129,7 +129,7 @@ export default function InventoryPage() {
   <div className="flex flex-col flex-1 min-h-0">
    <DashboardHeader
     title="Inventory"
-    subtitle={`${inventoryRecords.length} records across all channels`}
+    subtitle={`${inventoryRecords.length} titles across all channels`}
     actions={
      <div className="flex gap-2">
       <button className="btn-ghost text-sm px-3 py-2" onClick={() => exportToCSV(filtered as unknown as Record<string, unknown>[], `inventory-${new Date().toISOString().slice(0,10)}`, [
@@ -153,7 +153,7 @@ export default function InventoryPage() {
    <div className="shrink-0 grid grid-cols-2 lg:grid-cols-3 gap-3 mb-3">
     <StatCard label="Total Records" value="2,847" trend="+124" trendUp={true} />
     <StatCard label="Active Listings" value="2,412" trend="+98" trendUp={true} />
-    <StatCard label="Avg Price" value="$47.20" trend="+$2.30" trendUp={true} />
+    <StatCard label="Sell Thru Rate" value="6.5%" trend="+0.8%" trendUp={true} />
    </div>
 
    {/* Search + Filters */}

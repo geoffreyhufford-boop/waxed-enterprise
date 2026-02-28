@@ -531,6 +531,7 @@ export default function MarketplacePage() {
  const scrollRef = useRef<HTMLDivElement>(null)
  const [activePanel, setActivePanel] = useState(0)
  const panelCount = 3
+ const [headerCollapsed, setHeaderCollapsed] = useState(false)
 
  // Restock panel filters
  const [restockSearch, setRestockSearch] = useState('')
@@ -606,32 +607,35 @@ export default function MarketplacePage() {
     subtitle="B2B marketplace — restock, trade, and manage your dealer network"
     actions={
      <div className="flex gap-2 items-center">
-      <button onClick={toggleDrawer} className="btn-secondary text-[11px] px-4 py-2">
+      <button className="btn-ghost text-xs px-3 py-1.5">Invite Store</button>
+      <button onClick={toggleDrawer} className="btn-primary text-sm px-5 py-2">
        Cart {state.items.length > 0 && `(${state.items.length})`}
       </button>
-      <button className="btn-secondary text-sm px-4 py-2">Invite Store</button>
      </div>
     }
    />
 
-   {/* Recommended — auto-scrolling ticker */}
-   <div className="shrink-0 mb-4">
-    <p className="text-[11px] font-semibold text-waxe-text-muted mb-2">
-     Recommended for you
-    </p>
-    <RecommendationTicker />
-   </div>
+   {/* Collapsible header area */}
+   <div className={`shrink-0 overflow-hidden transition-all duration-300 ${headerCollapsed ? 'max-h-0 opacity-0 mb-0' : 'max-h-[300px] opacity-100'}`}>
+    {/* Recommended — auto-scrolling ticker */}
+    <div className="mb-4">
+     <p className="text-[11px] font-semibold text-waxe-text-muted mb-2">
+      Recommended for you
+     </p>
+     <RecommendationTicker />
+    </div>
 
-   {/* Stats Row */}
-   <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-    <StatCard label="Stores in Network" value="47" trend="+6 this month" trendUp={true} />
-    <StatCard label="Stale Inventory" value={String(deadStockItems.filter(d => d.daysInStock >= 60).length)} trend="60+ days sitting" trendUp={false} />
-    <StatCard label="Inbound Requests" value={String(pendingRequests.length)} trend={`${inboundPackRequests.length} total`} trendUp={pendingRequests.length > 0} />
-    <StatCard label="Trade Volume" value={`$${tradeVolume}`} trend={`${totalTxns} transactions`} trendUp={true} />
+    {/* Stats Row */}
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+     <StatCard label="Stores in Network" value="47" trend="+6 this month" trendUp={true} />
+     <StatCard label="Aged Inventory" value={String(deadStockItems.filter(d => d.daysInStock >= 60).length)} trend="60+ days sitting" trendUp={false} />
+     <StatCard label="Inbound Requests" value={String(pendingRequests.length)} trend={`${inboundPackRequests.length} total`} trendUp={pendingRequests.length > 0} />
+     <StatCard label="Trade Volume" value={`$${tradeVolume}`} trend={`${totalTxns} transactions`} trendUp={true} />
+    </div>
    </div>
 
    {/* Panel tabs */}
-   <div className="shrink-0 flex gap-1.5 pb-3 mb-3 w-fit border-b border-waxe-border pr-4">
+   <div className="shrink-0 flex items-center gap-1.5 pb-3 mb-3 border-b border-waxe-border pr-4">
     {['Restock', 'Collections', 'Network'].map((label, i) => (
      <button
       key={label}
@@ -645,6 +649,13 @@ export default function MarketplacePage() {
       {label}
      </button>
     ))}
+    <button
+     onClick={() => setHeaderCollapsed(!headerCollapsed)}
+     className="ml-auto text-[10px] text-waxe-text-muted hover:text-waxe-text transition-colors"
+     title={headerCollapsed ? 'Show metrics' : 'Hide metrics'}
+    >
+     {headerCollapsed ? '&#9660; Show' : '&#9650; Hide'}
+    </button>
    </div>
 
    {/* Horizontal swipe panels */}
@@ -718,7 +729,7 @@ export default function MarketplacePage() {
        <h3 className="text-[11px] font-semibold text-waxe-text">
         Packs & Collections — {pendingRequests.length} Pending Requests
        </h3>
-       <p className="text-[10px] text-waxe-text-muted mt-0.5">Your packs for sale &middot; network packs to buy &middot; inbound requests &middot; order history</p>
+       <p className="text-[10px] text-waxe-text-secondary mt-0.5">Your packs for sale &middot; network packs to buy &middot; inbound requests &middot; order history</p>
       </div>
      </div>
 

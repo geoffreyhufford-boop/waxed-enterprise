@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { DashboardHeader, StatCard, StatusBadge, FilterDropdown, DataTable, DateRangeSelector } from '@/components/dashboard'
 import { orders, fulfillmentStats, inventoryRecords, type Order } from '@/lib/dashboard-data'
 import { exportToCSV } from '@/lib/export-utils'
@@ -36,6 +36,25 @@ export default function OrdersPage() {
  const panelCount = 3
  const [poStatusFilter, setPOStatusFilter] = useState('All')
  const [selectedPO, setSelectedPO] = useState<PurchaseOrder | null>(null)
+ const [actionsOpen, setActionsOpen] = useState(false)
+ const actionsRef = useRef<HTMLDivElement>(null)
+ const [toastMessage, setToastMessage] = useState<string | null>(null)
+ const [confirmAction, setConfirmAction] = useState<{ type: 'refund' | 'cancel'; order: Order } | null>(null)
+
+ useEffect(() => {
+  if (!toastMessage) return
+  const t = setTimeout(() => setToastMessage(null), 3000)
+  return () => clearTimeout(t)
+ }, [toastMessage])
+
+ useEffect(() => {
+  if (!actionsOpen) return
+  const handleClick = (e: MouseEvent) => {
+   if (actionsRef.current && !actionsRef.current.contains(e.target as Node)) setActionsOpen(false)
+  }
+  document.addEventListener('mousedown', handleClick)
+  return () => document.removeEventListener('mousedown', handleClick)
+ }, [actionsOpen])
 
  const filtered = orders.filter((o) => {
   if (search) {
@@ -103,10 +122,45 @@ export default function OrdersPage() {
   ])
  }
 
+ const handleEditOrder = () => {
+  if (!selectedOrder) return
+  setActionsOpen(false)
+  setToastMessage(`Edit mode for ${selectedOrder.id} (coming soon)`)
+ }
+
+ const handleRefundOrder = () => {
+  if (!selectedOrder) return
+  setActionsOpen(false)
+  setConfirmAction({ type: 'refund', order: selectedOrder })
+ }
+
+ const handleCancelOrder = () => {
+  if (!selectedOrder) return
+  setActionsOpen(false)
+  setConfirmAction({ type: 'cancel', order: selectedOrder })
+ }
+
+ const handleConfirmAction = () => {
+  if (!confirmAction) return
+  const newStatus = confirmAction.type === 'refund' ? 'refunded' : 'cancelled'
+  const updated = { ...confirmAction.order, status: newStatus } as Order
+  setSelectedOrder(updated)
+  setToastMessage(`${confirmAction.order.id} ${confirmAction.type === 'refund' ? 'refunded' : 'cancelled'}`)
+  setConfirmAction(null)
+ }
+
+ const handlePrintOrderSlip = () => {
+  const el = document.getElementById('order-slip-content')
+  if (!el) return
+  el.classList.add('print-target')
+  window.print()
+  el.classList.remove('print-target')
+ }
+
  return (
   <div className="flex flex-col flex-1 min-h-0">
    <DashboardHeader
-    title="Orders"
+    title="Sales Orders"
     subtitle="Pack, ship & track orders"
     actions={
      <div className="flex gap-2 items-center">
@@ -127,7 +181,7 @@ export default function OrdersPage() {
 
     {/* Panel tabs */}
     <div className="shrink-0 flex gap-1.5 pb-3 mb-3 w-fit border-b border-waxe-border pr-4">
-     {['Orders', 'Print Queue', 'Purchase Orders'].map((label, i) => (
+     {['Sales Orders', 'Print Queue', 'Purchase Orders'].map((label, i) => (
       <button
        key={label}
        onClick={() => scrollToPanel(i)}
@@ -165,7 +219,7 @@ export default function OrdersPage() {
        />
        <FilterDropdown
         label="Status"
-        options={['All', 'processing', 'unfulfilled', 'label_printed', 'in_transit', 'delivered']}
+        options={['All', 'processing', 'unfulfilled', 'label_printed', 'in_transit', 'delivered', 'refunded', 'cancelled']}
         value={statusFilter}
         onChange={setStatusFilter}
        />
@@ -311,7 +365,7 @@ export default function OrdersPage() {
      <div className="absolute inset-0 bg-waxe-text/40" onClick={() => setSelectedOrder(null)} />
      <div className="relative w-full max-w-2xl h-[90vh] flex flex-col overflow-hidden bg-waxe-base border border-waxe-border shadow-xl clip-modal">
       {/* Header */}
-      <div className="shrink-0 bg-waxe-base border-b border-waxe-border p-5 z-10">
+      <div className="shrink-0 bg-waxe-card border-b border-waxe-border p-5 z-10">
        <div className="flex items-center justify-between">
         <div>
          <div className="flex items-center gap-3">
@@ -320,14 +374,35 @@ export default function OrdersPage() {
          </div>
          <p className="text-xs text-waxe-text-muted mt-1">{selectedOrder.date}</p>
         </div>
-        <button onClick={() => setSelectedOrder(null)} className="text-waxe-text-muted hover:text-waxe-text text-lg">✕</button>
+        <div className="flex items-center gap-2">
+         <div ref={actionsRef} className="relative">
+          <button onClick={() => setActionsOpen(!actionsOpen)} className="btn-ghost text-sm px-3 py-1.5">
+           Actions <span className="ml-1 text-[10px]">&#9662;</span>
+          </button>
+          {actionsOpen && (
+           <div className="absolute right-0 top-full mt-1 w-48 bg-waxe-card border border-waxe-border shadow-lg z-40 py-1">
+            <button onClick={handleEditOrder} className="w-full text-left px-4 py-2 text-sm text-waxe-text hover:bg-waxe-surface/50 transition-colors">
+             Edit Order
+            </button>
+            <button onClick={handleRefundOrder} className="w-full text-left px-4 py-2 text-sm text-waxe-text hover:bg-waxe-surface/50 transition-colors">
+             Refund Order
+            </button>
+            <div className="my-1 border-t border-waxe-border" />
+            <button onClick={handleCancelOrder} className="w-full text-left px-4 py-2 text-sm text-waxe-negative hover:bg-waxe-surface/50 transition-colors">
+             Cancel Order
+            </button>
+           </div>
+          )}
+         </div>
+         <button onClick={() => { setActionsOpen(false); setSelectedOrder(null) }} className="text-waxe-text-muted hover:text-waxe-text text-lg">✕</button>
+        </div>
        </div>
       </div>
 
       {/* Body */}
-      <div className="flex-1 min-h-0 overflow-y-auto p-5 space-y-5">
+      <div id="order-slip-content" className="flex-1 min-h-0 overflow-y-auto p-5 space-y-5">
        {/* Customer */}
-       <div className="bg-waxe-surface/30 p-4">
+       <div className="bg-waxe-surface/30 border border-waxe-border/50 p-4">
         <p className="text-[10px] font-medium text-waxe-text-muted mb-3">Customer</p>
         <div className="space-y-1.5">
          <a href="/dashboard/customers" className="text-sm font-medium text-waxe-text hover:text-waxe-warm">{selectedOrder.customer.name}</a>
@@ -337,7 +412,7 @@ export default function OrdersPage() {
        </div>
 
        {/* Items */}
-       <div className="bg-waxe-surface/30 p-4">
+       <div className="bg-waxe-surface/30 border border-waxe-border/50 p-4">
         <p className="text-[10px] font-medium text-waxe-text-muted mb-3">Items</p>
         <div className="space-y-3">
          {selectedOrder.items.map((item) => (
@@ -365,8 +440,8 @@ export default function OrdersPage() {
        </div>
 
        {/* Shipping */}
-       <div className="bg-waxe-surface/30 p-4">
-        <p className="text-[10px] font-medium text-waxe-text-mutedst mb-3">Shipping</p>
+       <div className="bg-waxe-surface/30 border border-waxe-border/50 p-4">
+        <p className="text-[10px] font-medium text-waxe-text-muted mb-3">Shipping</p>
         <div className="grid grid-cols-2 gap-4">
          <div>
           <label className="text-xs text-waxe-text-muted mb-1 block">Method</label>
@@ -410,10 +485,44 @@ export default function OrdersPage() {
       </div>
 
       {/* Footer */}
-      <div className="shrink-0 bg-waxe-base border-t border-waxe-border p-5 flex items-center justify-end">
+      <div className="shrink-0 bg-waxe-card border-t border-waxe-border p-5 flex items-center justify-between">
+       <button className="btn-secondary text-sm px-4 py-2" onClick={handlePrintOrderSlip}>Print Order Slip</button>
        <button className="btn-secondary text-sm px-4 py-2" onClick={() => setSelectedOrder(null)}>Close</button>
       </div>
      </div>
+    </div>
+   )}
+
+   {/* ─── Confirmation Dialog ─── */}
+   {confirmAction && (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center">
+     <div className="absolute inset-0 bg-waxe-text/50" onClick={() => setConfirmAction(null)} />
+     <div className="relative w-full max-w-sm bg-waxe-base border border-waxe-border shadow-xl p-6">
+      <h3 className="text-lg font-semibold text-waxe-text mb-2">
+       {confirmAction.type === 'refund' ? 'Refund Order' : 'Cancel Order'}
+      </h3>
+      <p className="text-sm text-waxe-text-secondary mb-5">
+       {confirmAction.type === 'refund'
+        ? `Issue a full refund of $${confirmAction.order.total.toFixed(2)} for ${confirmAction.order.id}?`
+        : `This will cancel ${confirmAction.order.id}. This action cannot be undone.`}
+      </p>
+      <div className="flex items-center justify-end gap-3">
+       <button className="btn-secondary text-sm px-4 py-2" onClick={() => setConfirmAction(null)}>No, Go Back</button>
+       <button
+        className={`text-sm px-4 py-2 font-medium ${confirmAction.type === 'cancel' ? 'bg-waxe-negative text-waxe-deep hover:bg-waxe-negative/80' : 'btn-primary'}`}
+        onClick={handleConfirmAction}
+       >
+        {confirmAction.type === 'refund' ? 'Confirm Refund' : 'Cancel Order'}
+       </button>
+      </div>
+     </div>
+    </div>
+   )}
+
+   {/* ─── Toast ─── */}
+   {toastMessage && (
+    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[70] bg-waxe-text text-waxe-deep text-sm font-medium px-5 py-2.5 shadow-lg">
+     {toastMessage}
     </div>
    )}
 

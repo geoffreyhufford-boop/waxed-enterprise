@@ -168,7 +168,7 @@ export default function PackCard({ pack, onListNetwork, onSellInStore }: PackCar
                 {pack.genre} &middot; {pack.records.length} records &middot; Avg {'★'.repeat(Math.round(pack.avgCondition))}{'☆'.repeat(5 - Math.round(pack.avgCondition))}
               </p>
               <p className="text-[11px] text-waxe-text-muted mt-0.5">
-                {pack.deadStockCount} dead stock &middot; {pack.slowMoverCount} slow movers
+                {pack.deadStockCount} aged &middot; {pack.slowMoverCount} slow movers
               </p>
               <div className="flex items-center gap-2 mt-1.5">
                 <span className="text-[11px] text-waxe-text-muted line-through font-mono">${pack.totalValue}</span>

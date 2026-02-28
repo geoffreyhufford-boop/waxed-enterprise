@@ -111,7 +111,7 @@ export const widgetRegistry: Record<string, WidgetDef> = {
   },
   'analytics-dead-stock': {
     id: 'analytics-dead-stock',
-    label: 'Dead or Stale Inventory',
+    label: 'Aged Inventory',
     source: 'Analytics',
     size: 'sm',
     render: () => <AnalyticsDeadStock />,

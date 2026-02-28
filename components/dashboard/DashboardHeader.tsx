@@ -11,7 +11,7 @@ export default function DashboardHeader({ title, subtitle, actions }: DashboardH
         <div>
           <h1 className="text-2xl font-semibold text-waxe-text leading-none">{title}</h1>
           {subtitle && (
-            <p className="text-xs text-waxe-text-secondary mt-1.5">{subtitle}</p>
+            <p className="text-xs text-waxe-text mt-1.5">{subtitle}</p>
           )}
         </div>
         {actions && <div className="flex items-center gap-3">{actions}</div>}

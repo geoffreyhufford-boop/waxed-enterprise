@@ -206,7 +206,7 @@ export const curatedPacks: CuratedPack[] = [
     discountPercent: 15,
     status: 'listed_network',
     generatedAt: '2 hours ago',
-    generationReason: 'Jazz is 3% of your sales but 18% of your inventory. Auto-generated from 6 dead stock + 8 slow movers.',
+    generationReason: 'Jazz is 3% of your sales but 18% of your inventory. Auto-generated from 6 aged inventory + 8 slow movers.',
     avgCondition: 3.6,
     deadStockCount: 6,
     slowMoverCount: 8,

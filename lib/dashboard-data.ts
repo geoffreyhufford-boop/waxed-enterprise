@@ -243,7 +243,7 @@ export interface Order {
   customer: { name: string; email: string; address: string }
   items: OrderItem[]
   total: number
-  status: 'processing' | 'unfulfilled' | 'label_printed' | 'in_transit' | 'delivered'
+  status: 'processing' | 'unfulfilled' | 'label_printed' | 'in_transit' | 'delivered' | 'refunded' | 'cancelled'
   shippingMethod: 'standard' | 'priority' | 'pickup'
   orderType: 'b2b' | 'd2c'
   trackingNumber?: string
@@ -413,7 +413,7 @@ export const inventoryRecords: InventoryRecord[] = [
 
 export const crates: Crate[] = [
   { id: 'crate-all', name: 'All Inventory', type: 'smart', records: [], createdAt: '2025-01-01' },
-  { id: 'crate-dead', name: 'Dead Stock', type: 'dead_stock', records: ['WX-006', 'WX-012'], createdAt: '2025-01-01' },
+  { id: 'crate-dead', name: 'Aged Inventory', type: 'dead_stock', records: ['WX-006', 'WX-012'], createdAt: '2025-01-01' },
   { id: 'crate-new', name: 'New Arrivals', type: 'manual', records: ['WX-003', 'WX-004', 'WX-011'], createdAt: '2026-02-01' },
   { id: 'crate-techno', name: 'Techno Essentials', type: 'manual', records: ['WX-003', 'WX-004', 'WX-005', 'WX-009', 'WX-010'], createdAt: '2026-01-15' },
   { id: 'crate-rare', name: 'Rare Pressings', type: 'manual', records: ['WX-002', 'WX-005', 'WX-007', 'WX-010'], createdAt: '2026-01-20' },
@@ -817,7 +817,7 @@ export const orders: Order[] = [
 
 export const fulfillmentStats: QuickStat[] = [
   { label: 'Unfulfilled Orders', value: '5', trend: '+2', trendUp: false },
-  { label: 'Orders Shipped', value: '3', trend: '+1', trendUp: true },
+  { label: 'Orders Fulfilled', value: '3', trend: '+1', trendUp: true },
   { label: 'Items Ordered', value: '14', trend: '+3', trendUp: true },
   { label: 'Avg Time to Fulfillment', value: '1.4d', trend: '-0.3d', trendUp: true },
 ]

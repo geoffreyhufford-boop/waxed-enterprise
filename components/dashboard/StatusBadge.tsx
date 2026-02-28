@@ -52,6 +52,7 @@ const statusStyles: Record<string, string> = {
   review: 'bg-waxe-cool text-waxe-deep',
   completed: 'bg-waxe-positive text-waxe-deep',
   cancelled: 'bg-waxe-surface text-waxe-text-muted',
+  refunded: 'bg-waxe-negative/20 text-waxe-negative',
   // Staff statuses
   invited: 'bg-waxe-surface text-waxe-text',
   disabled: 'bg-waxe-surface text-waxe-text-muted',

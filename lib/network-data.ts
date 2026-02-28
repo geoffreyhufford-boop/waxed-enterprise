@@ -125,7 +125,7 @@ export const inboundRequests: InboundRequest[] = [
 export const wholesaleListings: WholesaleListing[] = [
   {
     id: 'wl-001',
-    lotName: 'Jazz Dead Stock',
+    lotName: 'Jazz Aged Inventory',
     genre: 'Jazz',
     records: [
       { artist: 'John Coltrane', title: 'Blue Train', genre: 'Jazz', condition: 4, artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/6e/1a/13/6e1a134d-8f6f-d90f-b855-ea69436a2e8b/17UM1IM45370.rgb.jpg/300x300bb.jpg', photoColor: '#3D3050' },

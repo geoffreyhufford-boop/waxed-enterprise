@@ -39,7 +39,7 @@ export default function AnalyticsPage() {
     <StatCard label="Revenue (MTD)" value="$14,230" trend="+18%" trendUp={true} />
     <StatCard label="Margin" value="46%" trend="+1%" trendUp={true} />
     <StatCard label="Avg Order Value" value="$76.50" trend="+$4.20" trendUp={true} />
-    <StatCard label="Sell-through" value="6.5%" trend="+0.8%" trendUp={true} />
+    <StatCard label="Items Sold" value="186" trend="+24" trendUp={true} />
    </div>
 
    {/* Vertically scrolling sections */}
@@ -157,12 +157,12 @@ export default function AnalyticsPage() {
        </ChartCard>
       </div>
 
-      {/* Sidebar — Dead stock + condition */}
+      {/* Sidebar — Aged inventory + condition */}
       <div className="flex flex-col gap-4">
        <div className="relative bg-waxe-card border border-waxe-border p-5 clip-card accent-strip-left accent-negative">
         <PinButton widgetId="analytics-dead-stock" />
         <div className="mb-4">
-         <h3 className="text-[11px] font-semibold text-waxe-text">Dead or Stale Inventory — 90+ Days</h3>
+         <h3 className="text-[11px] font-semibold text-waxe-text">Aged Inventory — 90+ Days</h3>
         </div>
         <div className="space-y-3">
          <div className="flex justify-between items-baseline">
@@ -286,10 +286,10 @@ export default function AnalyticsPage() {
     <section>
      <h2 className="text-[11px] font-medium text-waxe-text-muted mb-3">Inventory Intelligence</h2>
      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      {/* Dead Stock Items */}
+      {/* Aged Inventory Items */}
       <div className="lg:col-span-2">
        <div className="bg-waxe-card border border-waxe-border p-5 clip-card">
-        <h3 className="text-[11px] font-semibold text-waxe-text mb-3">Dead or Stale Inventory</h3>
+        <h3 className="text-[11px] font-semibold text-waxe-text mb-3">Aged Inventory</h3>
         <div className="space-y-2 max-h-[400px] overflow-y-auto" style={{ scrollbarWidth: 'thin' }}>
          {deadStockItems.map((item) => (
           <div key={item.id} className="flex items-center gap-3 py-2 px-3 bg-waxe-surface/30 hover:bg-waxe-surface/50 transition-colors">
