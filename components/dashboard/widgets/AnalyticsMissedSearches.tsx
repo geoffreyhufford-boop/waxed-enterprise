@@ -5,11 +5,11 @@ import PinButton from '../PinButton'
 
 export default function AnalyticsMissedSearches() {
   return (
-    <div className="relative bg-waxe-card border-2 border-waxe-border rounded-none p-5 flex flex-col h-[360px] clip-card-bl">
+    <div className="relative bg-waxe-card border border-waxe-border p-5 flex flex-col h-[360px] clip-card-bl">
       <PinButton widgetId="analytics-missed-searches" />
       <div className="mb-2 shrink-0">
         <div className="flex items-center gap-2">
-          <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Missed <span className="text-waxe-cool">{'>>'}</span> Searches</h3>
+          <h3 className="text-[11px] font-semibold text-waxe-text">Missed → Searches</h3>
           <span className="hatch-inline flex-1 mr-10" style={{ width: 'auto' }} />
         </div>
         <p className="text-[11px] text-waxe-text-muted mt-1">What buyers searched for that you don&apos;t carry</p>
@@ -23,8 +23,8 @@ export default function AnalyticsMissedSearches() {
               <p className="text-[11px] text-waxe-text-muted">{s.lastSearched}</p>
             </div>
             <div className="shrink-0 text-right">
-              <p className="text-sm font-bold text-waxe-warm font-mono">{s.searchCount}</p>
-              <p className="text-[11px] text-waxe-text-muted uppercase">searches</p>
+              <p className="text-sm font-medium text-waxe-warm font-mono">{s.searchCount}</p>
+              <p className="text-[11px] text-waxe-text-muted">searches</p>
             </div>
           </div>
         ))}

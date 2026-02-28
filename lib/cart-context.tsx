@@ -136,7 +136,7 @@ export function CartDrawer() {
                 <div className="flex gap-3">
                   <div
                     className="w-10 h-10 shrink-0 border border-waxe-border flex items-center justify-center overflow-hidden"
-                    style={{ backgroundColor: item.listing.photoColor || '#2C3B4D' }}
+                    style={{ backgroundColor: item.listing.photoColor || '#3D3050' }}
                   >
                     {item.listing.artworkUrl ? (
                       <img src={item.listing.artworkUrl} alt="" className="w-full h-full object-cover" />

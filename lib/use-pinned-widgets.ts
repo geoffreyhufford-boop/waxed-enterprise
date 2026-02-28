@@ -7,9 +7,11 @@ const STORAGE_KEY = 'waxed-pinned-widgets'
 const DEFAULT_PINS = [
   'overview-getting-started',
   'overview-revenue-chart',
+  'overview-margin-calculator',
   'overview-top-sellers',
   'overview-activity-feed',
   'overview-inventory-alerts',
+  'overview-market-pulse',
   'overview-channel-breakdown',
 ]
 

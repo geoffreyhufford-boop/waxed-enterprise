@@ -16,506 +16,506 @@ import { useCart } from '@/lib/cart-context'
 // ─── MarketplaceListingCard ──────────────────────────────────
 
 function MarketplaceListingCard({ listing }: { listing: MarketplaceListing }) {
-  const { addItem, toggleDrawer } = useCart()
-  const [qty, setQty] = useState(listing.minOrderQty)
+ const { addItem, toggleDrawer } = useCart()
+ const [qty, setQty] = useState(listing.minOrderQty)
 
-  const handleAdd = () => {
-    addItem(listing, qty)
-    toggleDrawer()
-  }
+ const handleAdd = () => {
+  addItem(listing, qty)
+  toggleDrawer()
+ }
 
-  return (
-    <div className="border-2 border-waxe-border bg-waxe-card flex flex-col clip-card">
-      <div className="p-4 flex-1">
-        {/* Artwork + info + price */}
-        <div className="flex gap-3 mb-3">
-          <div
-            className="w-14 h-14 shrink-0 border-2 border-waxe-border flex items-center justify-center overflow-hidden"
-            style={{ backgroundColor: listing.photoColor || '#2C3B4D' }}
-          >
-            {listing.artworkUrl ? (
-              <img src={listing.artworkUrl} alt={`${listing.artist} — ${listing.title}`} className="w-full h-full object-cover" />
-            ) : (
-              <span className="text-xs font-black text-white/30">LP</span>
-            )}
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-bold text-waxe-text truncate">{listing.title}</p>
-            <p className="text-[11px] font-bold text-waxe-text-muted truncate">{listing.artist}</p>
-            <p className="text-[9px] text-waxe-text-muted uppercase tracking-wider mt-1">
-              {listing.label} &middot; {listing.year} &middot; {listing.format}
-              &middot; {'★'.repeat(listing.condition)}{'☆'.repeat(5 - listing.condition)}
-            </p>
-          </div>
-          <div className="shrink-0 text-right">
-            <p className="text-lg font-black font-mono text-waxe-text leading-none">${listing.wholesalePrice.toFixed(2)}</p>
-            <p className="text-[9px] text-waxe-text-muted uppercase mt-0.5">/unit</p>
-            {listing.retailSuggested && (
-              <p className="text-[9px] text-waxe-text-muted mt-0.5">MSRP ${listing.retailSuggested.toFixed(2)}</p>
-            )}
-          </div>
-        </div>
-
-        {/* Seller + availability in one row */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className={`text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-none ${
-            listing.sellerType === 'label' ? 'bg-waxe-text text-waxe-deep clip-badge' :
-            listing.sellerType === 'distributor' ? 'bg-waxe-cool text-waxe-deep clip-badge' :
-            'border border-waxe-border text-waxe-text-muted'
-          }`}>
-            {listing.sellerType}
-          </span>
-          <span className="text-[11px] text-waxe-text-secondary truncate">{listing.seller.name}</span>
-          <span className="text-[9px] text-waxe-text-muted">{listing.seller.location}</span>
-          {listing.sellerType === 'store' && listing.seller.rating && (
-            <span className="text-[9px] font-mono text-waxe-text-muted ml-auto">T:{listing.seller.rating}</span>
-          )}
-        </div>
-
-        {/* Status line */}
-        <div className="flex items-center gap-2 mt-2">
-          <StatusBadge status={listing.listingType} />
-          <span className="text-[10px] text-waxe-text-muted">
-            {listing.listingType === 'backorder' ? 'Awaiting repress' : `${listing.availableQty} avail`} &middot; Min {listing.minOrderQty}
-          </span>
-          {listing.listingType === 'pre_order' && listing.releaseDate && (
-            <span className="text-[10px] text-waxe-warm font-bold ml-auto">{listing.releaseDate}</span>
-          )}
-        </div>
-      </div>
-
-      {/* Action row — pinned to bottom */}
-      <div className="flex items-center gap-2 px-4 py-3 border-t-2 border-waxe-border bg-waxe-surface/30">
-        <input
-          type="number"
-          min={listing.minOrderQty}
-          max={listing.availableQty || undefined}
-          value={qty}
-          onChange={(e) => setQty(Math.max(listing.minOrderQty, parseInt(e.target.value) || listing.minOrderQty))}
-          className="w-20 px-2 py-1.5 text-sm bg-waxe-deep border-2 border-waxe-border text-waxe-text rounded-none text-center font-mono"
-        />
-        <button
-          onClick={handleAdd}
-          className="btn-primary text-[11px] px-4 py-1.5 flex-1"
-          disabled={listing.listingType === 'backorder'}
-        >
-          Add to Cart
-        </button>
-      </div>
+ return (
+  <div className="border border-waxe-border bg-waxe-card flex flex-col clip-card">
+   <div className="p-4 flex-1">
+    {/* Artwork + info + price */}
+    <div className="flex gap-3 mb-3">
+     <div
+      className="w-14 h-14 shrink-0 border border-waxe-border flex items-center justify-center overflow-hidden"
+      style={{ backgroundColor: listing.photoColor || '#3D3050' }}
+     >
+      {listing.artworkUrl ? (
+       <img src={listing.artworkUrl} alt={`${listing.artist} — ${listing.title}`} className="w-full h-full object-cover" />
+      ) : (
+       <span className="text-xs font-semibold text-white/30">LP</span>
+      )}
+     </div>
+     <div className="flex-1 min-w-0">
+      <p className="text-sm font-bold text-waxe-text truncate">{listing.title}</p>
+      <p className="text-[11px] font-medium text-waxe-text-muted truncate">{listing.artist}</p>
+      <p className="text-[9px] text-waxe-text-muted mt-1">
+       {listing.label} &middot; {listing.year} &middot; {listing.format}
+       &middot; {'★'.repeat(listing.condition)}{'☆'.repeat(5 - listing.condition)}
+      </p>
+     </div>
+     <div className="shrink-0 text-right">
+      <p className="text-lg font-semibold font-mono text-waxe-text leading-none">${listing.wholesalePrice.toFixed(2)}</p>
+      <p className="text-[9px] text-waxe-text-muted mt-0.5">/unit</p>
+      {listing.retailSuggested && (
+       <p className="text-[9px] text-waxe-text-muted mt-0.5">MSRP ${listing.retailSuggested.toFixed(2)}</p>
+      )}
+     </div>
     </div>
-  )
+
+    {/* Seller + availability in one row */}
+    <div className="flex items-center gap-2 flex-wrap">
+     <span className={`text-[9px] font-semibold px-1.5 py-0.5 ${
+      listing.sellerType === 'label' ? 'bg-waxe-text text-waxe-deep clip-badge' :
+      listing.sellerType === 'distributor' ? 'bg-waxe-cool text-waxe-deep clip-badge' :
+      'border border-waxe-border text-waxe-text-muted'
+     }`}>
+      {listing.sellerType}
+     </span>
+     <span className="text-[11px] text-waxe-text-secondary truncate">{listing.seller.name}</span>
+     <span className="text-[9px] text-waxe-text-muted">{listing.seller.location}</span>
+     {listing.sellerType === 'store' && listing.seller.rating && (
+      <span className="text-[9px] font-mono text-waxe-text-muted ml-auto">T:{listing.seller.rating}</span>
+     )}
+    </div>
+
+    {/* Status line */}
+    <div className="flex items-center gap-2 mt-2">
+     <StatusBadge status={listing.listingType} />
+     <span className="text-[10px] text-waxe-text-muted">
+      {listing.listingType === 'backorder' ? 'Awaiting repress' : `${listing.availableQty} avail`} &middot; Min {listing.minOrderQty}
+     </span>
+     {listing.listingType === 'pre_order' && listing.releaseDate && (
+      <span className="text-[10px] text-waxe-warm font-bold ml-auto">{listing.releaseDate}</span>
+     )}
+    </div>
+   </div>
+
+   {/* Action row — pinned to bottom */}
+   <div className="flex items-center gap-2 px-4 py-3 border-t border-waxe-border bg-waxe-surface/30">
+    <input
+     type="number"
+     min={listing.minOrderQty}
+     max={listing.availableQty || undefined}
+     value={qty}
+     onChange={(e) => setQty(Math.max(listing.minOrderQty, parseInt(e.target.value) || listing.minOrderQty))}
+     className="w-20 px-2 py-1.5 text-sm bg-waxe-deep border border-waxe-border text-waxe-text text-center font-mono"
+    />
+    <button
+     onClick={handleAdd}
+     className="btn-primary text-[11px] px-4 py-1.5 flex-1"
+     disabled={listing.listingType === 'backorder'}
+    >
+     Add to Cart
+    </button>
+   </div>
+  </div>
+ )
 }
 
 // ─── RecommendationCard ──────────────────────────────────────
 
 function RecommendationCard({ listing, reason, basedOn }: { listing: MarketplaceListing; reason: string; basedOn: string }) {
-  const { addItem, toggleDrawer } = useCart()
+ const { addItem, toggleDrawer } = useCart()
 
-  const basedOnLabel: Record<string, string> = {
-    sales_history: 'Sales Data',
-    genre_gap: 'Genre Gap',
-    trending: 'Trending',
-    want_list: 'Want List',
-  }
+ const basedOnLabel: Record<string, string> = {
+  sales_history: 'Sales Data',
+  genre_gap: 'Genre Gap',
+  trending: 'Trending',
+  want_list: 'Want List',
+ }
 
-  return (
-    <div className="border-2 border-waxe-border bg-waxe-card min-w-[260px] max-w-[300px] shrink-0 snap-start flex flex-col clip-card">
-      <div className="p-3 flex-1">
-        <div className="flex gap-2.5 mb-2">
-          <div
-            className="w-10 h-10 shrink-0 border border-waxe-border flex items-center justify-center overflow-hidden"
-            style={{ backgroundColor: listing.photoColor || '#2C3B4D' }}
-          >
-            {listing.artworkUrl ? (
-              <img src={listing.artworkUrl} alt="" className="w-full h-full object-cover" />
-            ) : (
-              <span className="text-[9px] font-black text-white/30">LP</span>
-            )}
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-bold text-waxe-text truncate">{listing.title}</p>
-            <p className="text-[11px] font-bold text-waxe-text-muted truncate">{listing.artist}</p>
-          </div>
-          <p className="text-sm font-black font-mono text-waxe-text shrink-0">${listing.wholesalePrice.toFixed(2)}</p>
-        </div>
-        <div className="flex items-center gap-1.5 mb-1.5">
-          <span className="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 bg-waxe-warm text-waxe-text rounded-none">
-            {basedOnLabel[basedOn] || basedOn}
-          </span>
-          <span className="text-[9px] text-waxe-text-muted truncate">{listing.seller.name}</span>
-        </div>
-        <p className="text-[10px] text-waxe-text-secondary leading-relaxed line-clamp-2">{reason}</p>
-      </div>
-      <div className="px-3 pb-3">
-        <button
-          onClick={() => { addItem(listing, listing.minOrderQty); toggleDrawer() }}
-          className="btn-primary text-[11px] px-4 py-1.5 w-full"
-        >
-          Add {listing.minOrderQty} Units
-        </button>
-      </div>
+ return (
+  <div className="border border-waxe-border bg-waxe-card min-w-[260px] max-w-[300px] shrink-0 snap-start flex flex-col clip-card">
+   <div className="p-3 flex-1">
+    <div className="flex gap-2.5 mb-2">
+     <div
+      className="w-10 h-10 shrink-0 border border-waxe-border flex items-center justify-center overflow-hidden"
+      style={{ backgroundColor: listing.photoColor || '#3D3050' }}
+     >
+      {listing.artworkUrl ? (
+       <img src={listing.artworkUrl} alt="" className="w-full h-full object-cover" />
+      ) : (
+       <span className="text-[9px] font-semibold text-white/30">LP</span>
+      )}
+     </div>
+     <div className="flex-1 min-w-0">
+      <p className="text-sm font-bold text-waxe-text truncate">{listing.title}</p>
+      <p className="text-[11px] font-medium text-waxe-text-muted truncate">{listing.artist}</p>
+     </div>
+     <p className="text-sm font-semibold font-mono text-waxe-text shrink-0">${listing.wholesalePrice.toFixed(2)}</p>
     </div>
-  )
+    <div className="flex items-center gap-1.5 mb-1.5">
+     <span className="text-[9px] font-semibold px-1.5 py-0.5 bg-waxe-warm text-waxe-text">
+      {basedOnLabel[basedOn] || basedOn}
+     </span>
+     <span className="text-[9px] text-waxe-text-muted truncate">{listing.seller.name}</span>
+    </div>
+    <p className="text-[10px] text-waxe-text-secondary leading-relaxed line-clamp-2">{reason}</p>
+   </div>
+   <div className="px-3 pb-3">
+    <button
+     onClick={() => { addItem(listing, listing.minOrderQty); toggleDrawer() }}
+     className="btn-primary text-[11px] px-4 py-1.5 w-full"
+    >
+     Add {listing.minOrderQty} Units
+    </button>
+   </div>
+  </div>
+ )
 }
 
 // ─── RecommendationTicker ────────────────────────────────────
 
 function RecommendationTicker() {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const pausedRef = useRef(false)
+ const scrollRef = useRef<HTMLDivElement>(null)
+ const pausedRef = useRef(false)
 
-  useEffect(() => {
-    const el = scrollRef.current
-    if (!el) return
-    let raf: number
+ useEffect(() => {
+  const el = scrollRef.current
+  if (!el) return
+  let raf: number
 
-    const step = () => {
-      if (!pausedRef.current && el) {
-        el.scrollLeft += 0.5
-        // Loop: when we've scrolled past the first set, jump back
-        if (el.scrollLeft >= el.scrollWidth / 2) {
-          el.scrollLeft = 0
-        }
-      }
-      raf = requestAnimationFrame(step)
+  const step = () => {
+   if (!pausedRef.current && el) {
+    el.scrollLeft += 0.5
+    // Loop: when we've scrolled past the first set, jump back
+    if (el.scrollLeft >= el.scrollWidth / 2) {
+     el.scrollLeft = 0
     }
-    raf = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(raf)
-  }, [])
+   }
+   raf = requestAnimationFrame(step)
+  }
+  raf = requestAnimationFrame(step)
+  return () => cancelAnimationFrame(raf)
+ }, [])
 
-  // Duplicate cards for seamless loop
-  const cards = [...marketplaceRecommendations, ...marketplaceRecommendations]
+ // Duplicate cards for seamless loop
+ const cards = [...marketplaceRecommendations, ...marketplaceRecommendations]
 
-  return (
-    <div
-      ref={scrollRef}
-      onMouseEnter={() => { pausedRef.current = true }}
-      onMouseLeave={() => { pausedRef.current = false }}
-      className="flex gap-3 overflow-x-auto pb-1 scrollbar-hide"
-      style={{ scrollbarWidth: 'none' }}
-    >
-      {cards.map((rec, i) => (
-        <RecommendationCard
-          key={`${rec.id}-${i}`}
-          listing={rec.listing}
-          reason={rec.reason}
-          basedOn={rec.basedOn}
-        />
-      ))}
-    </div>
-  )
+ return (
+  <div
+   ref={scrollRef}
+   onMouseEnter={() => { pausedRef.current = true }}
+   onMouseLeave={() => { pausedRef.current = false }}
+   className="flex gap-3 overflow-x-auto pb-1 scrollbar-hide"
+   style={{ scrollbarWidth: 'none' }}
+  >
+   {cards.map((rec, i) => (
+    <RecommendationCard
+     key={`${rec.id}-${i}`}
+     listing={rec.listing}
+     reason={rec.reason}
+     basedOn={rec.basedOn}
+    />
+   ))}
+  </div>
+ )
 }
 
 // ─── Record Request Modal ────────────────────────────────────
 
 function RecordModal({ record, store, onClose }: { record: NetworkRecord; store?: RestockStore; onClose: () => void }) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-waxe-text/60" onClick={onClose} />
-      <div className="relative bg-waxe-card border-2 border-waxe-border rounded-none w-full max-w-lg max-h-[85vh] overflow-y-auto clip-modal">
-        <div className="p-6">
-          <div className="flex justify-between items-start mb-5">
-            <div>
-              <p className="text-[11px] font-black uppercase tracking-[0.1em] text-waxe-text-muted mb-1">Request Record</p>
-              <h2 className="text-xl font-black text-waxe-text tracking-tight">{record.artist}</h2>
-              <p className="text-sm text-waxe-text-secondary">{record.title}</p>
-            </div>
-            <button onClick={onClose} className="text-waxe-text-muted hover:text-waxe-text text-lg font-black">✕</button>
-          </div>
-          <div
-            className="w-full h-40 border-2 border-waxe-border mb-5 flex items-center justify-center relative overflow-hidden"
-            style={{ backgroundColor: record.photoColor || '#2C3B4D' }}
-          >
-            {record.artworkUrl ? (
-              <img src={record.artworkUrl} alt={`${record.artist} — ${record.title}`} className="absolute inset-0 w-full h-full object-cover" />
-            ) : (
-              <span className="text-2xl font-black text-white/30">LP</span>
-            )}
-          </div>
-          <div className="grid grid-cols-2 gap-3 mb-5">
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-0.5">Genre</p>
-              <p className="text-sm text-waxe-text">{record.genre}</p>
-            </div>
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-0.5">Condition</p>
-              <p className="text-sm text-waxe-text">{'★'.repeat(record.condition)}{'☆'.repeat(5 - record.condition)}</p>
-            </div>
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-0.5">Format</p>
-              <p className="text-sm text-waxe-text">{record.format}</p>
-            </div>
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-0.5">Year</p>
-              <p className="text-sm text-waxe-text">{record.year}</p>
-            </div>
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-0.5">Label</p>
-              <p className="text-sm text-waxe-text">{record.label}</p>
-            </div>
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-0.5">Price</p>
-              <p className="text-sm font-bold text-waxe-text font-mono">${record.price}</p>
-            </div>
-          </div>
-          {store && (
-            <div className="border-t-2 border-waxe-border pt-4 mb-5">
-              <p className="text-[11px] font-black uppercase tracking-[0.15em] text-waxe-text-muted mb-2">Selling Store</p>
-              <div className="flex justify-between items-start">
-                <div>
-                  <p className="text-sm font-bold text-waxe-text">{store.name}</p>
-                  <p className="text-xs text-waxe-text-muted">{store.location}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-[11px] font-bold text-waxe-text font-mono">Trust: {store.trustScore}/100</p>
-                  <p className="text-[11px] text-waxe-text-muted">{store.completedSwaps} swaps &middot; {store.responseTime}</p>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-1 mt-2">
-                {store.specialtyGenres.map((g) => (
-                  <span key={g} className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 border border-waxe-border text-waxe-text-muted">{g}</span>
-                ))}
-              </div>
-            </div>
-          )}
-          <div className="border-t-2 border-waxe-border pt-4">
-            <label className="block text-[11px] font-black uppercase tracking-[0.15em] text-waxe-text-muted mb-1.5">Message to Store</label>
-            <textarea
-              className="input-field w-full h-20 resize-none text-sm"
-              placeholder="Add a note about your request..."
-            />
-            <div className="flex gap-2 mt-3">
-              <button className="btn-primary text-sm px-5 py-2.5 flex-1">Send Request</button>
-              <button onClick={onClose} className="btn-ghost text-sm px-4 py-2.5">Cancel</button>
-            </div>
-          </div>
-        </div>
+ return (
+  <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+   <div className="absolute inset-0 bg-waxe-text/60" onClick={onClose} />
+   <div className="relative bg-waxe-card border border-waxe-border w-full max-w-lg max-h-[85vh] overflow-y-auto clip-modal">
+    <div className="p-6">
+     <div className="flex justify-between items-start mb-5">
+      <div>
+       <p className="text-[11px] font-semibold text-waxe-text-muted mb-1">Request Record</p>
+       <h2 className="text-xl font-semibold text-waxe-text">{record.artist}</h2>
+       <p className="text-sm text-waxe-text-secondary">{record.title}</p>
       </div>
+      <button onClick={onClose} className="text-waxe-text-muted hover:text-waxe-text text-lg font-semibold">✕</button>
+     </div>
+     <div
+      className="w-full h-40 border border-waxe-border mb-5 flex items-center justify-center relative overflow-hidden"
+      style={{ backgroundColor: record.photoColor || '#3D3050' }}
+     >
+      {record.artworkUrl ? (
+       <img src={record.artworkUrl} alt={`${record.artist} — ${record.title}`} className="absolute inset-0 w-full h-full object-cover" />
+      ) : (
+       <span className="text-2xl font-semibold text-white/30">LP</span>
+      )}
+     </div>
+     <div className="grid grid-cols-2 gap-3 mb-5">
+      <div>
+       <p className="text-[11px] font-medium text-waxe-text-muted mb-0.5">Genre</p>
+       <p className="text-sm text-waxe-text">{record.genre}</p>
+      </div>
+      <div>
+       <p className="text-[11px] font-medium text-waxe-text-muted mb-0.5">Condition</p>
+       <p className="text-sm text-waxe-text">{'★'.repeat(record.condition)}{'☆'.repeat(5 - record.condition)}</p>
+      </div>
+      <div>
+       <p className="text-[11px] font-medium text-waxe-text-muted mb-0.5">Format</p>
+       <p className="text-sm text-waxe-text">{record.format}</p>
+      </div>
+      <div>
+       <p className="text-[11px] font-medium text-waxe-text-muted mb-0.5">Year</p>
+       <p className="text-sm text-waxe-text">{record.year}</p>
+      </div>
+      <div>
+       <p className="text-[11px] font-medium text-waxe-text-muted mb-0.5">Label</p>
+       <p className="text-sm text-waxe-text">{record.label}</p>
+      </div>
+      <div>
+       <p className="text-[11px] font-medium text-waxe-text-muted mb-0.5">Price</p>
+       <p className="text-sm font-bold text-waxe-text font-mono">${record.price}</p>
+      </div>
+     </div>
+     {store && (
+      <div className="border-t border-waxe-border pt-4 mb-5">
+       <p className="text-[11px] font-semibold text-waxe-text-muted mb-2">Selling Store</p>
+       <div className="flex justify-between items-start">
+        <div>
+         <p className="text-sm font-bold text-waxe-text">{store.name}</p>
+         <p className="text-xs text-waxe-text-muted">{store.location}</p>
+        </div>
+        <div className="text-right">
+         <p className="text-[11px] font-medium text-waxe-text font-mono">Trust: {store.trustScore}/100</p>
+         <p className="text-[11px] text-waxe-text-muted">{store.completedSwaps} swaps &middot; {store.responseTime}</p>
+        </div>
+       </div>
+       <div className="flex flex-wrap gap-1 mt-2">
+        {store.specialtyGenres.map((g) => (
+         <span key={g} className="text-[10px] font-medium px-2 py-0.5 border border-waxe-border text-waxe-text-muted">{g}</span>
+        ))}
+       </div>
+      </div>
+     )}
+     <div className="border-t border-waxe-border pt-4">
+      <label className="block text-[11px] font-semibold text-waxe-text-muted mb-1.5">Message to Store</label>
+      <textarea
+       className="input-field w-full h-20 resize-none text-sm"
+       placeholder="Add a note about your request..."
+      />
+      <div className="flex gap-2 mt-3">
+       <button className="btn-primary text-sm px-5 py-2.5 flex-1">Send Request</button>
+       <button onClick={onClose} className="btn-ghost text-sm px-4 py-2.5">Cancel</button>
+      </div>
+     </div>
     </div>
-  )
+   </div>
+  </div>
+ )
 }
 
 // ─── Store Card ──────────────────────────────────────────────
 
 function trustColor(score: number) {
-  if (score >= 95) return 'bg-waxe-positive'
-  if (score >= 90) return 'bg-waxe-cool'
-  if (score >= 80) return 'bg-waxe-warm'
-  return 'bg-waxe-negative'
+ if (score >= 95) return 'bg-waxe-positive'
+ if (score >= 90) return 'bg-waxe-cool'
+ if (score >= 80) return 'bg-waxe-warm'
+ return 'bg-waxe-negative'
 }
 
 function StoreCard({ store }: { store: NetworkStore }) {
-  return (
-    <div className="bg-waxe-card border-2 border-waxe-border p-4 clip-card">
-      <div className="flex items-start justify-between mb-3">
-        <div className="min-w-0">
-          <p className="text-sm font-black text-waxe-text truncate">{store.name}</p>
-          <p className="text-[11px] text-waxe-text-muted">{store.location}</p>
-        </div>
-        <div className="shrink-0 text-right">
-          <p className="designation-tag">Trust</p>
-          <p className="text-lg font-black text-waxe-text font-mono leading-none mt-0.5">{store.trustScore}</p>
-        </div>
-      </div>
-      <div className="w-full h-1.5 bg-waxe-border mb-2 overflow-hidden">
-        <div className={`h-full ${trustColor(store.trustScore)}`} style={{ width: `${store.trustScore}%` }} />
-      </div>
-      <div className="hatch-divider mb-3" />
-      <div className="flex flex-wrap gap-1 mb-3">
-        {store.specialtyGenres.map((g) => (
-          <span key={g} className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 border border-waxe-border text-waxe-text-muted">{g}</span>
-        ))}
-      </div>
-      <div className="flex items-center gap-3 mb-3 text-[10px] text-waxe-text-muted">
-        <span className="font-mono">{store.completedSwaps} swaps</span>
-        <span>&middot;</span>
-        <span>{store.responseTime}</span>
-        <span>&middot;</span>
-        <span>Since {store.memberSince}</span>
-      </div>
-      <div className="flex gap-2">
-        <button className="btn-secondary text-[10px] px-3 py-1.5 flex-1">View Catalog</button>
-        <button className="btn-secondary text-[10px] px-3 py-1.5 flex-1">Message</button>
-        <button className="btn-primary text-[10px] px-3 py-1.5 flex-1">Propose Trade</button>
-      </div>
+ return (
+  <div className="bg-waxe-card border border-waxe-border p-4 clip-card">
+   <div className="flex items-start justify-between mb-3">
+    <div className="min-w-0">
+     <p className="text-sm font-semibold text-waxe-text truncate">{store.name}</p>
+     <p className="text-[11px] text-waxe-text-muted">{store.location}</p>
     </div>
-  )
+    <div className="shrink-0 text-right">
+     <p className="designation-tag">Trust</p>
+     <p className="text-lg font-semibold text-waxe-text font-mono leading-none mt-0.5">{store.trustScore}</p>
+    </div>
+   </div>
+   <div className="w-full h-1.5 bg-waxe-border mb-2 overflow-hidden">
+    <div className={`h-full ${trustColor(store.trustScore)}`} style={{ width: `${store.trustScore}%` }} />
+   </div>
+   <div className="hatch-divider mb-3" />
+   <div className="flex flex-wrap gap-1 mb-3">
+    {store.specialtyGenres.map((g) => (
+     <span key={g} className="text-[10px] font-medium px-2 py-0.5 border border-waxe-border text-waxe-text-muted">{g}</span>
+    ))}
+   </div>
+   <div className="flex items-center gap-3 mb-3 text-[10px] text-waxe-text-muted">
+    <span className="font-mono">{store.completedSwaps} swaps</span>
+    <span>&middot;</span>
+    <span>{store.responseTime}</span>
+    <span>&middot;</span>
+    <span>Since {store.memberSince}</span>
+   </div>
+   <div className="flex gap-2">
+    <button className="btn-secondary text-[10px] px-3 py-1.5 flex-1">View Catalog</button>
+    <button className="btn-secondary text-[10px] px-3 py-1.5 flex-1">Message</button>
+    <button className="btn-primary text-[10px] px-3 py-1.5 flex-1">Propose Trade</button>
+   </div>
+  </div>
+ )
 }
 
 // ─── Transaction Row ─────────────────────────────────────────
 
 function typeColor(type: NetworkTransaction['type']) {
-  switch (type) {
-    case 'swap': return 'border-waxe-cool/40 text-waxe-cool bg-waxe-cool/5'
-    case 'purchase': return 'border-waxe-warm/40 text-waxe-warm bg-waxe-warm/5'
-    case 'sale': return 'border-waxe-positive/40 text-waxe-positive bg-waxe-positive/5'
-  }
+ switch (type) {
+  case 'swap': return 'border-waxe-cool/40 text-waxe-cool bg-waxe-cool/5'
+  case 'purchase': return 'border-waxe-warm/40 text-waxe-warm bg-waxe-warm/5'
+  case 'sale': return 'border-waxe-positive/40 text-waxe-positive bg-waxe-positive/5'
+ }
 }
 
 function TransactionRow({ transaction }: { transaction: NetworkTransaction }) {
-  return (
-    <div className="bg-waxe-card border-2 border-waxe-border p-3 clip-stat accent-strip-left">
-      <div className="flex items-start gap-3">
-        <span className={`shrink-0 text-[10px] font-black uppercase tracking-wider px-2 py-1 border clip-badge ${typeColor(transaction.type)}`}>
-          {transaction.type}
+ return (
+  <div className="bg-waxe-card border border-waxe-border p-3 clip-stat accent-strip-left">
+   <div className="flex items-start gap-3">
+    <span className={`shrink-0 text-[10px] font-semibold px-2 py-1 border clip-badge ${typeColor(transaction.type)}`}>
+     {transaction.type}
+    </span>
+    <div className="flex-1 min-w-0">
+     <div className="flex items-center gap-2 mb-1">
+      <p className="text-sm font-bold text-waxe-text">{transaction.counterparty.name}</p>
+      <span className="text-[10px] text-waxe-text-muted">{transaction.counterparty.location}</span>
+     </div>
+     <div className="space-y-0.5">
+      {transaction.records.map((rec, i) => (
+       <div key={i} className="flex items-center gap-2 text-[11px]">
+        <span className={`font-mono font-bold ${rec.direction === 'sent' ? 'text-waxe-negative' : 'text-waxe-positive'}`}>
+         {rec.direction === 'sent' ? '↑' : '↓'}
         </span>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <p className="text-sm font-bold text-waxe-text">{transaction.counterparty.name}</p>
-            <span className="text-[10px] text-waxe-text-muted">{transaction.counterparty.location}</span>
-          </div>
-          <div className="space-y-0.5">
-            {transaction.records.map((rec, i) => (
-              <div key={i} className="flex items-center gap-2 text-[11px]">
-                <span className={`font-mono font-bold ${rec.direction === 'sent' ? 'text-waxe-negative' : 'text-waxe-positive'}`}>
-                  {rec.direction === 'sent' ? '↑' : '↓'}
-                </span>
-                <span className="text-waxe-text-secondary">{rec.artist} — {rec.title}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="shrink-0 text-right">
-          <p className={`text-sm font-black font-mono ${transaction.netValue >= 0 ? 'text-waxe-positive' : 'text-waxe-negative'}`}>
-            {transaction.netValue >= 0 ? '+' : ''}${transaction.netValue}
-          </p>
-          <p className="text-[10px] text-waxe-text-muted mt-0.5">{transaction.completedAt}</p>
-        </div>
-      </div>
+        <span className="text-waxe-text-secondary">{rec.artist} — {rec.title}</span>
+       </div>
+      ))}
+     </div>
     </div>
-  )
+    <div className="shrink-0 text-right">
+     <p className={`text-sm font-semibold font-mono ${transaction.netValue >= 0 ? 'text-waxe-positive' : 'text-waxe-negative'}`}>
+      {transaction.netValue >= 0 ? '+' : ''}${transaction.netValue}
+     </p>
+     <p className="text-[10px] text-waxe-text-muted mt-0.5">{transaction.completedAt}</p>
+    </div>
+   </div>
+  </div>
+ )
 }
 
 // ─── Inbound Pack Request Card ──────────────────────────────
 
 function InboundPackRequestCard({ request }: { request: InboundPackRequest }) {
-  return (
-    <div className="bg-waxe-card border-2 border-waxe-border p-3 clip-card">
-      <div className="flex items-center gap-2 mb-1.5">
-        <p className="text-sm font-bold text-waxe-text truncate">{request.requestedPackName}</p>
-        <StatusBadge status={request.status} />
-      </div>
-      <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 border border-waxe-border text-waxe-text-muted">{request.requestedGenre}</span>
-      <div className="flex items-center gap-2 mt-2">
-        <span className="text-[10px] font-bold text-waxe-text-secondary">{request.fromStore.name}</span>
-        <span className="text-[10px] text-waxe-text-muted">{request.fromStore.location}</span>
-      </div>
-      <span className="text-[10px] text-waxe-text-muted font-mono">Trust: {request.fromStore.trustScore}</span>
-      {request.message && (
-        <p className="text-[10px] text-waxe-text-secondary mt-1.5 leading-relaxed italic">&ldquo;{request.message}&rdquo;</p>
-      )}
-      <div className="flex items-center gap-3 mt-2">
-        <span className="text-[11px] font-black text-waxe-text font-mono">${request.offeredPrice}</span>
-        <span className="text-[10px] text-waxe-text-muted">{request.requestedAt}</span>
-      </div>
-      {request.status === 'pending' && (
-        <div className="flex gap-2 mt-2.5">
-          <button className="btn-primary text-[10px] px-3 py-1 flex-1">Accept</button>
-          <button className="btn-secondary text-[10px] px-3 py-1">Counter</button>
-          <button className="btn-ghost text-[10px] px-3 py-1">Decline</button>
-        </div>
-      )}
+ return (
+  <div className="bg-waxe-card border border-waxe-border p-3 clip-card">
+   <div className="flex items-center gap-2 mb-1.5">
+    <p className="text-sm font-bold text-waxe-text truncate">{request.requestedPackName}</p>
+    <StatusBadge status={request.status} />
+   </div>
+   <span className="text-[10px] font-medium px-1.5 py-0.5 border border-waxe-border text-waxe-text-muted">{request.requestedGenre}</span>
+   <div className="flex items-center gap-2 mt-2">
+    <span className="text-[10px] font-medium text-waxe-text-secondary">{request.fromStore.name}</span>
+    <span className="text-[10px] text-waxe-text-muted">{request.fromStore.location}</span>
+   </div>
+   <span className="text-[10px] text-waxe-text-muted font-mono">Trust: {request.fromStore.trustScore}</span>
+   {request.message && (
+    <p className="text-[10px] text-waxe-text-secondary mt-1.5 leading-relaxed italic">&ldquo;{request.message}&rdquo;</p>
+   )}
+   <div className="flex items-center gap-3 mt-2">
+    <span className="text-[11px] font-semibold text-waxe-text font-mono">${request.offeredPrice}</span>
+    <span className="text-[10px] text-waxe-text-muted">{request.requestedAt}</span>
+   </div>
+   {request.status === 'pending' && (
+    <div className="flex gap-2 mt-2.5">
+     <button className="btn-primary text-[10px] px-3 py-1 flex-1">Accept</button>
+     <button className="btn-secondary text-[10px] px-3 py-1">Counter</button>
+     <button className="btn-ghost text-[10px] px-3 py-1">Decline</button>
     </div>
-  )
+   )}
+  </div>
+ )
 }
 
 // ─── Network Pack Card ───────────────────────────────────────
 
 const genreColors: Record<string, string> = {
-  Jazz: '#2A4058', House: '#3D7A4F', Ambient: '#546878', Techno: '#0A0E14',
-  Disco: '#E89A40', 'R&B': '#A35139', Soul: '#C04040', Electronic: '#2A4058',
-  Funk: '#A35139', Garage: '#3D7A4F',
+ Jazz: '#2D2540', House: '#4A9A62', Ambient: '#5A4D70', Techno: '#0D0B14',
+ Disco: '#E8837C', 'R&B': '#7B6FA0', Soul: '#C04040', Electronic: '#2D2540',
+ Funk: '#7B6FA0', Garage: '#4A9A62',
 }
 
 function NetworkPackCard({ listing }: { listing: NetworkPackListing }) {
-  const { pack, store } = listing
-  const barColor = genreColors[pack.genre] || '#2C3B4D'
-  const { fee, shipping, buyerPays, rate } = calculateFees(pack.packPrice, 1)
+ const { pack, store } = listing
+ const barColor = genreColors[pack.genre] || '#3D3050'
+ const { fee, shipping, buyerPays, rate } = calculateFees(pack.packPrice, 1)
 
-  return (
-    <div className="bg-waxe-card border-2 border-waxe-border rounded-none overflow-hidden clip-card">
-      <div className="h-1" style={{ backgroundColor: barColor }} />
-      <div className="p-5">
-        <div className="flex items-start gap-4 mb-3">
-          <PackArtworkGrid records={pack.records} />
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <p className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em] truncate">{pack.name}</p>
-              <StatusBadge status={pack.status} />
-            </div>
-            <p className="text-[10px] text-waxe-text-muted">
-              {pack.genre} &middot; {pack.records.length} records &middot; Avg {'★'.repeat(Math.round(pack.avgCondition))}{'☆'.repeat(5 - Math.round(pack.avgCondition))}
-            </p>
-            <p className="text-[10px] text-waxe-text-secondary mt-0.5">
-              {store.name} &middot; {store.location} &middot; Trust: {store.trustScore}
-            </p>
-            <div className="flex items-center gap-2 mt-1.5">
-              <span className="text-[11px] text-waxe-text-muted line-through font-mono">${pack.totalValue}</span>
-              <span className="text-[11px] font-black text-waxe-text font-mono">${pack.packPrice}</span>
-              <span className="text-[10px] font-bold text-waxe-positive">(-{pack.discountPercent}%)</span>
-            </div>
-            <p className="text-[10px] text-waxe-text-muted mt-1">
-              WAXED fee: <span className="font-mono font-bold text-waxe-warm">${fee}</span> ({Math.round(rate * 100)}%) · Shipping: <span className="font-mono">${shipping}</span> · Total: <span className="font-mono font-bold text-waxe-text">${buyerPays}</span>
-            </p>
-          </div>
-        </div>
-        <div className="flex gap-2 border-t border-waxe-border pt-3">
-          <button className="btn-primary text-[10px] px-3 py-1.5 flex-1">Buy Pack</button>
-          <button className="btn-secondary text-[10px] px-3 py-1.5 flex-1">View Contents</button>
-        </div>
+ return (
+  <div className="bg-waxe-card border border-waxe-border overflow-hidden clip-card">
+   <div className="h-1" style={{ backgroundColor: barColor }} />
+   <div className="p-5">
+    <div className="flex items-start gap-4 mb-3">
+     <PackArtworkGrid records={pack.records} />
+     <div className="flex-1 min-w-0">
+      <div className="flex items-center gap-2 mb-1">
+       <p className="text-[11px] font-semibold text-waxe-text truncate">{pack.name}</p>
+       <StatusBadge status={pack.status} />
       </div>
+      <p className="text-[10px] text-waxe-text-muted">
+       {pack.genre} &middot; {pack.records.length} records &middot; Avg {'★'.repeat(Math.round(pack.avgCondition))}{'☆'.repeat(5 - Math.round(pack.avgCondition))}
+      </p>
+      <p className="text-[10px] text-waxe-text-secondary mt-0.5">
+       {store.name} &middot; {store.location} &middot; Trust: {store.trustScore}
+      </p>
+      <div className="flex items-center gap-2 mt-1.5">
+       <span className="text-[11px] text-waxe-text-muted line-through font-mono">${pack.totalValue}</span>
+       <span className="text-[11px] font-semibold text-waxe-text font-mono">${pack.packPrice}</span>
+       <span className="text-[10px] font-medium text-waxe-positive">(-{pack.discountPercent}%)</span>
+      </div>
+      <p className="text-[10px] text-waxe-text-muted mt-1">
+       WAXED fee: <span className="font-mono font-bold text-waxe-warm">${fee}</span> ({Math.round(rate * 100)}%) · Shipping: <span className="font-mono">${shipping}</span> · Total: <span className="font-mono font-bold text-waxe-text">${buyerPays}</span>
+      </p>
+     </div>
     </div>
-  )
+    <div className="flex gap-2 border-t border-waxe-border pt-3">
+     <button className="btn-primary text-[10px] px-3 py-1.5 flex-1">Buy Pack</button>
+     <button className="btn-secondary text-[10px] px-3 py-1.5 flex-1">View Contents</button>
+    </div>
+   </div>
+  </div>
+ )
 }
 
 // ─── Purchase Card ───────────────────────────────────────────
 
 function PurchaseCard({ order }: { order: PackPurchase }) {
-  const isSale = order.type === 'sale'
+ const isSale = order.type === 'sale'
 
-  return (
-    <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-4 clip-card">
-      <div className="flex items-start justify-between mb-3">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 border ${
-              isSale ? 'border-waxe-positive/40 text-waxe-positive bg-waxe-positive/5' : 'border-waxe-cool/40 text-waxe-cool bg-waxe-cool/5'
-            }`}>
-              {isSale ? 'You Sold' : 'You Bought'}
-            </span>
-            <StatusBadge status={order.status} />
-          </div>
-          <p className="text-sm font-black text-waxe-text">{order.pack.name}</p>
-          <p className="text-[11px] text-waxe-text-muted">
-            {order.pack.genre} &middot; {order.pack.recordCount} records &middot; {order.counterparty.name}, {order.counterparty.location}
-          </p>
-        </div>
-        <p className="text-[10px] text-waxe-text-muted">{order.createdAt}</p>
-      </div>
-      <div className="bg-waxe-surface border border-waxe-border p-3 grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-0.5">Pack Price</p>
-          <p className="text-sm font-black text-waxe-text font-mono">${order.pack.packPrice}</p>
-        </div>
-        <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-0.5">WAXED Fee</p>
-          <p className="text-sm font-black text-waxe-warm font-mono">${order.waxedFee}</p>
-        </div>
-        <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-0.5">Shipping</p>
-          <p className="text-sm font-black text-waxe-text font-mono">${order.shipping}</p>
-        </div>
-        <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-0.5">
-            {isSale ? 'You Receive' : 'You Pay'}
-          </p>
-          <p className={`text-sm font-black font-mono ${isSale ? 'text-waxe-positive' : 'text-waxe-text'}`}>
-            ${isSale ? order.sellerReceives : order.buyerPays}
-          </p>
-        </div>
-      </div>
+ return (
+  <div className="bg-waxe-card border border-waxe-border p-4 clip-card">
+   <div className="flex items-start justify-between mb-3">
+    <div>
+     <div className="flex items-center gap-2 mb-1">
+      <span className={`text-[10px] font-semibold px-2 py-0.5 border ${
+       isSale ? 'border-waxe-positive/40 text-waxe-positive bg-waxe-positive/5' : 'border-waxe-cool/40 text-waxe-cool bg-waxe-cool/5'
+      }`}>
+       {isSale ? 'You Sold' : 'You Bought'}
+      </span>
+      <StatusBadge status={order.status} />
+     </div>
+     <p className="text-sm font-semibold text-waxe-text">{order.pack.name}</p>
+     <p className="text-[11px] text-waxe-text-muted">
+      {order.pack.genre} &middot; {order.pack.recordCount} records &middot; {order.counterparty.name}, {order.counterparty.location}
+     </p>
     </div>
-  )
+    <p className="text-[10px] text-waxe-text-muted">{order.createdAt}</p>
+   </div>
+   <div className="bg-waxe-surface border border-waxe-border p-3 grid grid-cols-2 lg:grid-cols-4 gap-3">
+    <div>
+     <p className="text-[10px] font-medium text-waxe-text-muted mb-0.5">Pack Price</p>
+     <p className="text-sm font-semibold text-waxe-text font-mono">${order.pack.packPrice}</p>
+    </div>
+    <div>
+     <p className="text-[10px] font-medium text-waxe-text-muted mb-0.5">WAXED Fee</p>
+     <p className="text-sm font-semibold text-waxe-warm font-mono">${order.waxedFee}</p>
+    </div>
+    <div>
+     <p className="text-[10px] font-medium text-waxe-text-muted mb-0.5">Shipping</p>
+     <p className="text-sm font-semibold text-waxe-text font-mono">${order.shipping}</p>
+    </div>
+    <div>
+     <p className="text-[10px] font-medium text-waxe-text-muted mb-0.5">
+      {isSale ? 'You Receive' : 'You Pay'}
+     </p>
+     <p className={`text-sm font-semibold font-mono ${isSale ? 'text-waxe-positive' : 'text-waxe-text'}`}>
+      ${isSale ? order.sellerReceives : order.buyerPays}
+     </p>
+    </div>
+   </div>
+  </div>
+ )
 }
 
 // ─── Page ────────────────────────────────────────────────────
@@ -527,324 +527,324 @@ const allStoreGenres = ['All', ...Array.from(new Set(networkStores.flatMap((s) =
 const storeSortOptions = ['Trust Score', 'Swaps', 'Response Time', 'Name']
 
 export default function MarketplacePage() {
-  const { state, toggleDrawer } = useCart()
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const [activePanel, setActivePanel] = useState(0)
-  const panelCount = 3
+ const { state, toggleDrawer } = useCart()
+ const scrollRef = useRef<HTMLDivElement>(null)
+ const [activePanel, setActivePanel] = useState(0)
+ const panelCount = 3
 
-  // Restock panel filters
-  const [restockSearch, setRestockSearch] = useState('')
-  const [restockGenreFilter, setRestockGenreFilter] = useState('All')
-  const [restockConditionFilter, setRestockConditionFilter] = useState('All')
-  const [restockStoreFilter, setRestockStoreFilter] = useState('All')
-  const [selectedRecord, setSelectedRecord] = useState<NetworkRecord | null>(null)
+ // Restock panel filters
+ const [restockSearch, setRestockSearch] = useState('')
+ const [restockGenreFilter, setRestockGenreFilter] = useState('All')
+ const [restockConditionFilter, setRestockConditionFilter] = useState('All')
+ const [restockStoreFilter, setRestockStoreFilter] = useState('All')
+ const [selectedRecord, setSelectedRecord] = useState<NetworkRecord | null>(null)
 
-  // Network panel filters
-  const [storeSearch, setStoreSearch] = useState('')
-  const [storeGenreFilter, setStoreGenreFilter] = useState('All')
-  const [storeSortBy, setStoreSortBy] = useState('Trust Score')
+ // Network panel filters
+ const [storeSearch, setStoreSearch] = useState('')
+ const [storeGenreFilter, setStoreGenreFilter] = useState('All')
+ const [storeSortBy, setStoreSortBy] = useState('Trust Score')
 
-  const handleScroll = () => {
-    if (!scrollRef.current) return
-    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
-    const maxScroll = scrollWidth - clientWidth
-    if (maxScroll <= 0) return
-    setActivePanel(Math.round((scrollLeft / maxScroll) * (panelCount - 1)))
+ const handleScroll = () => {
+  if (!scrollRef.current) return
+  const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
+  const maxScroll = scrollWidth - clientWidth
+  if (maxScroll <= 0) return
+  setActivePanel(Math.round((scrollLeft / maxScroll) * (panelCount - 1)))
+ }
+
+ const scrollToPanel = (i: number) => {
+  const panels = scrollRef.current?.querySelectorAll(':scope > .snap-start')
+  if (panels?.[i]) panels[i].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' })
+ }
+
+ // Filtered restock records
+ const filteredRecords = useMemo(() => {
+  return networkRecords.filter((r) => {
+   if (restockSearch) {
+    const q = restockSearch.toLowerCase()
+    if (!r.artist.toLowerCase().includes(q) && !r.title.toLowerCase().includes(q) && !r.genre.toLowerCase().includes(q)) return false
+   }
+   if (restockGenreFilter !== 'All' && r.genre !== restockGenreFilter) return false
+   if (restockConditionFilter !== 'All' && r.condition !== restockConditionFilter.length) return false
+   if (restockStoreFilter !== 'All' && r.storeName !== restockStoreFilter) return false
+   return true
+  })
+ }, [restockSearch, restockGenreFilter, restockConditionFilter, restockStoreFilter])
+
+ // Filtered + sorted stores
+ const filteredStores = useMemo(() => {
+  let stores = [...networkStores]
+  if (storeSearch) {
+   const q = storeSearch.toLowerCase()
+   stores = stores.filter((s) =>
+    s.name.toLowerCase().includes(q) || s.location.toLowerCase().includes(q) || s.specialtyGenres.some((g) => g.toLowerCase().includes(q))
+   )
   }
-
-  const scrollToPanel = (i: number) => {
-    const panels = scrollRef.current?.querySelectorAll(':scope > .snap-start')
-    if (panels?.[i]) panels[i].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' })
+  if (storeGenreFilter !== 'All') {
+   stores = stores.filter((s) => s.specialtyGenres.includes(storeGenreFilter))
   }
+  switch (storeSortBy) {
+   case 'Trust Score': stores.sort((a, b) => b.trustScore - a.trustScore); break
+   case 'Swaps': stores.sort((a, b) => b.completedSwaps - a.completedSwaps); break
+   case 'Response Time': stores.sort((a, b) => a.responseTime.localeCompare(b.responseTime)); break
+   case 'Name': stores.sort((a, b) => a.name.localeCompare(b.name)); break
+  }
+  return stores
+ }, [storeSearch, storeGenreFilter, storeSortBy])
 
-  // Filtered restock records
-  const filteredRecords = useMemo(() => {
-    return networkRecords.filter((r) => {
-      if (restockSearch) {
-        const q = restockSearch.toLowerCase()
-        if (!r.artist.toLowerCase().includes(q) && !r.title.toLowerCase().includes(q) && !r.genre.toLowerCase().includes(q)) return false
-      }
-      if (restockGenreFilter !== 'All' && r.genre !== restockGenreFilter) return false
-      if (restockConditionFilter !== 'All' && r.condition !== restockConditionFilter.length) return false
-      if (restockStoreFilter !== 'All' && r.storeName !== restockStoreFilter) return false
-      return true
-    })
-  }, [restockSearch, restockGenreFilter, restockConditionFilter, restockStoreFilter])
+ const getStore = (storeId: string) => restockStores.find((s) => s.id === storeId)
 
-  // Filtered + sorted stores
-  const filteredStores = useMemo(() => {
-    let stores = [...networkStores]
-    if (storeSearch) {
-      const q = storeSearch.toLowerCase()
-      stores = stores.filter((s) =>
-        s.name.toLowerCase().includes(q) || s.location.toLowerCase().includes(q) || s.specialtyGenres.some((g) => g.toLowerCase().includes(q))
-      )
+ // Stats
+ const pendingRequests = inboundPackRequests.filter((r) => r.status === 'pending')
+ const tradeVolume = networkTransactions.reduce((sum, t) => sum + Math.abs(t.netValue), 0)
+ const totalTxns = networkTransactions.length
+
+ return (
+  <div className="flex flex-col flex-1 min-h-0">
+   <DashboardHeader
+    title="Marketplace"
+    subtitle="B2B marketplace — restock, trade, and manage your dealer network"
+    actions={
+     <div className="flex gap-2 items-center">
+      <button onClick={toggleDrawer} className="btn-secondary text-[11px] px-4 py-2">
+       Cart {state.items.length > 0 && `(${state.items.length})`}
+      </button>
+      <button className="btn-secondary text-sm px-4 py-2">Invite Store</button>
+     </div>
     }
-    if (storeGenreFilter !== 'All') {
-      stores = stores.filter((s) => s.specialtyGenres.includes(storeGenreFilter))
-    }
-    switch (storeSortBy) {
-      case 'Trust Score': stores.sort((a, b) => b.trustScore - a.trustScore); break
-      case 'Swaps': stores.sort((a, b) => b.completedSwaps - a.completedSwaps); break
-      case 'Response Time': stores.sort((a, b) => a.responseTime.localeCompare(b.responseTime)); break
-      case 'Name': stores.sort((a, b) => a.name.localeCompare(b.name)); break
-    }
-    return stores
-  }, [storeSearch, storeGenreFilter, storeSortBy])
+   />
 
-  const getStore = (storeId: string) => restockStores.find((s) => s.id === storeId)
+   {/* Recommended — auto-scrolling ticker */}
+   <div className="shrink-0 mb-4">
+    <p className="text-[11px] font-semibold text-waxe-text-muted mb-2">
+     Recommended for you
+    </p>
+    <RecommendationTicker />
+   </div>
 
-  // Stats
-  const pendingRequests = inboundPackRequests.filter((r) => r.status === 'pending')
-  const tradeVolume = networkTransactions.reduce((sum, t) => sum + Math.abs(t.netValue), 0)
-  const totalTxns = networkTransactions.length
+   {/* Stats Row */}
+   <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+    <StatCard label="Stores in Network" value="47" trend="+6 this month" trendUp={true} />
+    <StatCard label="Stale Inventory" value={String(deadStockItems.filter(d => d.daysInStock >= 60).length)} trend="60+ days sitting" trendUp={false} />
+    <StatCard label="Inbound Requests" value={String(pendingRequests.length)} trend={`${inboundPackRequests.length} total`} trendUp={pendingRequests.length > 0} />
+    <StatCard label="Trade Volume" value={`$${tradeVolume}`} trend={`${totalTxns} transactions`} trendUp={true} />
+   </div>
 
-  return (
-    <div className="flex flex-col flex-1 min-h-0">
-      <DashboardHeader
-        title="Marketplace"
-        subtitle="B2B marketplace — restock, trade, and manage your dealer network"
-        actions={
-          <div className="flex gap-2 items-center">
-            <button onClick={toggleDrawer} className="btn-secondary text-[11px] px-4 py-2">
-              Cart {state.items.length > 0 && `(${state.items.length})`}
-            </button>
-            <button className="btn-secondary text-sm px-4 py-2">Invite Store</button>
-          </div>
-        }
+   {/* Panel tabs */}
+   <div className="shrink-0 flex gap-1.5 pb-3 mb-3 w-fit border-b border-waxe-border pr-4">
+    {['Restock', 'Collections', 'Network'].map((label, i) => (
+     <button
+      key={label}
+      onClick={() => scrollToPanel(i)}
+      className={`text-[11px] font-medium px-3 py-1.5 border ${
+       activePanel === i
+        ? 'bg-waxe-text text-waxe-deep border-waxe-text'
+        : 'text-waxe-text bg-waxe-card/80 backdrop-blur-sm border-waxe-border hover:border-waxe-border-hover'
+      }`}
+     >
+      {label}
+     </button>
+    ))}
+   </div>
+
+   {/* Horizontal swipe panels */}
+   <div className="relative flex-1 min-h-0 -mr-5 lg:-mr-6">
+    <div ref={scrollRef} onScroll={handleScroll} className="absolute inset-0 overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex gap-4 scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
+
+    {/* ── Panel 1: Restock ── */}
+    <div className="snap-start shrink-0 w-[92%] flex flex-col gap-4 min-h-0">
+     {/* Search + Filters */}
+     <div className="shrink-0 flex flex-wrap items-center gap-2">
+      <input
+       type="text"
+       value={restockSearch}
+       onChange={(e) => setRestockSearch(e.target.value)}
+       placeholder="Search artist, title, genre..."
+       className="input-field text-sm px-3 py-1.5 w-64"
       />
+      <FilterDropdown label="Genre" options={allRecordGenres} value={restockGenreFilter} onChange={setRestockGenreFilter} />
+      <FilterDropdown label="Condition" options={allRecordConditions} value={restockConditionFilter} onChange={setRestockConditionFilter} />
+      <FilterDropdown label="Store" options={allRecordStores} value={restockStoreFilter} onChange={setRestockStoreFilter} />
+      <span className="text-[11px] text-waxe-text-muted ml-auto font-mono">{filteredRecords.length} records</span>
+     </div>
 
-      {/* Recommended — auto-scrolling ticker */}
-      <div className="shrink-0 mb-4">
-        <p className="text-[11px] font-black uppercase tracking-[0.15em] text-waxe-text-muted mb-2">
-          Recommended for you
-        </p>
-        <RecommendationTicker />
-      </div>
-
-      {/* Stats Row */}
-      <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-        <StatCard label="Stores in Network" value="47" trend="+6 this month" trendUp={true} />
-        <StatCard label="Stale Inventory" value={String(deadStockItems.filter(d => d.daysInStock >= 60).length)} trend="60+ days sitting" trendUp={false} />
-        <StatCard label="Inbound Requests" value={String(pendingRequests.length)} trend={`${inboundPackRequests.length} total`} trendUp={pendingRequests.length > 0} />
-        <StatCard label="Trade Volume" value={`$${tradeVolume}`} trend={`${totalTxns} transactions`} trendUp={true} />
-      </div>
-
-      {/* Panel tabs */}
-      <div className="shrink-0 flex gap-1.5 pb-3 mb-3 w-fit border-b border-waxe-border pr-4">
-        {['Restock', 'Collections', 'Network'].map((label, i) => (
-          <button
-            key={label}
-            onClick={() => scrollToPanel(i)}
-            className={`text-[11px] font-bold uppercase tracking-[0.1em] px-3 py-1.5 border ${
-              activePanel === i
-                ? 'bg-waxe-text text-waxe-deep border-waxe-text'
-                : 'text-waxe-text-muted border-waxe-border hover:text-waxe-text'
-            }`}
+     {/* Records table */}
+     <div className="flex-1 min-h-0">
+      <DataTable headers={['', 'Artist / Title', 'Store', 'Genre', 'Condition', 'Price', 'Qty', '']} maxHeight="100%">
+       {filteredRecords.map((rec) => (
+        <tr key={rec.id} className="table-row hover:bg-waxe-surface/30 transition-colors">
+         <td className="px-3 py-2.5">
+          <div
+           className="w-8 h-8 border border-waxe-border flex items-center justify-center relative overflow-hidden"
+           style={{ backgroundColor: rec.photoColor || '#3D3050' }}
           >
-            {label}
-          </button>
-        ))}
-      </div>
-
-      {/* Horizontal swipe panels */}
-      <div className="relative flex-1 min-h-0 -mr-5 lg:-mr-6">
-        <div ref={scrollRef} onScroll={handleScroll} className="absolute inset-0 overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex gap-4 scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
-
-        {/* ── Panel 1: Restock ── */}
-        <div className="snap-start shrink-0 w-[92%] flex flex-col gap-4 min-h-0">
-          {/* Search + Filters */}
-          <div className="shrink-0 flex flex-wrap items-center gap-2">
-            <input
-              type="text"
-              value={restockSearch}
-              onChange={(e) => setRestockSearch(e.target.value)}
-              placeholder="Search artist, title, genre..."
-              className="input-field text-sm px-3 py-1.5 w-64"
-            />
-            <FilterDropdown label="Genre" options={allRecordGenres} value={restockGenreFilter} onChange={setRestockGenreFilter} />
-            <FilterDropdown label="Condition" options={allRecordConditions} value={restockConditionFilter} onChange={setRestockConditionFilter} />
-            <FilterDropdown label="Store" options={allRecordStores} value={restockStoreFilter} onChange={setRestockStoreFilter} />
-            <span className="text-[11px] text-waxe-text-muted ml-auto font-mono">{filteredRecords.length} records</span>
+           {rec.artworkUrl ? (
+            <img src={rec.artworkUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
+           ) : (
+            <span className="text-[6px] font-semibold text-white/50">LP</span>
+           )}
           </div>
-
-          {/* Records table */}
-          <div className="flex-1 min-h-0">
-            <DataTable headers={['', 'Artist / Title', 'Store', 'Genre', 'Condition', 'Price', 'Qty', '']} maxHeight="100%">
-              {filteredRecords.map((rec) => (
-                <tr key={rec.id} className="table-row hover:bg-waxe-surface/30 transition-colors">
-                  <td className="px-3 py-2.5">
-                    <div
-                      className="w-8 h-8 border border-waxe-border flex items-center justify-center relative overflow-hidden"
-                      style={{ backgroundColor: rec.photoColor || '#2C3B4D' }}
-                    >
-                      {rec.artworkUrl ? (
-                        <img src={rec.artworkUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
-                      ) : (
-                        <span className="text-[6px] font-black text-white/50">LP</span>
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-3 py-2.5">
-                    <p className="text-sm font-medium text-waxe-text">{rec.artist}</p>
-                    <p className="text-xs text-waxe-text-muted">{rec.title} &middot; {rec.label} ({rec.year})</p>
-                  </td>
-                  <td className="px-3 py-2.5">
-                    <p className="text-sm text-waxe-text-secondary">{rec.storeName}</p>
-                    <p className="text-[11px] text-waxe-text-muted">{rec.storeLocation}</p>
-                  </td>
-                  <td className="px-3 py-2.5 text-sm text-waxe-text-secondary">{rec.genre}</td>
-                  <td className="px-3 py-2.5 text-sm text-waxe-text-secondary">{'★'.repeat(rec.condition)}{'☆'.repeat(5 - rec.condition)}</td>
-                  <td className="px-3 py-2.5 text-sm font-bold text-waxe-text font-mono">${rec.price}</td>
-                  <td className="px-3 py-2.5 text-sm text-waxe-text-muted font-mono">{rec.qty}</td>
-                  <td className="px-3 py-2.5">
-                    <button
-                      onClick={() => setSelectedRecord(rec)}
-                      className="btn-secondary text-[11px] px-3 py-1"
-                    >
-                      Request
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </DataTable>
-          </div>
-        </div>
-
-        {/* ── Panel 2: Collections ── */}
-        <div className="snap-start shrink-0 w-[92%] flex flex-col gap-4 min-h-0">
-          <div className="shrink-0 flex items-center justify-between">
-            <div>
-              <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">
-                Packs & Collections — {pendingRequests.length} Pending Requests
-              </h3>
-              <p className="text-[10px] text-waxe-text-muted mt-0.5">Your packs for sale &middot; network packs to buy &middot; inbound requests &middot; order history</p>
-            </div>
-          </div>
-
-          <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {/* Left: Packs + Network Packs + Purchase History */}
-            <div className="lg:col-span-2 min-h-0 flex flex-col">
-              <div className="flex-1 min-h-0 overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
-                {/* Your Packs */}
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="designation-tag">Your Packs</span>
-                </div>
-                <div className="space-y-3 mb-6">
-                  {curatedPacks.map((pack) => (
-                    <PackCard key={pack.id} pack={pack} />
-                  ))}
-                </div>
-
-                {/* Network Packs */}
-                <div className="hatch-divider-strong mb-3" />
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="designation-tag">Network Packs</span>
-                </div>
-                <div className="space-y-3 mb-6">
-                  {networkPackListings.map((listing) => (
-                    <NetworkPackCard key={listing.id} listing={listing} />
-                  ))}
-                </div>
-
-                {/* Purchase History */}
-                <div className="hatch-divider-strong mb-3" />
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="designation-tag">Order History</span>
-                </div>
-                <div className="space-y-3">
-                  {packPurchases.map((order) => (
-                    <PurchaseCard key={order.id} order={order} />
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Inbound Requests */}
-            <div className="lg:col-span-1 min-h-0 flex flex-col">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="designation-tag">Inbound Requests</span>
-              </div>
-              <div className="flex-1 min-h-0 overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
-                <div className="space-y-2">
-                  {inboundPackRequests.map((req) => (
-                    <InboundPackRequestCard key={req.id} request={req} />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* ── Panel 3: Network ── */}
-        <div className="snap-start shrink-0 w-[92%] flex flex-col gap-4 min-h-0">
-          {/* Search + Filters */}
-          <div className="shrink-0 flex flex-wrap items-center gap-2">
-            <input
-              type="text"
-              value={storeSearch}
-              onChange={(e) => setStoreSearch(e.target.value)}
-              placeholder="Search stores, locations, genres..."
-              className="input-field text-sm px-3 py-1.5 w-64"
-            />
-            <FilterDropdown label="Genre" options={allStoreGenres} value={storeGenreFilter} onChange={setStoreGenreFilter} />
-            <FilterDropdown label="Sort" options={storeSortOptions} value={storeSortBy} onChange={setStoreSortBy} />
-            <span className="text-[11px] text-waxe-text-muted ml-auto font-mono">{filteredStores.length} stores</span>
-          </div>
-
-          {/* Store Grid */}
-          <div className="flex-1 min-h-0 overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 mb-6">
-              {filteredStores.map((store) => (
-                <StoreCard key={store.id} store={store} />
-              ))}
-            </div>
-
-            {/* Transaction History */}
-            <div className="hatch-divider-strong mb-3" />
-            <div className="flex items-center justify-between mb-3">
-              <div>
-                <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">
-                  Transaction History — {totalTxns} Completed
-                </h3>
-                <p className="text-[10px] text-waxe-text-muted mt-0.5">All B2B trades across your dealer network</p>
-              </div>
-              <button className="btn-ghost text-[11px]">Export CSV</button>
-            </div>
-            <div className="space-y-2">
-              {networkTransactions.map((txn) => (
-                <TransactionRow key={txn.id} transaction={txn} />
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Spacer so last panel can fully snap */}
-        <div className="shrink-0 w-[8%]" />
-
-        </div>
-
-        {/* Edge fade + arrow hint */}
-        {activePanel < panelCount - 1 && (
+         </td>
+         <td className="px-3 py-2.5">
+          <p className="text-sm font-medium text-waxe-text">{rec.artist}</p>
+          <p className="text-xs text-waxe-text-secondary">{rec.title} &middot; {rec.label} ({rec.year})</p>
+         </td>
+         <td className="px-3 py-2.5">
+          <p className="text-sm text-waxe-text">{rec.storeName}</p>
+          <p className="text-[11px] text-waxe-text-secondary">{rec.storeLocation}</p>
+         </td>
+         <td className="px-3 py-2.5 text-sm text-waxe-text">{rec.genre}</td>
+         <td className="px-3 py-2.5 text-sm text-waxe-text">{'★'.repeat(rec.condition)}{'☆'.repeat(5 - rec.condition)}</td>
+         <td className="px-3 py-2.5 text-sm font-bold text-waxe-text font-mono">${rec.price}</td>
+         <td className="px-3 py-2.5 text-sm text-waxe-text-secondary font-mono">{rec.qty}</td>
+         <td className="px-3 py-2.5">
           <button
-            onClick={() => scrollToPanel(activePanel + 1)}
-            className="absolute right-0 top-0 bottom-0 w-32 flex items-center justify-end pr-3 pointer-events-auto z-10"
-            style={{ background: 'linear-gradient(to right, transparent 0%, var(--color-waxe-deep) 100%)' }}
-            aria-label="Next panel"
+           onClick={() => setSelectedRecord(rec)}
+           className="btn-secondary text-[11px] px-3 py-1"
           >
-            <span className="text-waxe-text-muted text-lg font-black">→</span>
+           Request
           </button>
-        )}
-      </div>
-
-      {/* Modals */}
-      {selectedRecord && (
-        <RecordModal
-          record={selectedRecord}
-          store={getStore(selectedRecord.storeId)}
-          onClose={() => setSelectedRecord(null)}
-        />
-      )}
+         </td>
+        </tr>
+       ))}
+      </DataTable>
+     </div>
     </div>
-  )
+
+    {/* ── Panel 2: Collections ── */}
+    <div className="snap-start shrink-0 w-[92%] flex flex-col gap-4 min-h-0">
+     <div className="shrink-0 flex items-center justify-between">
+      <div>
+       <h3 className="text-[11px] font-semibold text-waxe-text">
+        Packs & Collections — {pendingRequests.length} Pending Requests
+       </h3>
+       <p className="text-[10px] text-waxe-text-muted mt-0.5">Your packs for sale &middot; network packs to buy &middot; inbound requests &middot; order history</p>
+      </div>
+     </div>
+
+     <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 gap-4">
+      {/* Left: Packs + Network Packs + Purchase History */}
+      <div className="lg:col-span-2 min-h-0 flex flex-col">
+       <div className="flex-1 min-h-0 overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
+        {/* Your Packs */}
+        <div className="flex items-center gap-2 mb-2">
+         <span className="designation-tag">Your Packs</span>
+        </div>
+        <div className="space-y-3 mb-6">
+         {curatedPacks.map((pack) => (
+          <PackCard key={pack.id} pack={pack} />
+         ))}
+        </div>
+
+        {/* Network Packs */}
+        <div className="hatch-divider-strong mb-3" />
+        <div className="flex items-center gap-2 mb-2">
+         <span className="designation-tag">Network Packs</span>
+        </div>
+        <div className="space-y-3 mb-6">
+         {networkPackListings.map((listing) => (
+          <NetworkPackCard key={listing.id} listing={listing} />
+         ))}
+        </div>
+
+        {/* Purchase History */}
+        <div className="hatch-divider-strong mb-3" />
+        <div className="flex items-center gap-2 mb-2">
+         <span className="designation-tag">Order History</span>
+        </div>
+        <div className="space-y-3">
+         {packPurchases.map((order) => (
+          <PurchaseCard key={order.id} order={order} />
+         ))}
+        </div>
+       </div>
+      </div>
+
+      {/* Right: Inbound Requests */}
+      <div className="lg:col-span-1 min-h-0 flex flex-col">
+       <div className="flex items-center gap-2 mb-2">
+        <span className="designation-tag">Inbound Requests</span>
+       </div>
+       <div className="flex-1 min-h-0 overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
+        <div className="space-y-2">
+         {inboundPackRequests.map((req) => (
+          <InboundPackRequestCard key={req.id} request={req} />
+         ))}
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+
+    {/* ── Panel 3: Network ── */}
+    <div className="snap-start shrink-0 w-[92%] flex flex-col gap-4 min-h-0">
+     {/* Search + Filters */}
+     <div className="shrink-0 flex flex-wrap items-center gap-2">
+      <input
+       type="text"
+       value={storeSearch}
+       onChange={(e) => setStoreSearch(e.target.value)}
+       placeholder="Search stores, locations, genres..."
+       className="input-field text-sm px-3 py-1.5 w-64"
+      />
+      <FilterDropdown label="Genre" options={allStoreGenres} value={storeGenreFilter} onChange={setStoreGenreFilter} />
+      <FilterDropdown label="Sort" options={storeSortOptions} value={storeSortBy} onChange={setStoreSortBy} />
+      <span className="text-[11px] text-waxe-text-muted ml-auto font-mono">{filteredStores.length} stores</span>
+     </div>
+
+     {/* Store Grid */}
+     <div className="flex-1 min-h-0 overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 mb-6">
+       {filteredStores.map((store) => (
+        <StoreCard key={store.id} store={store} />
+       ))}
+      </div>
+
+      {/* Transaction History */}
+      <div className="hatch-divider-strong mb-3" />
+      <div className="flex items-center justify-between mb-3">
+       <div>
+        <h3 className="text-[11px] font-semibold text-waxe-text">
+         Transaction History — {totalTxns} Completed
+        </h3>
+        <p className="text-[10px] text-waxe-text-muted mt-0.5">All B2B trades across your dealer network</p>
+       </div>
+       <button className="btn-ghost text-[11px]">Export CSV</button>
+      </div>
+      <div className="space-y-2">
+       {networkTransactions.map((txn) => (
+        <TransactionRow key={txn.id} transaction={txn} />
+       ))}
+      </div>
+     </div>
+    </div>
+
+    {/* Spacer so last panel can fully snap */}
+    <div className="shrink-0 w-[8%]" />
+
+    </div>
+
+    {/* Edge fade + arrow hint */}
+    {activePanel < panelCount - 1 && (
+     <button
+      onClick={() => scrollToPanel(activePanel + 1)}
+      className="absolute right-0 top-0 bottom-0 w-32 flex items-center justify-end pr-3 pointer-events-auto z-10"
+      style={{ background: 'linear-gradient(to right, transparent 0%, var(--color-waxe-deep) 100%)' }}
+      aria-label="Next panel"
+     >
+      <span className="text-waxe-text-muted text-lg font-semibold">→</span>
+     </button>
+    )}
+   </div>
+
+   {/* Modals */}
+   {selectedRecord && (
+    <RecordModal
+     record={selectedRecord}
+     store={getStore(selectedRecord.storeId)}
+     onClose={() => setSelectedRecord(null)}
+    />
+   )}
+  </div>
+ )
 }

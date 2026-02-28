@@ -8,14 +8,14 @@ import { StatusBadge } from '@/components/dashboard'
 // ─── Genre Color Bar ─────────────────────────────────────────
 
 const genreColors: Record<string, string> = {
-  Jazz: '#2C3B4D',
-  House: '#3D7A4F',
-  Ambient: '#4A5B6D',
-  Techno: '#0A0E14',
-  Disco: '#E89A40',
-  'R&B': '#A35139',
+  Jazz: '#3D3050',
+  House: '#4A9A62',
+  Ambient: '#6A5D80',
+  Techno: '#0D0B14',
+  Disco: '#E8837C',
+  'R&B': '#7B6FA0',
   Soul: '#C04040',
-  Electronic: '#2C3B4D',
+  Electronic: '#3D3050',
 }
 
 // ─── Pack Artwork Grid (3-over-2) ────────────────────────────
@@ -33,12 +33,12 @@ export function PackArtworkGrid({ records, size = 'md' }: { records: PackRecord[
           <div
             key={i}
             className={`${dim} border border-waxe-border flex items-center justify-center relative overflow-hidden`}
-            style={{ backgroundColor: shown[i]?.photoColor || '#2C3B4D' }}
+            style={{ backgroundColor: shown[i]?.photoColor || '#3D3050' }}
           >
             {shown[i]?.artworkUrl ? (
               <img src={shown[i].artworkUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
             ) : (
-              <span className="text-[5px] font-black text-white/40">LP</span>
+              <span className="text-[5px] font-medium text-white/40">LP</span>
             )}
           </div>
         ))}
@@ -49,12 +49,12 @@ export function PackArtworkGrid({ records, size = 'md' }: { records: PackRecord[
           <div
             key={i}
             className={`${dim} border border-waxe-border flex items-center justify-center relative overflow-hidden`}
-            style={{ backgroundColor: shown[i]?.photoColor || '#2C3B4D' }}
+            style={{ backgroundColor: shown[i]?.photoColor || '#3D3050' }}
           >
             {shown[i]?.artworkUrl ? (
               <img src={shown[i].artworkUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
             ) : (
-              <span className="text-[5px] font-black text-white/40">LP</span>
+              <span className="text-[5px] font-medium text-white/40">LP</span>
             )}
           </div>
         ))}
@@ -69,7 +69,7 @@ function PackContentsModal({ pack, onClose }: { pack: CuratedPack; onClose: () =
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-waxe-text/60" onClick={onClose} />
-      <div className="relative bg-waxe-card border-2 border-waxe-border rounded-none w-full max-w-2xl max-h-[85vh] overflow-y-auto clip-modal">
+      <div className="relative bg-waxe-card border border-waxe-border w-full max-w-2xl max-h-[85vh] overflow-y-auto clip-modal">
         <div className="p-6">
           {/* Header */}
           <div className="flex justify-between items-start mb-5">
@@ -78,25 +78,25 @@ function PackContentsModal({ pack, onClose }: { pack: CuratedPack; onClose: () =
                 <span className="designation-tag">Pack Contents</span>
                 <StatusBadge status={pack.status} />
               </div>
-              <h2 className="text-xl font-black text-waxe-text tracking-tight">{pack.name}</h2>
+              <h2 className="text-xl font-semibold text-waxe-text">{pack.name}</h2>
               <p className="text-xs text-waxe-text-muted">{pack.genre} &middot; {pack.records.length} records &middot; Avg {'★'.repeat(Math.round(pack.avgCondition))}{'☆'.repeat(5 - Math.round(pack.avgCondition))}</p>
             </div>
-            <button onClick={onClose} className="text-waxe-text-muted hover:text-waxe-text text-lg font-black">✕</button>
+            <button onClick={onClose} className="text-waxe-text-muted hover:text-waxe-text text-lg">✕</button>
           </div>
 
           {/* Value summary */}
           <div className="grid grid-cols-3 gap-3 mb-5">
             <div className="bg-waxe-surface border border-waxe-border p-3 text-center">
-              <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-1">Total Value</p>
-              <p className="text-lg font-black text-waxe-text font-mono">${pack.totalValue}</p>
+              <p className="text-[11px] font-medium text-waxe-text-muted mb-1">Total value</p>
+              <p className="text-lg font-semibold text-waxe-text font-mono">${pack.totalValue}</p>
             </div>
             <div className="bg-waxe-surface border border-waxe-border p-3 text-center">
-              <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-1">Pack Price</p>
-              <p className="text-lg font-black text-waxe-positive font-mono">${pack.packPrice}</p>
+              <p className="text-[11px] font-medium text-waxe-text-muted mb-1">Pack price</p>
+              <p className="text-lg font-semibold text-waxe-positive font-mono">${pack.packPrice}</p>
             </div>
             <div className="bg-waxe-surface border border-waxe-border p-3 text-center">
-              <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-waxe-text-muted mb-1">Discount</p>
-              <p className="text-lg font-black text-waxe-warm font-mono">-{pack.discountPercent}%</p>
+              <p className="text-[11px] font-medium text-waxe-text-muted mb-1">Discount</p>
+              <p className="text-lg font-semibold text-waxe-warm font-mono">-{pack.discountPercent}%</p>
             </div>
           </div>
 
@@ -107,12 +107,12 @@ function PackContentsModal({ pack, onClose }: { pack: CuratedPack; onClose: () =
                 <span className="text-[11px] text-waxe-text-muted font-mono w-5 text-right shrink-0">{i + 1}</span>
                 <div
                   className="w-8 h-8 shrink-0 border border-waxe-border flex items-center justify-center relative overflow-hidden"
-                  style={{ backgroundColor: r.photoColor || '#2C3B4D' }}
+                  style={{ backgroundColor: r.photoColor || '#3D3050' }}
                 >
                   {r.artworkUrl ? (
                     <img src={r.artworkUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
                   ) : (
-                    <span className="text-[6px] font-black text-white/50">LP</span>
+                    <span className="text-[6px] font-medium text-white/50">LP</span>
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -126,7 +126,7 @@ function PackContentsModal({ pack, onClose }: { pack: CuratedPack; onClose: () =
           </div>
 
           {/* Footer */}
-          <div className="mt-4 pt-4 border-t-2 border-waxe-border">
+          <div className="mt-4 pt-4 border-t border-waxe-border">
             <p className="text-[11px] text-waxe-text-secondary leading-relaxed mb-3">{pack.generationReason}</p>
             <button onClick={onClose} className="btn-secondary text-sm px-5 py-2.5 w-full">Close</button>
           </div>
@@ -146,22 +146,22 @@ interface PackCardProps {
 
 export default function PackCard({ pack, onListNetwork, onSellInStore }: PackCardProps) {
   const [showContents, setShowContents] = useState(false)
-  const barColor = genreColors[pack.genre] || '#2C3B4D'
+  const barColor = genreColors[pack.genre] || '#3D3050'
 
   return (
     <>
-      <div className="bg-waxe-card border-2 border-waxe-border rounded-none overflow-hidden clip-card">
+      <div className="bg-waxe-card border border-waxe-border overflow-hidden clip-card">
         {/* Genre color bar */}
         <div className="h-1" style={{ backgroundColor: barColor }} />
 
-        <div className="p-5 corner-marks">
+        <div className="p-5">
           {/* Top section: artwork grid + info */}
           <div className="flex items-start gap-4 mb-4">
             <PackArtworkGrid records={pack.records} />
 
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <p className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em] truncate">{pack.name}</p>
+                <p className="text-[11px] font-semibold text-waxe-text truncate">{pack.name}</p>
                 <StatusBadge status={pack.status} />
               </div>
               <p className="text-[11px] text-waxe-text-muted">
@@ -172,7 +172,7 @@ export default function PackCard({ pack, onListNetwork, onSellInStore }: PackCar
               </p>
               <div className="flex items-center gap-2 mt-1.5">
                 <span className="text-[11px] text-waxe-text-muted line-through font-mono">${pack.totalValue}</span>
-                <span className="text-[11px] font-black text-waxe-text font-mono">${pack.packPrice}</span>
+                <span className="text-[11px] font-semibold text-waxe-text font-mono">${pack.packPrice}</span>
                 <span className="text-[11px] font-bold text-waxe-positive">(-{pack.discountPercent}%)</span>
               </div>
               <p className="text-[10px] text-waxe-text-muted mt-0.5">Generated {pack.generatedAt}</p>

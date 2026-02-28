@@ -31,7 +31,7 @@ export default function DateRangeSelector({ presets, value, onChange, showCompar
         {value} <span className="text-[11px]">▾</span>
       </button>
       {open && (
-        <div className="absolute top-full mt-1 right-0 z-40 min-w-[180px] bg-waxe-surface border border-waxe-border rounded-none py-1 shadow-xl clip-card">
+        <div className="absolute top-full mt-1 right-0 z-40 min-w-[180px] bg-waxe-surface border border-waxe-border py-1 shadow-xl clip-card">
           {presets.map((preset) => (
             <button
               key={preset}

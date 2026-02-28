@@ -3,19 +3,19 @@
 import PinButton from '../PinButton'
 
 const channelBreakdown = [
-  { channel: 'Online (Storefront)', revenue: 6240, percentage: 44, color: '#D8D0C4' },
-  { channel: 'In-Store (POS)', revenue: 4980, percentage: 35, color: '#546878' },
-  { channel: 'Discogs', revenue: 2150, percentage: 15, color: '#A35139' },
-  { channel: 'Other', revenue: 860, percentage: 6, color: '#E89A40' },
+  { channel: 'Online (Storefront)', revenue: 6240, percentage: 44, color: '#E8E0D8' },
+  { channel: 'In-Store (POS)', revenue: 4980, percentage: 35, color: '#5A4D70' },
+  { channel: 'Discogs', revenue: 2150, percentage: 15, color: '#7B6FA0' },
+  { channel: 'Other', revenue: 860, percentage: 6, color: '#E8837C' },
 ]
 
 export default function OverviewChannelBreakdown() {
   return (
-    <div className="relative bg-waxe-card border-2 border-waxe-border rounded-none p-5 flex flex-col h-[360px] clip-card-bl">
+    <div className="relative bg-waxe-card border border-waxe-border p-5 flex flex-col h-[360px] clip-card-bl">
       <PinButton widgetId="overview-channel-breakdown" />
       <div className="mb-2 shrink-0">
         <div className="flex items-center gap-2">
-          <h2 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Sales <span className="text-waxe-cool">{'>>'}</span> By Channel</h2>
+          <h2 className="text-[11px] font-semibold text-waxe-text">Sales → By Channel</h2>
           <span className="hatch-inline flex-1 mr-10" style={{ width: 'auto' }} />
         </div>
       </div>

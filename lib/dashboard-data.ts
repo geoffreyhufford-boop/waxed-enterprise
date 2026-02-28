@@ -821,3 +821,85 @@ export const fulfillmentStats: QuickStat[] = [
   { label: 'Items Ordered', value: '14', trend: '+3', trendUp: true },
   { label: 'Avg Time to Fulfillment', value: '1.4d', trend: '-0.3d', trendUp: true },
 ]
+
+// ─── Competitor Intelligence ─────────────────────────────────
+
+export interface ChannelFeeStructure {
+  channel: string
+  platformFeePct: number
+  shippingFeePct: number
+  fixedFee: number
+  color: string
+  description: string
+}
+
+export const channelFeeStructures: ChannelFeeStructure[] = [
+  { channel: 'Discogs', platformFeePct: 8, shippingFeePct: 8, fixedFee: 0, color: '#6A6090', description: '8% on sale + 8% on shipping' },
+  { channel: 'Shopify', platformFeePct: 2.9, shippingFeePct: 0, fixedFee: 0.30, color: '#7B6FA0', description: '2.9% + $0.30 per transaction' },
+  { channel: 'In-Store POS', platformFeePct: 0, shippingFeePct: 0, fixedFee: 0, color: '#E8837C', description: 'No platform fees' },
+  { channel: 'WAXED', platformFeePct: 5, shippingFeePct: 0, fixedFee: 0, color: '#4A9A62', description: '5% flat — no shipping commission' },
+]
+
+export interface CompetitorPainPoint {
+  category: string
+  severityScore: number
+  commentCount: number
+  sampleQuote: string
+  waxedAdvantage: string
+}
+
+export const competitorPainPoints: CompetitorPainPoint[] = [
+  { category: 'Session Issues', severityScore: 9.2, commentCount: 156, sampleQuote: '"App logs me out every 5 minutes, cart empties mid-purchase"', waxedAdvantage: 'Persistent sessions with offline support' },
+  { category: 'UX Regression', severityScore: 8.7, commentCount: 134, sampleQuote: '"New UI is a disaster — can\'t find anything anymore"', waxedAdvantage: 'Purpose-built dealer interface' },
+  { category: 'High Fees', severityScore: 8.5, commentCount: 118, sampleQuote: '"8% on shipping too? That\'s insane for a $4 media mail"', waxedAdvantage: 'No shipping commission' },
+  { category: 'Missing Features', severityScore: 7.9, commentCount: 102, sampleQuote: '"They removed price graphs — how do I price anything now?"', waxedAdvantage: 'Built-in price intelligence' },
+  { category: 'Seller Tools Gutted', severityScore: 7.6, commentCount: 96, sampleQuote: '"Bulk editing is gone. I have 3000 listings to update"', waxedAdvantage: 'Bulk pricing & crate management' },
+  { category: 'Mobile Unusable', severityScore: 7.1, commentCount: 88, sampleQuote: '"App crashes when scrolling my inventory past 200 records"', waxedAdvantage: 'Mobile-first responsive design' },
+  { category: 'Search Degraded', severityScore: 6.8, commentCount: 78, sampleQuote: '"Search doesn\'t find exact catalog numbers anymore"', waxedAdvantage: 'Catalog-number & matrix search' },
+]
+
+export interface CompetitorMention {
+  platform: string
+  sentiment: 'negative' | 'mixed' | 'neutral' | 'positive'
+  mentionCount: number
+}
+
+export const competitorMentions: CompetitorMention[] = [
+  { platform: 'Discogs', sentiment: 'negative', mentionCount: 442 },
+  { platform: 'eBay', sentiment: 'mixed', mentionCount: 128 },
+  { platform: 'Personal sites', sentiment: 'neutral', mentionCount: 64 },
+]
+
+export interface PriceHistoryPoint {
+  month: string
+  storeAvg: number
+  discogsAvg: number
+  suggestedAvg: number
+}
+
+export const priceHistoryData: PriceHistoryPoint[] = [
+  { month: 'Mar', storeAvg: 62, discogsAvg: 58, suggestedAvg: 64 },
+  { month: 'Apr', storeAvg: 63, discogsAvg: 59, suggestedAvg: 65 },
+  { month: 'May', storeAvg: 65, discogsAvg: 60, suggestedAvg: 66 },
+  { month: 'Jun', storeAvg: 64, discogsAvg: 59, suggestedAvg: 66 },
+  { month: 'Jul', storeAvg: 66, discogsAvg: 61, suggestedAvg: 68 },
+  { month: 'Aug', storeAvg: 68, discogsAvg: 62, suggestedAvg: 70 },
+  { month: 'Sep', storeAvg: 70, discogsAvg: 63, suggestedAvg: 72 },
+  { month: 'Oct', storeAvg: 72, discogsAvg: 64, suggestedAvg: 74 },
+  { month: 'Nov', storeAvg: 74, discogsAvg: 65, suggestedAvg: 75 },
+  { month: 'Dec', storeAvg: 76, discogsAvg: 66, suggestedAvg: 77 },
+  { month: 'Jan', storeAvg: 75, discogsAvg: 67, suggestedAvg: 77 },
+  { month: 'Feb', storeAvg: 78, discogsAvg: 68, suggestedAvg: 79 },
+]
+
+export interface PriceIntelSummary {
+  label: string
+  value: string
+  positive: boolean
+}
+
+export const priceIntelSummary: PriceIntelSummary[] = [
+  { label: 'Avg Margin vs Market', value: '+12%', positive: true },
+  { label: 'Records Above Market', value: '34%', positive: true },
+  { label: 'Records Below Market', value: '18%', positive: false },
+]

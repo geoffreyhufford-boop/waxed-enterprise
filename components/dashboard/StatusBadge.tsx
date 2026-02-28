@@ -34,6 +34,30 @@ const statusStyles: Record<string, string> = {
   in_transit: 'bg-waxe-cool text-waxe-deep',
   b2b: 'bg-waxe-cool text-waxe-deep',
   d2c: 'bg-waxe-surface text-waxe-text',
+  // Customer tiers
+  retail: 'bg-waxe-surface text-waxe-text',
+  wholesale: 'bg-waxe-cool text-waxe-deep',
+  vip: 'bg-waxe-warm text-waxe-text',
+  // Discount types
+  store_wide: 'bg-waxe-warm text-waxe-text',
+  customer_tier: 'bg-waxe-cool text-waxe-deep',
+  volume: 'bg-waxe-surface text-waxe-text',
+  // PO statuses
+  sent: 'bg-waxe-text text-waxe-deep',
+  partially_received: 'bg-waxe-warm text-waxe-text',
+  received: 'bg-waxe-positive text-waxe-deep',
+  closed: 'bg-waxe-surface text-waxe-text-muted',
+  // Audit statuses
+  in_progress: 'bg-waxe-warm text-waxe-text',
+  review: 'bg-waxe-cool text-waxe-deep',
+  completed: 'bg-waxe-positive text-waxe-deep',
+  cancelled: 'bg-waxe-surface text-waxe-text-muted',
+  // Staff statuses
+  invited: 'bg-waxe-surface text-waxe-text',
+  disabled: 'bg-waxe-surface text-waxe-text-muted',
+  // Consignment statuses
+  consigned: 'bg-waxe-cool text-waxe-deep',
+  returned: 'bg-waxe-surface text-waxe-text-muted',
 }
 
 interface StatusBadgeProps {
@@ -44,7 +68,7 @@ interface StatusBadgeProps {
 export default function StatusBadge({ status, label }: StatusBadgeProps) {
   const display = label || status.replaceAll('_', ' ')
   return (
-    <span className={`inline-flex items-center clip-badge px-2.5 py-0.5 text-[11px] font-black uppercase tracking-[0.2em] rounded-none ${statusStyles[status] || 'bg-waxe-surface text-waxe-text-muted'}`}>
+    <span className={`inline-flex items-center clip-badge px-2.5 py-0.5 text-[11px] font-medium ${statusStyles[status] || 'bg-waxe-surface text-waxe-text-muted'}`}>
       {display}
     </span>
   )

@@ -27,7 +27,7 @@ export default function ShelfCard({ shelf, isSelected, onSelect, artworkMap = {}
   return (
     <button
       onClick={onSelect}
-      className={`w-full text-left p-4 rounded-none border transition-all duration-200 clip-stat ${
+      className={`w-full text-left p-4 border transition-all duration-200 clip-stat ${
         isSelected
           ? 'bg-waxe-surface border-waxe-warm/30'
           : 'bg-waxe-card/40 border-waxe-border hover:border-waxe-border-hover'
@@ -35,7 +35,7 @@ export default function ShelfCard({ shelf, isSelected, onSelect, artworkMap = {}
     >
       <div className="flex items-center justify-between mb-2">
         <h4 className="text-sm font-semibold text-waxe-text">{shelf.name}</h4>
-        <span className={`text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 ${typeBg[shelf.type]}`}>
+        <span className={`text-[11px] font-medium px-2 py-0.5 ${typeBg[shelf.type]}`}>
           {typeLabels[shelf.type]}
         </span>
       </div>

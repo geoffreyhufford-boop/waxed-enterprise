@@ -5,11 +5,11 @@ import PinButton from '../PinButton'
 
 export default function AnalyticsRevenueByGenre() {
   return (
-    <div className="relative bg-waxe-card border-2 border-waxe-border rounded-none p-5 flex flex-col h-[360px] clip-card-bl">
+    <div className="relative bg-waxe-card border border-waxe-border p-5 flex flex-col h-[360px] clip-card-bl">
       <PinButton widgetId="analytics-revenue-by-genre" />
       <div className="mb-2 shrink-0">
         <div className="flex items-center gap-2">
-          <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Revenue <span className="text-waxe-cool">{'>>'}</span> By Genre</h3>
+          <h3 className="text-[11px] font-semibold text-waxe-text">Revenue → By Genre</h3>
           <span className="hatch-inline flex-1 mr-10" style={{ width: 'auto' }} />
         </div>
       </div>

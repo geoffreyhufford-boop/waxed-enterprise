@@ -13,7 +13,7 @@ export default function PinButton({ widgetId }: PinButtonProps) {
   return (
     <button
       onClick={() => togglePin(widgetId)}
-      className={`absolute top-0 right-0 z-10 w-9 h-9 grid place-items-center border-l-2 border-b-2 hover:opacity-70 ${
+      className={`absolute top-0 right-0 z-10 w-9 h-9 grid place-items-center border-l border-b rounded-bl-lg hover:opacity-70 transition-colors ${
         pinned
           ? 'border-waxe-warm bg-waxe-warm/10'
           : 'border-waxe-border bg-waxe-card hover:border-waxe-text-muted'

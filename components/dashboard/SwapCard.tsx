@@ -8,12 +8,12 @@ function RecordThumb({ record }: { record: SwapRecord }) {
     <div className="flex items-center gap-2 py-1.5">
       <div
         className="w-8 h-8 shrink-0 border border-waxe-border flex items-center justify-center relative overflow-hidden"
-        style={{ backgroundColor: record.photoColor || '#2C3B4D' }}
+        style={{ backgroundColor: record.photoColor || '#3D3050' }}
       >
         {record.artworkUrl ? (
           <img src={record.artworkUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
         ) : (
-          <span className="text-[7px] font-black text-white/60">LP</span>
+          <span className="text-[7px] font-medium text-white/60">LP</span>
         )}
       </div>
       <div className="min-w-0 flex-1">
@@ -41,8 +41,8 @@ function RecordColumn({ label, records, total }: { label: string; records: SwapR
         ))}
       </div>
       <div className="mt-2 pt-2 border-t border-waxe-border flex justify-between items-center">
-        <span className="text-[11px] text-waxe-text-muted uppercase tracking-wide">{records.length} record{records.length !== 1 ? 's' : ''}</span>
-        <span className="text-[11px] font-black text-waxe-text font-mono">${total}</span>
+        <span className="text-[11px] text-waxe-text-muted">{records.length} record{records.length !== 1 ? 's' : ''}</span>
+        <span className="text-[11px] font-semibold text-waxe-text font-mono">${total}</span>
       </div>
     </div>
   )
@@ -60,13 +60,13 @@ export default function SwapCard({ proposal, onAccept, onDecline, onViewDetails 
   const receiveTotal = proposal.recordsYouReceive.reduce((sum, r) => sum + r.marketValue, 0)
 
   return (
-    <div className="bg-waxe-card border-2 border-waxe-border rounded-none p-5 clip-card-tr-bl">
+    <div className="bg-waxe-card border border-waxe-border p-5 clip-card-tr-bl">
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <p className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">
-              Swap <span className="text-waxe-cool">{'>>'}</span> {proposal.storeB.name}
+            <p className="text-[11px] font-semibold text-waxe-text">
+              Swap <span className="text-waxe-cool">→</span> {proposal.storeB.name}
             </p>
             <StatusBadge status={proposal.status} />
           </div>
@@ -74,7 +74,7 @@ export default function SwapCard({ proposal, onAccept, onDecline, onViewDetails 
         </div>
         {proposal.valueDelta > 0 && (
           <div className="text-right">
-            <p className="text-[11px] font-bold uppercase tracking-wide text-waxe-positive">+${proposal.valueDelta} Value</p>
+            <p className="text-[11px] font-medium text-waxe-positive">+${proposal.valueDelta} value</p>
           </div>
         )}
       </div>
@@ -100,7 +100,7 @@ export default function SwapCard({ proposal, onAccept, onDecline, onViewDetails 
       <div className="mb-3">
         <div className="flex justify-between items-center mb-1">
           <span className="designation-tag">Genre Mismatch Resolution</span>
-          <span className="text-[11px] font-black text-waxe-text font-mono">{proposal.mismatchScore}/100</span>
+          <span className="text-[11px] font-semibold text-waxe-text font-mono">{proposal.mismatchScore}/100</span>
         </div>
         <div className="w-full h-1.5 bg-waxe-surface overflow-hidden">
           <div
@@ -112,7 +112,7 @@ export default function SwapCard({ proposal, onAccept, onDecline, onViewDetails 
 
       {/* Savings callout */}
       <div className="bg-waxe-surface border border-waxe-border px-3 py-2 mb-3">
-        <p className="text-[11px] font-bold uppercase tracking-wide text-waxe-positive mb-0.5">
+        <p className="text-[11px] font-medium text-waxe-positive mb-0.5">
           Network Savings: ${proposal.marketSavings} vs. open market
         </p>
         <p className="text-[11px] text-waxe-text-secondary leading-relaxed">{proposal.reasoning}</p>

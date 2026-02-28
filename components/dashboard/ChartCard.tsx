@@ -12,10 +12,10 @@ interface ChartCardProps {
 
 export default function ChartCard({ title, subtitle, children, className = '', action }: ChartCardProps) {
   return (
-    <div className={`relative bg-waxe-card border-2 border-waxe-border rounded-none p-5 clip-card ${className}`}>
+    <div className={`relative p-5 card ${className}`}>
       {action}
       <div className="mb-3">
-        <h3 className="text-xs font-bold text-waxe-text uppercase tracking-[0.08em]">{title}</h3>
+        <h3 className="text-xs font-medium text-waxe-text">{title}</h3>
         {subtitle && (
           <p className="text-[11px] text-waxe-text-muted mt-0.5">{subtitle}</p>
         )}

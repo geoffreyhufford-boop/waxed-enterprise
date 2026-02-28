@@ -30,7 +30,7 @@ export default function SalesChannelFilter({ value, onChange }: SalesChannelFilt
         {value} <span className="ml-1 text-[11px]">▾</span>
       </button>
       {open && (
-        <div className="absolute top-full mt-1 left-0 z-40 min-w-[160px] bg-waxe-surface border border-waxe-border rounded-none py-1 shadow-xl clip-card">
+        <div className="absolute top-full mt-1 left-0 z-40 min-w-[160px] bg-waxe-surface border border-waxe-border py-1 shadow-xl clip-card">
           {channels.map((ch) => (
             <button
               key={ch}

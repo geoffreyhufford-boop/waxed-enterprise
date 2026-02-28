@@ -1,121 +1,117 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Base tokens (dark default, overridden by class) ── */
-  --color-waxe-deep: #0A0E14;
-  --color-waxe-base: #0A0E14;
-  --color-waxe-surface: #162030;
-  --color-waxe-card: #111B26;
-  --color-waxe-card-solid: #111B26;
-  --color-waxe-border: #2A4058;
-  --color-waxe-border-hover: #4A6878;
+  /* ── Base tokens (dark default) ── */
+  --color-waxe-deep: #111110;
+  --color-waxe-base: #111110;
+  --color-waxe-surface: #1C1C1A;
+  --color-waxe-card: #1A1A18;
+  --color-waxe-card-solid: #1A1A18;
+  --color-waxe-sidebar: #151514;
+  --color-waxe-border: #2A2A28;
+  --color-waxe-border-hover: #3A3A38;
 
-  /* Text — warm cream on dark */
-  --color-waxe-text: #D8D0C4;
-  --color-waxe-text-secondary: #A0B0BE;
-  --color-waxe-text-muted: #546878;
+  /* Text */
+  --color-waxe-text: #F0EDE8;
+  --color-waxe-text-secondary: #8A8A85;
+  --color-waxe-text-muted: #5A5A56;
 
-  /* Accent — MAGI amber + rust */
-  --color-waxe-warm: #E89A40;
-  --color-waxe-warm-hover: #D4893D;
-  --color-waxe-cool: #A35139;
-  --color-waxe-cool-muted: #2A4058;
+  /* Accent — warm salmon + cool lavender */
+  --color-waxe-warm: #E8837C;
+  --color-waxe-warm-hover: #D4736C;
+  --color-waxe-cool: #7B6FA0;
+  --color-waxe-cool-muted: #2D2540;
 
-  /* Semantic — money / condition */
-  --color-waxe-positive: #3D8A55;
-  --color-waxe-negative: #D04545;
-  --color-waxe-cond-10: #3D8A55;
-  --color-waxe-cond-9: #3D8A55;
-  --color-waxe-cond-7: #7A9040;
-  --color-waxe-cond-5: #C4A040;
-  --color-waxe-cond-3: #C47035;
-  --color-waxe-cond-1: #D04545;
+  /* Semantic */
+  --color-waxe-positive: #22C55E;
+  --color-waxe-negative: #EF4444;
+  --color-waxe-cond-10: #22C55E;
+  --color-waxe-cond-9: #22C55E;
+  --color-waxe-cond-7: #84CC16;
+  --color-waxe-cond-5: #EAB308;
+  --color-waxe-cond-3: #F97316;
+  --color-waxe-cond-1: #EF4444;
 
   /* Legacy aliases */
-  --color-waxed-black: #D8D0C4;
-  --color-waxed-dark: #0A0E14;
-  --color-waxed-card: #111B26;
-  --color-waxed-border: #2A4058;
-  --color-waxed-muted: #546878;
-  --color-waxed-text: #D8D0C4;
-  --color-waxed-text-secondary: #A0B0BE;
-  --color-waxed-text-muted: #546878;
-  --color-waxed-olive: #2A4058;
-  --color-waxed-olive-hover: #4A6878;
-  --color-waxed-olive-muted: #546878;
-  --color-waxed-sold: #A35139;
-  --color-waxed-active: #E89A40;
+  --color-waxed-black: #F0EDE8;
+  --color-waxed-dark: #111110;
+  --color-waxed-card: #1A1A18;
+  --color-waxed-border: #2A2A28;
+  --color-waxed-muted: #5A5A56;
+  --color-waxed-text: #F0EDE8;
+  --color-waxed-text-secondary: #8A8A85;
+  --color-waxed-text-muted: #5A5A56;
+  --color-waxed-olive: #2A2A28;
+  --color-waxed-olive-hover: #3A3A38;
+  --color-waxed-olive-muted: #5A5A56;
+  --color-waxed-sold: #7B6FA0;
+  --color-waxed-active: #E8837C;
 
-  /* Font */
-  --font-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  /* Font — sans-serif system stack */
+  --font-mono: 'Inter', -apple-system, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
 
-  /* ── Mecha-HUD: Chamfer Tokens ── */
-  --clip-corner-sm: 10px;
-  --clip-corner-md: 16px;
-  --clip-corner-lg: 22px;
+  /* ── Organic: Radius Tokens ── */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
 
-  /* ── Mecha-HUD: Pattern Colors ── */
-  --color-waxe-hatch: rgba(208, 200, 184, 0.10);
-  --color-waxe-hatch-strong: rgba(208, 200, 184, 0.22);
-  --color-waxe-scanline: rgba(100, 180, 180, 0.04);
-
-  /* ── Mecha-HUD: Boot Screen Tokens ── */
-  --color-boot-bg: #0A0E14;
-  --color-boot-panel: #111B26;
-  --color-boot-border: #2A4058;
-  --color-boot-border-active: #E89A40;
-  --color-boot-text: #D8D0C4;
-  --color-boot-text-muted: #546878;
-  --color-boot-accent: #E89A40;
-  --color-boot-positive: #3D7A4F;
-  --color-boot-scanline: rgba(100, 180, 180, 0.03);
-  --color-boot-hatch: rgba(208, 200, 184, 0.015);
-  --color-boot-logo-filter: brightness(0) invert(0.85);
+  /* ── Organic: Boot Screen Tokens ── */
+  --color-boot-bg: #111110;
+  --color-boot-panel: #1C1C1A;
+  --color-boot-border: #2A2A28;
+  --color-boot-border-active: #22C55E;
+  --color-boot-text: #F0EDE8;
+  --color-boot-text-muted: #5A5A56;
+  --color-boot-accent: #22C55E;
+  --color-boot-positive: #22C55E;
+  --color-boot-scanline: transparent;
+  --color-boot-hatch: transparent;
+  --color-boot-logo-filter: brightness(0) invert(0.9);
 }
 
-/* ── Light Mode (cream) ── */
+/* ── Light Mode (Neutone warm white) ── */
 :root.light {
-  --color-waxe-deep: #EEE9DF;
-  --color-waxe-base: #EEE9DF;
-  --color-waxe-surface: #DED8CC;
-  --color-waxe-card: #EEE9DF;
-  --color-waxe-card-solid: #EEE9DF;
-  --color-waxe-border: #2C3B4D;
-  --color-waxe-border-hover: #1B2632;
-  --color-waxe-text: #1B2632;
-  --color-waxe-text-secondary: #2C3B4D;
-  --color-waxe-text-muted: #4A5B6D;
-  --color-waxe-warm: #D4893D;
-  --color-waxe-warm-hover: #C07A30;
-  --color-waxe-cool-muted: #C9C1B1;
-  --color-waxe-positive: #3D7A4F;
-  --color-waxe-negative: #C04040;
-  --color-waxe-hatch: rgba(44, 59, 77, 0.28);
-  --color-waxe-hatch-strong: rgba(44, 59, 77, 0.50);
-  --color-waxe-scanline: rgba(44, 59, 77, 0.07);
-  --color-waxed-black: #1B2632;
-  --color-waxed-dark: #EEE9DF;
-  --color-waxed-card: #EEE9DF;
-  --color-waxed-border: #2C3B4D;
-  --color-waxed-text: #1B2632;
-  --color-waxed-text-secondary: #2C3B4D;
-  --color-waxed-text-muted: #4A5B6D;
-  --color-waxed-olive: #2C3B4D;
-  --color-waxed-olive-hover: #1B2632;
-  --color-waxed-olive-muted: #4A5B6D;
-  --color-waxed-active: #D4893D;
+  --color-waxe-deep: #F7F5F0;
+  --color-waxe-base: #F7F5F0;
+  --color-waxe-surface: #EDEAE4;
+  --color-waxe-card: #FFFFFF;
+  --color-waxe-card-solid: #FFFFFF;
+  --color-waxe-sidebar: #F0EDE7;
+  --color-waxe-border: #E0DDD6;
+  --color-waxe-border-hover: #C8C5BE;
+  --color-waxe-text: #1A1A18;
+  --color-waxe-text-secondary: #6B6B66;
+  --color-waxe-text-muted: #A0A09A;
+  --color-waxe-warm: #E8837C;
+  --color-waxe-warm-hover: #D4736C;
+  --color-waxe-cool-muted: #E8E4F0;
+  --color-waxe-positive: #22C55E;
+  --color-waxe-negative: #EF4444;
+  --color-waxed-black: #1A1A18;
+  --color-waxed-dark: #F7F5F0;
+  --color-waxed-card: #FFFFFF;
+  --color-waxed-border: #E0DDD6;
+  --color-waxed-text: #1A1A18;
+  --color-waxed-text-secondary: #6B6B66;
+  --color-waxed-text-muted: #A0A09A;
+  --color-waxed-olive: #E0DDD6;
+  --color-waxed-olive-hover: #C8C5BE;
+  --color-waxed-olive-muted: #A0A09A;
+  --color-waxed-active: #E8837C;
 
-  /* Boot screen — cream variant */
-  --color-boot-bg: #EEE9DF;
-  --color-boot-panel: #DED8CC;
-  --color-boot-border: #2C3B4D;
-  --color-boot-border-active: #D4893D;
-  --color-boot-text: #1B2632;
-  --color-boot-text-muted: #4A5B6D;
-  --color-boot-accent: #D4893D;
-  --color-boot-positive: #3D7A4F;
-  --color-boot-scanline: rgba(44, 59, 77, 0.03);
-  --color-boot-hatch: rgba(44, 59, 77, 0.015);
+  /* Boot screen — light variant */
+  --color-boot-bg: #F7F5F0;
+  --color-boot-panel: #EDEAE4;
+  --color-boot-border: #E0DDD6;
+  --color-boot-border-active: #22C55E;
+  --color-boot-text: #1A1A18;
+  --color-boot-text-muted: #A0A09A;
+  --color-boot-accent: #22C55E;
+  --color-boot-positive: #22C55E;
+  --color-boot-scanline: transparent;
+  --color-boot-hatch: transparent;
   --color-boot-logo-filter: none;
 }
 
@@ -129,14 +125,94 @@
     min-height: 100vh;
     font-family: var(--font-mono);
     font-feature-settings: "ss01", "ss02";
+    -webkit-font-smoothing: antialiased;
   }
 
   ::selection {
-    @apply bg-waxe-warm text-waxe-text;
+    @apply bg-waxe-warm/20 text-waxe-text;
   }
 
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  /* ── Boot Screen Animated Gradient ── */
+  .boot-blob {
+    border-radius: 50%;
+    filter: blur(80px);
+    will-change: transform, opacity;
+  }
+
+  .boot-blob-1 {
+    width: 60vw;
+    height: 60vh;
+    right: -15%;
+    bottom: -10%;
+    background: radial-gradient(circle, rgba(232, 131, 124, 0.25) 0%, rgba(244, 162, 97, 0.12) 40%, transparent 70%);
+    animation: boot-drift-1 6s ease-in-out infinite alternate;
+  }
+
+  .boot-blob-2 {
+    width: 50vw;
+    height: 50vh;
+    left: -10%;
+    top: -5%;
+    background: radial-gradient(circle, rgba(234, 179, 8, 0.15) 0%, rgba(244, 162, 97, 0.08) 50%, transparent 70%);
+    animation: boot-drift-2 7s ease-in-out infinite alternate;
+  }
+
+  .boot-blob-3 {
+    width: 45vw;
+    height: 40vh;
+    right: 10%;
+    top: 15%;
+    background: radial-gradient(circle, rgba(123, 111, 160, 0.12) 0%, transparent 65%);
+    animation: boot-drift-3 5s ease-in-out infinite alternate;
+  }
+
+  .boot-blob-4 {
+    width: 40vw;
+    height: 45vh;
+    left: 20%;
+    bottom: 5%;
+    background: radial-gradient(circle, rgba(210, 140, 110, 0.15) 0%, rgba(232, 131, 124, 0.06) 50%, transparent 70%);
+    animation: boot-drift-4 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes boot-drift-1 {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+    100% { transform: translate(-8vw, -6vh) scale(1.15); opacity: 1; }
+  }
+
+  @keyframes boot-drift-2 {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+    100% { transform: translate(6vw, 8vh) scale(1.1); opacity: 0.9; }
+  }
+
+  @keyframes boot-drift-3 {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+    100% { transform: translate(-5vw, 4vh) scale(1.2); opacity: 0.8; }
+  }
+
+  @keyframes boot-drift-4 {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+    100% { transform: translate(4vw, -5vh) scale(1.1); opacity: 0.7; }
+  }
+
+  :root.light .boot-blob-1 {
+    background: radial-gradient(circle, rgba(232, 131, 124, 0.5) 0%, rgba(244, 162, 97, 0.25) 40%, transparent 70%);
+  }
+
+  :root.light .boot-blob-2 {
+    background: radial-gradient(circle, rgba(234, 179, 8, 0.3) 0%, rgba(244, 162, 97, 0.15) 50%, transparent 70%);
+  }
+
+  :root.light .boot-blob-3 {
+    background: radial-gradient(circle, rgba(123, 111, 160, 0.25) 0%, transparent 65%);
+  }
+
+  :root.light .boot-blob-4 {
+    background: radial-gradient(circle, rgba(210, 140, 110, 0.3) 0%, rgba(232, 131, 124, 0.12) 50%, transparent 70%);
   }
 }
 
@@ -145,65 +221,60 @@
     @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
   }
 
-  /* ── Mecha-HUD: Clip-Path Utilities ── */
+  /* ── Organic: Rounded Card Shapes (replacing clip-paths) ── */
 
   .clip-card {
-    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+    border-radius: var(--radius-lg);
+    clip-path: none;
   }
 
   .clip-card-bl {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+    border-radius: var(--radius-lg);
+    clip-path: none;
   }
 
   .clip-card-tr-bl {
-    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+    border-radius: var(--radius-lg);
+    clip-path: none;
   }
 
   .clip-stat {
-    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+    border-radius: var(--radius-md);
+    clip-path: none;
   }
 
   .clip-badge {
-    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%);
-    padding-right: 14px;
+    border-radius: var(--radius-full);
+    clip-path: none;
+    padding-right: 10px;
   }
 
   .clip-badge-left {
-    clip-path: polygon(8px 0, 100% 0, 100% 100%, 8px 100%, 0 50%);
-    padding-left: 14px;
+    border-radius: var(--radius-full);
+    clip-path: none;
+    padding-left: 10px;
   }
 
   .clip-modal {
-    clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+    border-radius: var(--radius-xl);
+    clip-path: none;
   }
 
-  /* ── Mecha-HUD: Hatching Dividers ── */
+  /* ── Organic: Dividers (replacing hatching) ── */
 
   .hatch-divider {
-    height: 10px;
+    height: 1px;
     width: 100%;
-    background: repeating-linear-gradient(
-      0deg,
-      var(--color-waxe-hatch),
-      var(--color-waxe-hatch) 1px,
-      transparent 1px,
-      transparent 4px
-    );
+    background: var(--color-waxe-border);
   }
 
   .hatch-divider-strong {
-    height: 10px;
+    height: 1px;
     width: 100%;
-    background: repeating-linear-gradient(
-      0deg,
-      var(--color-waxe-hatch-strong),
-      var(--color-waxe-hatch-strong) 1px,
-      transparent 1px,
-      transparent 4px
-    );
+    background: var(--color-waxe-border);
   }
 
-  /* ── Mecha-HUD: Corner Marks ── */
+  /* ── Organic: Corner Marks → removed ── */
 
   .corner-marks {
     position: relative;
@@ -211,324 +282,332 @@
 
   .corner-marks::before,
   .corner-marks::after {
-    content: '';
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    pointer-events: none;
+    display: none;
   }
 
-  .corner-marks::before {
-    top: 4px;
-    left: 4px;
-    border-left: 2px solid var(--color-waxe-border);
-    border-top: 2px solid var(--color-waxe-border);
-  }
-
-  .corner-marks::after {
-    bottom: 4px;
-    right: 4px;
-    border-right: 2px solid var(--color-waxe-border);
-    border-bottom: 2px solid var(--color-waxe-border);
-  }
-
-  /* ── Mecha-HUD: Scanline ── */
+  /* ── Organic: Scanline → removed ── */
 
   .scanline {
     position: relative;
   }
 
   .scanline::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 3px,
-      var(--color-waxe-scanline) 3px,
-      var(--color-waxe-scanline) 4px
-    );
+    display: none;
   }
 
-  /* ── Mecha-HUD: Glyph Containers ── */
+  /* ── Organic: Glyph Containers → rounded icons ── */
 
   .glyph-box {
     display: inline-grid;
     place-items: center;
     width: 28px;
     height: 28px;
-    border: 2px solid var(--color-waxe-border);
-    background: var(--color-waxe-surface);
-    font-size: 12px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
     line-height: 1;
     flex-shrink: 0;
     text-align: center;
+    border-radius: var(--radius-sm);
   }
 
   .glyph-box-sm {
     width: 20px;
     height: 20px;
-    font-size: 10px;
-    border-width: 1.5px;
-    background: var(--color-waxe-surface);
+    font-size: 11px;
+    border-width: 0;
+    background: transparent;
   }
 
   .nav-item-active .glyph-box {
-    border-color: var(--color-waxe-warm);
-    color: var(--color-waxe-warm);
-    background: rgba(255, 177, 98, 0.15);
-    clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px));
+    border: none;
+    color: var(--color-waxe-deep);
+    background: transparent;
+    clip-path: none;
   }
 
   .nav-item .glyph-box {
     background: transparent;
-    border-color: var(--color-waxe-text-muted);
+    border: none;
     color: var(--color-waxe-text-muted);
-    clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px));
+    clip-path: none;
   }
 
   .nav-item:hover .glyph-box {
-    border-color: var(--color-waxe-border);
+    border: none;
     color: var(--color-waxe-text);
   }
 
-  /* ── Mecha-HUD: Inline Hatching ── */
+  /* ── Organic: Hatching → removed ── */
 
   .hatch-inline {
-    display: inline-block;
-    width: 48px;
-    height: 8px;
-    vertical-align: middle;
-    background: repeating-linear-gradient(
-      0deg,
-      var(--color-waxe-hatch),
-      var(--color-waxe-hatch) 1px,
-      transparent 1px,
-      transparent 4px
-    );
+    display: none;
   }
 
   .hatch-inline-lg {
-    width: 80px;
+    display: none;
   }
 
   .hatch-inline-strong {
-    background: repeating-linear-gradient(
-      0deg,
-      var(--color-waxe-hatch-strong),
-      var(--color-waxe-hatch-strong) 1px,
-      transparent 1px,
-      transparent 4px
-    );
+    display: none;
   }
 
-  /* ── Mecha-HUD: Accent Strips (inset shadow — composable with ::before/::after) ── */
+  /* ── Organic: Accent Strips → subtle left border ── */
 
   .accent-strip-left {
-    box-shadow: inset 5px 0 0 var(--color-waxe-warm);
+    box-shadow: none;
+    border-left: 3px solid var(--color-waxe-warm);
+    border-radius: var(--radius-md);
   }
 
   .accent-strip-left.accent-cool {
-    box-shadow: inset 5px 0 0 var(--color-waxe-cool);
+    box-shadow: none;
+    border-left-color: var(--color-waxe-cool);
   }
 
   .accent-strip-left.accent-positive {
-    box-shadow: inset 5px 0 0 var(--color-waxe-positive);
+    box-shadow: none;
+    border-left-color: var(--color-waxe-positive);
   }
 
   .accent-strip-left.accent-negative {
-    box-shadow: inset 5px 0 0 var(--color-waxe-negative);
+    box-shadow: none;
+    border-left-color: var(--color-waxe-negative);
   }
 
-  /* ── Mecha-HUD: Designation Tags ── */
+  /* ── Organic: Designation Tags → clean labels ── */
 
   .designation-tag {
-    font-size: 9px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
     color: var(--color-waxe-text-muted);
     font-family: var(--font-mono);
     line-height: 1;
   }
 
-  /* ── Mecha-HUD: Compound Badges ── */
+  /* ── Organic: Compound Badges → pills ── */
 
   .badge-compound {
     display: inline-flex;
     align-items: stretch;
     font-family: var(--font-mono);
     line-height: 1;
-    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+    clip-path: none;
+    border-radius: var(--radius-full);
+    overflow: hidden;
   }
 
   .badge-compound-label {
     display: inline-flex;
     align-items: center;
-    padding: 4px 8px;
-    font-size: 9px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    background: var(--color-waxe-text);
-    color: var(--color-waxe-deep);
+    padding: 4px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    background: var(--color-waxe-positive);
+    color: white;
+    border-radius: var(--radius-full) 0 0 var(--radius-full);
   }
 
   .badge-compound-code {
     display: inline-flex;
     align-items: center;
     padding: 4px 10px;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: 0.05em;
-    border: 2px solid var(--color-waxe-border);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0;
+    border: 1px solid var(--color-waxe-border);
     border-left: none;
-    color: var(--color-waxe-text);
+    color: var(--color-waxe-text-secondary);
+    border-radius: 0 var(--radius-full) var(--radius-full) 0;
   }
 
   .badge-compound-warm .badge-compound-label {
     background: var(--color-waxe-warm);
-    color: var(--color-waxe-text);
+    color: white;
   }
 
   .badge-compound-cool .badge-compound-label {
     background: var(--color-waxe-cool);
-    color: var(--color-waxe-deep);
+    color: white;
   }
 
-  /* ── Mecha-HUD: Angular Cut ── */
+  /* ── Organic: Angular Cut → rounded ── */
 
   .skew-box {
-    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+    clip-path: none;
+    border-radius: var(--radius-sm);
   }
 
   .skew-box-strong {
-    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    clip-path: none;
+    border-radius: var(--radius-md);
   }
 
-  /* ── Mecha-HUD: Arrow Terminator ── */
+  /* ── Organic: Arrow Terminator ── */
 
   .arrow-term::after {
-    content: '▸';
+    content: '\2192';
     margin-left: 6px;
     font-size: 12px;
+    opacity: 0.5;
   }
 
-  /* ── Mecha-HUD: Hatch Background ── */
+  /* ── Organic: Hatch Background → clean ── */
 
   .hatch-bg {
-    background-image: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 6px,
-      var(--color-waxe-scanline) 6px,
-      var(--color-waxe-scanline) 7px
-    );
+    background-image: none;
   }
 
   /* ── Buttons ── */
 
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 text-[11px] font-black uppercase tracking-[0.15em]
-           bg-waxe-text text-waxe-deep rounded-none border-2 border-waxe-text
-           transition-none
+    @apply inline-flex items-center justify-center px-5 py-2.5 text-[13px] font-semibold
+           bg-waxe-text text-waxe-deep border border-transparent
+           transition-all duration-200
            focus:outline-none cursor-pointer;
     font-family: var(--font-mono);
-    box-shadow: 2px 2px 0px var(--color-waxe-text-muted);
-    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    border-radius: var(--radius-full);
+    box-shadow: none;
+    clip-path: none;
+    text-transform: none;
+    letter-spacing: 0;
   }
 
   .btn-primary:hover {
-    @apply bg-waxe-warm text-waxe-text border-waxe-warm;
-    box-shadow: none;
-    transform: translate(2px, 2px);
+    @apply bg-waxe-warm text-white border-transparent;
+    box-shadow: 0 4px 12px rgba(232, 131, 124, 0.3);
+    transform: none;
   }
 
   .btn-primary:disabled,
   .btn-primary:disabled:hover {
     box-shadow: none;
     transform: none;
+    opacity: 0.5;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 text-[11px] font-black uppercase tracking-[0.15em]
-           bg-transparent text-waxe-text border-2 border-waxe-text rounded-none
-           transition-none
+    @apply inline-flex items-center justify-center px-5 py-2.5 text-[13px] font-semibold
+           bg-transparent text-waxe-text border border-waxe-border
+           transition-all duration-200
            focus:outline-none cursor-pointer;
     font-family: var(--font-mono);
-    box-shadow: 2px 2px 0px var(--color-waxe-text-muted);
-    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    border-radius: var(--radius-full);
+    box-shadow: none;
+    clip-path: none;
+    text-transform: none;
+    letter-spacing: 0;
   }
 
   .btn-secondary:hover {
-    @apply bg-waxe-text text-waxe-deep;
+    @apply bg-waxe-surface text-waxe-text;
     box-shadow: none;
-    transform: translate(2px, 2px);
+    transform: none;
   }
 
   .btn-secondary:disabled,
   .btn-secondary:disabled:hover {
     box-shadow: none;
     transform: none;
+    opacity: 0.5;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center px-4 py-2 text-[11px] font-black uppercase tracking-[0.15em]
-           bg-transparent text-waxe-text-secondary rounded-none
-           hover:text-waxe-text
-           transition-none;
+    @apply inline-flex items-center justify-center px-3 py-1.5 text-[13px] font-medium
+           bg-transparent text-waxe-text-secondary
+           hover:text-waxe-text hover:bg-waxe-surface/50
+           transition-all duration-200;
     font-family: var(--font-mono);
+    border-radius: var(--radius-sm);
+    text-transform: none;
+    letter-spacing: 0;
   }
 
-  /* ── Cards ── */
+  /* ── Cards — Glassmorphism ── */
 
   .card {
-    @apply bg-waxe-card border-2 border-waxe-border rounded-none p-6;
-    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+    @apply p-6;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04);
   }
 
   .value-card {
-    @apply bg-waxe-card border-2 border-waxe-border rounded-none p-6;
-    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+    @apply p-6;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04);
   }
 
   .stat-card {
-    @apply bg-waxe-card border-2 border-waxe-border rounded-none px-3 py-2;
-    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
-    box-shadow: inset 3px 0 0 var(--color-waxe-warm);
+    @apply px-4 py-3;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 4px 16px rgba(0, 0, 0, 0.03);
+  }
+
+  /* Light mode glass cards */
+  :root.light .card,
+  :root.light .value-card {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.03);
+  }
+
+  :root.light .stat-card {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 4px 16px rgba(0, 0, 0, 0.02);
   }
 
   /* ── Form Elements ── */
 
   .input-field {
-    @apply w-full px-3 py-2.5 text-sm rounded-none
-           bg-waxe-deep border-2 border-waxe-border text-waxe-text
-           focus:outline-none focus:border-waxe-warm
-           placeholder:text-waxe-text-muted
-           transition-none;
+    @apply w-full px-3 py-2.5 text-sm
+           bg-waxe-surface/50 border border-waxe-border text-waxe-text
+           focus:outline-none focus:border-waxe-text-secondary
+           placeholder:text-waxe-text-secondary
+           transition-all duration-200;
     font-family: var(--font-mono);
+    border-radius: var(--radius-md);
   }
 
   select.input-field {
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%232C3B4D' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23A0A09A' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
     padding-right: 32px;
   }
 
   .label-text {
-    @apply block text-[11px] font-black text-waxe-text uppercase tracking-[0.15em] mb-2;
+    @apply block text-[12px] font-medium text-waxe-text-secondary mb-2;
     font-family: var(--font-mono);
+    text-transform: none;
+    letter-spacing: 0;
   }
 
   .pill {
-    @apply inline-flex items-center px-3 py-1 text-[11px] font-black uppercase tracking-[0.1em]
-           border border-waxe-border rounded-none
+    @apply inline-flex items-center px-3 py-1 text-[12px] font-medium
+           border border-waxe-border bg-waxe-card/80 backdrop-blur-sm
            text-waxe-text;
     font-family: var(--font-mono);
+    border-radius: var(--radius-full);
+    text-transform: none;
+    letter-spacing: 0;
   }
 
   .pill-active {
@@ -537,35 +616,43 @@
 
   .text-gradient {
     @apply text-waxe-text;
-    font-weight: 900;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
     font-family: var(--font-mono);
   }
 
   /* ── Dashboard Navigation ── */
 
   .nav-item {
-    @apply flex items-center gap-3 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.15em] rounded-none
+    @apply flex items-center gap-3 px-3 py-2.5 text-[13px] font-medium
            text-waxe-text-muted
-           hover:text-waxe-text hover:bg-waxe-surface
-           transition-none;
+           hover:text-waxe-text hover:bg-waxe-surface/50
+           transition-all duration-200 cursor-pointer;
     font-family: var(--font-mono);
+    border-radius: var(--radius-md);
+    text-transform: none;
+    letter-spacing: 0;
   }
 
   .nav-item-active {
-    @apply flex items-center gap-3 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.15em] rounded-none
+    @apply flex items-center gap-3 px-3 py-2.5 text-[13px] font-semibold
            bg-waxe-text text-waxe-deep;
     font-family: var(--font-mono);
-    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    border-radius: var(--radius-md);
+    clip-path: none;
+    text-transform: none;
+    letter-spacing: 0;
   }
 
   /* ── Dashboard Table ── */
 
   .table-header {
-    @apply text-left px-4 py-3 text-[11px] font-bold text-waxe-text-secondary uppercase tracking-[0.15em]
-           bg-waxe-surface border-b border-waxe-border;
+    @apply text-left px-4 py-3 text-[12px] font-medium text-waxe-text-secondary
+           bg-waxe-surface/30 border-b border-waxe-border/30;
     font-family: var(--font-mono);
+    text-transform: none;
+    letter-spacing: 0;
   }
 
   .table-row {
@@ -575,45 +662,40 @@
   /* ── Dashboard Messages ── */
 
   .message-inbound {
-    @apply max-w-[75%] px-4 py-2.5 rounded-none text-sm
+    @apply max-w-[75%] px-4 py-2.5 text-sm
            bg-waxe-surface border border-waxe-border text-waxe-text;
-    clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 10px);
+    border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) 4px;
+    clip-path: none;
   }
 
   .message-outbound {
-    @apply max-w-[75%] px-4 py-2.5 rounded-none text-sm
+    @apply max-w-[75%] px-4 py-2.5 text-sm
            bg-waxe-text text-waxe-deep border border-waxe-text;
-    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+    border-radius: var(--radius-lg) var(--radius-lg) 4px var(--radius-lg);
+    clip-path: none;
   }
 
   /* ── Dashboard Tabs ── */
 
   .tab-item {
-    @apply px-4 py-2 text-[11px] font-bold uppercase tracking-[0.15em] rounded-none
+    @apply px-4 py-2 text-[13px] font-medium
            text-waxe-text-muted
            hover:text-waxe-text
-           transition-none cursor-pointer;
+           transition-all duration-200 cursor-pointer;
     font-family: var(--font-mono);
+    border-radius: var(--radius-sm);
+    text-transform: none;
+    letter-spacing: 0;
   }
 
   .tab-item-active {
-    @apply px-4 py-2 text-[11px] font-bold uppercase tracking-[0.15em] rounded-none
-           text-waxe-text border-b-2 border-waxe-warm;
+    @apply px-4 py-2 text-[13px] font-semibold
+           text-waxe-text border-b-2 border-waxe-positive;
     font-family: var(--font-mono);
     position: relative;
-    background-image: linear-gradient(
-      to top,
-      var(--color-waxe-scanline) 0px,
-      var(--color-waxe-scanline) 1px,
-      transparent 1px,
-      transparent 3px,
-      var(--color-waxe-scanline) 3px,
-      var(--color-waxe-scanline) 4px,
-      transparent 4px
-    );
-    background-size: 100% 8px;
-    background-position: bottom;
-    background-repeat: no-repeat;
+    background-image: none;
+    text-transform: none;
+    letter-spacing: 0;
   }
 
   /* ── Arrow Separator ── */
@@ -622,4 +704,173 @@
     content: '\2192';
     @apply mx-2 text-waxe-text-muted;
   }
+
+  /* ── Organic: Vinyl Groove → removed ── */
+
+  .vinyl-groove {
+    position: relative;
+  }
+
+  .vinyl-groove::before {
+    display: none;
+  }
+
+  /* ── Organic: Crosshair Mark → removed ── */
+
+  .crosshair-mark {
+    position: relative;
+  }
+
+  .crosshair-mark::before,
+  .crosshair-mark::after {
+    display: none;
+  }
+
+  /* ── Organic: Hex Clips → rounded ── */
+
+  .clip-hex {
+    clip-path: none;
+    border-radius: var(--radius-lg);
+  }
+
+  .clip-hex-lg {
+    clip-path: none;
+    border-radius: var(--radius-xl);
+  }
+
+  /* ── Organic: Section Index → clean label ── */
+
+  .section-index {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--color-waxe-text-muted);
+    text-transform: none;
+    line-height: 1;
+  }
+
+  .section-index::before {
+    content: attr(data-index);
+    display: inline-block;
+    margin-right: 8px;
+    color: var(--color-waxe-positive);
+  }
+
+  /* ── Organic: Vertical Label ── */
+
+  .vertical-label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: none;
+    color: var(--color-waxe-text-muted);
+  }
+
+  /* ── Organic: Circuit Line → removed ── */
+
+  .circuit-line {
+    position: relative;
+  }
+
+  .circuit-line::after {
+    display: none;
+  }
+
+  /* ── Neutone-style Right-Side Gradient Panel ── */
+
+  .gradient-panel {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .gradient-panel-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 75%;
+    height: 100%;
+    mask-image: linear-gradient(90deg, black 0%, black 20%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, black 0%, black 20%, transparent 100%);
+    transition: background 0.6s ease;
+  }
+
+  .gradient-panel-noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 512px 512px;
+    mask-image: linear-gradient(90deg, black 0%, transparent 60%);
+    -webkit-mask-image: linear-gradient(90deg, black 0%, transparent 60%);
+  }
+
+  /* Dark mode — muted */
+  :root:not(.light) .gradient-panel-fill {
+    opacity: 0.15;
+  }
+
+  :root:not(.light) .gradient-panel-noise {
+    opacity: 0.02;
+  }
+
+  /* Light mode — full Neutone warmth */
+  :root.light .gradient-panel-fill {
+    opacity: 1;
+  }
+
+  /* Utility classes for per-element mesh gradients */
+
+  .mesh-gradient-warm {
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(244, 162, 97, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(234, 179, 8, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 80%, rgba(232, 131, 124, 0.12) 0%, transparent 50%);
+  }
+
+  .mesh-gradient-cool {
+    background:
+      radial-gradient(ellipse at 30% 30%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 70%, rgba(232, 131, 124, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 20%, rgba(244, 162, 97, 0.06) 0%, transparent 40%);
+  }
+
+  .mesh-gradient-accent {
+    background:
+      radial-gradient(ellipse at 0% 100%, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 100% 0%, rgba(244, 162, 97, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(234, 179, 8, 0.08) 0%, transparent 60%);
+  }
+
+  /* ── Status dot (Neutone green indicator) ── */
+
+  .status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-waxe-positive);
+  }
+
+  .status-dot-warn {
+    background: var(--color-waxe-warm);
+  }
+
+  .status-dot-error {
+    background: var(--color-waxe-negative);
+  }
+}
+
+@media print {
+  body * { visibility: hidden; }
+  .print-target, .print-target * { visibility: visible; }
+  .print-target { position: absolute; left: 0; top: 0; width: 100%; }
 }

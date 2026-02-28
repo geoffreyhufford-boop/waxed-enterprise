@@ -5,11 +5,11 @@ import PinButton from '../PinButton'
 
 export default function AnalyticsCondition() {
   return (
-    <div className="relative bg-waxe-card border-2 border-waxe-border rounded-none p-5 flex flex-col h-[360px] clip-card-bl">
+    <div className="relative bg-waxe-card border border-waxe-border p-5 flex flex-col h-[360px] clip-card-bl">
       <PinButton widgetId="analytics-condition" />
       <div className="mb-2 shrink-0">
         <div className="flex items-center gap-2">
-          <h3 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Condition <span className="text-waxe-cool">{'>>'}</span> Distribution</h3>
+          <h3 className="text-[11px] font-semibold text-waxe-text">Condition → Distribution</h3>
           <span className="hatch-inline flex-1 mr-10" style={{ width: 'auto' }} />
         </div>
       </div>

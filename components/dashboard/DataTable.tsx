@@ -6,7 +6,7 @@ interface DataTableProps {
 
 export default function DataTable({ headers, children, maxHeight }: DataTableProps) {
   return (
-    <div className="rounded-none border border-waxe-border overflow-x-auto" style={maxHeight ? { maxHeight, overflowY: 'auto' } : undefined}>
+    <div className="rounded-xl overflow-x-auto bg-waxe-card/60 backdrop-blur-sm" style={maxHeight ? { maxHeight, overflowY: 'auto' } : undefined}>
       <table className="w-full text-sm">
         <thead className={maxHeight ? 'sticky top-0 z-10' : ''}>
           <tr>
@@ -15,7 +15,7 @@ export default function DataTable({ headers, children, maxHeight }: DataTablePro
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-black/10">
+        <tbody className="divide-y divide-waxe-border/30">
           {children}
         </tbody>
       </table>

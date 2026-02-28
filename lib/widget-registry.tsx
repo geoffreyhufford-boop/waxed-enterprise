@@ -18,6 +18,9 @@ import {
   AnalyticsCondition,
   AnalyticsVelocity,
   AnalyticsRestockTable,
+  OverviewMarginCalculator,
+  OverviewMarketPulse,
+  AnalyticsPriceHistory,
 } from '@/components/dashboard/widgets'
 
 export interface WidgetDef {
@@ -161,5 +164,26 @@ export const widgetRegistry: Record<string, WidgetDef> = {
     source: 'Analytics',
     size: 'lg',
     render: () => <AnalyticsRestockTable />,
+  },
+  'overview-margin-calculator': {
+    id: 'overview-margin-calculator',
+    label: 'Fee Comparison',
+    source: 'Overview',
+    size: 'lg',
+    render: () => <OverviewMarginCalculator />,
+  },
+  'overview-market-pulse': {
+    id: 'overview-market-pulse',
+    label: 'Market Pulse',
+    source: 'Overview',
+    size: 'sm',
+    render: () => <OverviewMarketPulse />,
+  },
+  'analytics-price-history': {
+    id: 'analytics-price-history',
+    label: 'Price History',
+    source: 'Analytics',
+    size: 'lg',
+    render: () => <AnalyticsPriceHistory />,
   },
 }

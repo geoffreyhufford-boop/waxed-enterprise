@@ -12,11 +12,11 @@ const inventoryAlerts = [
 
 export default function OverviewInventoryAlerts() {
   return (
-    <div className="relative bg-waxe-card border-2 border-waxe-border rounded-none p-5 flex flex-col h-[360px] clip-card-bl">
+    <div className="relative bg-waxe-card border border-waxe-border p-5 flex flex-col h-[360px] clip-card-bl">
       <PinButton widgetId="overview-inventory-alerts" />
       <div className="mb-2 shrink-0">
         <div className="flex items-center gap-2">
-          <h2 className="text-[11px] font-black text-waxe-text uppercase tracking-[0.1em]">Inventory <span className="text-waxe-cool">{'>>'}</span> Alerts</h2>
+          <h2 className="text-[11px] font-semibold text-waxe-text">Inventory → Alerts</h2>
           <span className="hatch-inline flex-1 mr-10" style={{ width: 'auto' }} />
         </div>
       </div>
@@ -26,7 +26,7 @@ export default function OverviewInventoryAlerts() {
           <div key={i} className="flex items-center justify-between">
             <span className="text-sm text-waxe-text-secondary">{alert.label}</span>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-black text-waxe-text">{alert.count}</span>
+              <span className="text-[11px] font-semibold text-waxe-text">{alert.count}</span>
               <StatusBadge status={alert.status} />
             </div>
           </div>
