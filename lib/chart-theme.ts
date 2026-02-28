@@ -47,7 +47,7 @@ const dark: ChartPalette = {
 const light: ChartPalette = {
   ...dark,
   tooltip: {
-    contentStyle: { background: '#FFFFFF', border: '1px solid #E0DDD6', borderRadius: '12px', fontSize: '10px', fontFamily: 'var(--font-mono)' },
+    contentStyle: { background: '#F7F5F0', border: 'none', borderRadius: '16px', fontSize: '10px', fontFamily: 'var(--font-mono)', boxShadow: '4px 4px 8px #ccc9c3, -4px -4px 8px #ffffff' },
     labelStyle: { color: '#6B6B66', fontWeight: 500, fontSize: '9px' },
     itemStyle: { color: '#1A1A18', fontFamily: 'var(--font-mono)' },
   },
