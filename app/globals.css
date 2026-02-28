@@ -1,26 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Base tokens (dark default) ── */
-  --color-waxe-deep: #111110;
-  --color-waxe-base: #111110;
-  --color-waxe-surface: #1C1C1A;
-  --color-waxe-card: #1A1A18;
-  --color-waxe-card-solid: #1A1A18;
-  --color-waxe-sidebar: #151514;
-  --color-waxe-border: #2A2A28;
-  --color-waxe-border-hover: #3A3A38;
+  /* ── Base tokens (neumorphic default) ── */
+  --color-waxe-deep: #E0E5EC;
+  --color-waxe-base: #E0E5EC;
+  --color-waxe-surface: #E0E5EC;
+  --color-waxe-card: #E0E5EC;
+  --color-waxe-card-solid: #E0E5EC;
+  --color-waxe-sidebar: #E0E5EC;
+  --color-waxe-border: #D0D5DC;
+  --color-waxe-border-hover: #C0C5CC;
 
   /* Text */
-  --color-waxe-text: #F0EDE8;
-  --color-waxe-text-secondary: #8A8A85;
-  --color-waxe-text-muted: #5A5A56;
+  --color-waxe-text: #2D3436;
+  --color-waxe-text-secondary: #636E72;
+  --color-waxe-text-muted: #B2BEC3;
 
   /* Accent — warm salmon + cool lavender */
   --color-waxe-warm: #E8837C;
   --color-waxe-warm-hover: #D4736C;
   --color-waxe-cool: #7B6FA0;
-  --color-waxe-cool-muted: #2D2540;
+  --color-waxe-cool-muted: #EDE8F4;
 
   /* Semantic */
   --color-waxe-positive: #22C55E;
@@ -33,42 +33,42 @@
   --color-waxe-cond-1: #EF4444;
 
   /* Legacy aliases */
-  --color-waxed-black: #F0EDE8;
-  --color-waxed-dark: #111110;
-  --color-waxed-card: #1A1A18;
-  --color-waxed-border: #2A2A28;
-  --color-waxed-muted: #5A5A56;
-  --color-waxed-text: #F0EDE8;
-  --color-waxed-text-secondary: #8A8A85;
-  --color-waxed-text-muted: #5A5A56;
-  --color-waxed-olive: #2A2A28;
-  --color-waxed-olive-hover: #3A3A38;
-  --color-waxed-olive-muted: #5A5A56;
+  --color-waxed-black: #2D3436;
+  --color-waxed-dark: #E0E5EC;
+  --color-waxed-card: #E0E5EC;
+  --color-waxed-border: #D0D5DC;
+  --color-waxed-muted: #B2BEC3;
+  --color-waxed-text: #2D3436;
+  --color-waxed-text-secondary: #636E72;
+  --color-waxed-text-muted: #B2BEC3;
+  --color-waxed-olive: #D0D5DC;
+  --color-waxed-olive-hover: #C0C5CC;
+  --color-waxed-olive-muted: #B2BEC3;
   --color-waxed-sold: #7B6FA0;
   --color-waxed-active: #E8837C;
 
   /* Font — sans-serif system stack */
   --font-mono: 'Inter', -apple-system, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
 
-  /* ── Organic: Radius Tokens ── */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
+  /* ── Neumorphic: Radius Tokens (softer) ── */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
   --radius-full: 9999px;
 
-  /* ── Organic: Boot Screen Tokens ── */
-  --color-boot-bg: #111110;
-  --color-boot-panel: #1C1C1A;
-  --color-boot-border: #2A2A28;
+  /* ── Boot Screen Tokens ── */
+  --color-boot-bg: #E0E5EC;
+  --color-boot-panel: #E0E5EC;
+  --color-boot-border: #D0D5DC;
   --color-boot-border-active: #22C55E;
-  --color-boot-text: #F0EDE8;
-  --color-boot-text-muted: #5A5A56;
+  --color-boot-text: #2D3436;
+  --color-boot-text-muted: #B2BEC3;
   --color-boot-accent: #22C55E;
   --color-boot-positive: #22C55E;
   --color-boot-scanline: transparent;
   --color-boot-hatch: transparent;
-  --color-boot-logo-filter: brightness(0) invert(0.9);
+  --color-boot-logo-filter: none;
 }
 
 /* ── Light Mode (Neutone warm white) ── */
@@ -115,6 +115,76 @@
   --color-boot-logo-filter: none;
 }
 
+/* ── Retro Mode (NERV MAGI System) ── */
+:root.retro {
+  /* Dark void with faint blue cast */
+  --color-waxe-deep: #08090C;
+  --color-waxe-base: #0C0E12;
+  --color-waxe-surface: #141820;
+  /* Dark cards — steel blue lives in the borders */
+  --color-waxe-card: #161C28;
+  --color-waxe-card-solid: #161C28;
+  --color-waxe-sidebar: #060810;
+  /* MAGI steel-blue as border accent */
+  --color-waxe-border: #3A5A7C;
+  --color-waxe-border-hover: #4A6A8C;
+  --color-waxe-text: #D8E0E8;
+  --color-waxe-text-secondary: #90A0B8;
+  --color-waxe-text-muted: #607890;
+  /* Burnt orange designations */
+  --color-waxe-warm: #D08030;
+  --color-waxe-warm-hover: #B86820;
+  /* Teal scan-line accents */
+  --color-waxe-cool: #48B0A8;
+  --color-waxe-cool-muted: #0C1818;
+  --color-waxe-positive: #48B0A8;
+  --color-waxe-negative: #C83030;
+  --color-waxe-cond-10: #48B0A8;
+  --color-waxe-cond-9: #48B0A8;
+  --color-waxe-cond-7: #5A98C0;
+  --color-waxe-cond-5: #D08030;
+  --color-waxe-cond-3: #B86820;
+  --color-waxe-cond-1: #C83030;
+
+  /* Legacy aliases — retro */
+  --color-waxed-black: #D8E0E8;
+  --color-waxed-dark: #08090C;
+  --color-waxed-card: #161C28;
+  --color-waxed-border: #3A5A7C;
+  --color-waxed-muted: #607890;
+  --color-waxed-text: #D8E0E8;
+  --color-waxed-text-secondary: #90A0B8;
+  --color-waxed-text-muted: #607890;
+  --color-waxed-olive: #3A5A7C;
+  --color-waxed-olive-hover: #4A6A8C;
+  --color-waxed-olive-muted: #607890;
+  --color-waxed-sold: #48B0A8;
+  --color-waxed-active: #D08030;
+
+  /* Font — monospace stack */
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* Radius — all zero (angular) */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-full: 0px;
+
+  /* Boot screen — retro */
+  --color-boot-bg: #08090C;
+  --color-boot-panel: #161C28;
+  --color-boot-border: #3A5A7C;
+  --color-boot-border-active: #48B0A8;
+  --color-boot-text: #D8E0E8;
+  --color-boot-text-muted: #607890;
+  --color-boot-accent: #48B0A8;
+  --color-boot-positive: #48B0A8;
+  --color-boot-scanline: rgba(72, 176, 168, 0.04);
+  --color-boot-hatch: rgba(72, 176, 168, 0.07);
+  --color-boot-logo-filter: brightness(0) invert(0.8) sepia(0.15) saturate(1.5) hue-rotate(170deg);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -148,7 +218,7 @@
     height: 60vh;
     right: -15%;
     bottom: -10%;
-    background: radial-gradient(circle, rgba(232, 131, 124, 0.25) 0%, rgba(244, 162, 97, 0.12) 40%, transparent 70%);
+    background: radial-gradient(circle, rgba(232, 131, 124, 0.12) 0%, rgba(244, 162, 97, 0.06) 40%, transparent 70%);
     animation: boot-drift-1 6s ease-in-out infinite alternate;
   }
 
@@ -157,7 +227,7 @@
     height: 50vh;
     left: -10%;
     top: -5%;
-    background: radial-gradient(circle, rgba(234, 179, 8, 0.15) 0%, rgba(244, 162, 97, 0.08) 50%, transparent 70%);
+    background: radial-gradient(circle, rgba(234, 179, 8, 0.08) 0%, rgba(244, 162, 97, 0.04) 50%, transparent 70%);
     animation: boot-drift-2 7s ease-in-out infinite alternate;
   }
 
@@ -166,7 +236,7 @@
     height: 40vh;
     right: 10%;
     top: 15%;
-    background: radial-gradient(circle, rgba(123, 111, 160, 0.12) 0%, transparent 65%);
+    background: radial-gradient(circle, rgba(123, 111, 160, 0.06) 0%, transparent 65%);
     animation: boot-drift-3 5s ease-in-out infinite alternate;
   }
 
@@ -175,7 +245,7 @@
     height: 45vh;
     left: 20%;
     bottom: 5%;
-    background: radial-gradient(circle, rgba(210, 140, 110, 0.15) 0%, rgba(232, 131, 124, 0.06) 50%, transparent 70%);
+    background: radial-gradient(circle, rgba(210, 140, 110, 0.08) 0%, rgba(232, 131, 124, 0.03) 50%, transparent 70%);
     animation: boot-drift-4 8s ease-in-out infinite alternate;
   }
 
@@ -213,6 +283,15 @@
 
   :root.light .boot-blob-4 {
     background: radial-gradient(circle, rgba(210, 140, 110, 0.3) 0%, rgba(232, 131, 124, 0.12) 50%, transparent 70%);
+  }
+
+  /* ── Retro boot blobs — suppressed, near-black void ── */
+  :root.retro .boot-blob-1,
+  :root.retro .boot-blob-2,
+  :root.retro .boot-blob-3,
+  :root.retro .boot-blob-4 {
+    background: none;
+    opacity: 0;
   }
 }
 
@@ -321,7 +400,7 @@
 
   .nav-item-active .glyph-box {
     border: none;
-    color: var(--color-waxe-deep);
+    color: var(--color-waxe-warm);
     background: transparent;
     clip-path: none;
   }
@@ -466,20 +545,20 @@
 
   .btn-primary {
     @apply inline-flex items-center justify-center px-5 py-2.5 text-[13px] font-semibold
-           bg-waxe-text text-waxe-deep border border-transparent
+           bg-waxe-warm text-white border-transparent
            transition-all duration-200
            focus:outline-none cursor-pointer;
     font-family: var(--font-mono);
     border-radius: var(--radius-full);
-    box-shadow: none;
+    box-shadow: 4px 4px 8px #b8bec7, -4px -4px 8px #ffffff;
     clip-path: none;
     text-transform: none;
     letter-spacing: 0;
   }
 
   .btn-primary:hover {
-    @apply bg-waxe-warm text-white border-transparent;
-    box-shadow: 0 4px 12px rgba(232, 131, 124, 0.3);
+    @apply bg-waxe-warm-hover text-white border-transparent;
+    box-shadow: 2px 2px 4px #b8bec7, -2px -2px 4px #ffffff;
     transform: none;
   }
 
@@ -492,20 +571,20 @@
 
   .btn-secondary {
     @apply inline-flex items-center justify-center px-5 py-2.5 text-[13px] font-semibold
-           bg-transparent text-waxe-text border border-waxe-border
+           bg-waxe-surface text-waxe-text border-transparent
            transition-all duration-200
            focus:outline-none cursor-pointer;
     font-family: var(--font-mono);
     border-radius: var(--radius-full);
-    box-shadow: none;
+    box-shadow: 4px 4px 8px #b8bec7, -4px -4px 8px #ffffff;
     clip-path: none;
     text-transform: none;
     letter-spacing: 0;
   }
 
   .btn-secondary:hover {
-    @apply bg-waxe-surface text-waxe-text;
-    box-shadow: none;
+    @apply text-waxe-text;
+    box-shadow: 2px 2px 4px #b8bec7, -2px -2px 4px #ffffff;
     transform: none;
   }
 
@@ -527,62 +606,134 @@
     letter-spacing: 0;
   }
 
-  /* ── Cards — Glassmorphism ── */
+  /* ── Cards — Neumorphic (default) ── */
 
   .card {
     @apply p-6;
     border-radius: var(--radius-lg);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04);
+    border: none;
+    background: var(--color-waxe-card);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: 8px 8px 16px #b8bec7, -8px -8px 16px #ffffff;
   }
 
   .value-card {
     @apply p-6;
     border-radius: var(--radius-lg);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04);
+    border: none;
+    background: var(--color-waxe-card);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: 8px 8px 16px #b8bec7, -8px -8px 16px #ffffff;
   }
 
   .stat-card {
     @apply px-4 py-3;
     border-radius: var(--radius-md);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 4px 16px rgba(0, 0, 0, 0.03);
+    border: none;
+    background: var(--color-waxe-card);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: 4px 4px 8px #b8bec7, -4px -4px 8px #ffffff;
   }
 
-  /* Light mode glass cards */
+  /* Light mode — glass cards */
   :root.light .card,
   :root.light .value-card {
     border: 1px solid rgba(0, 0, 0, 0.06);
     background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.03);
   }
 
   :root.light .stat-card {
     border: 1px solid rgba(0, 0, 0, 0.06);
     background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 4px 16px rgba(0, 0, 0, 0.02);
+  }
+
+  /* Light mode — restore flat styles over neumorphic defaults */
+  :root.light .btn-primary {
+    background: var(--color-waxe-text);
+    color: var(--color-waxe-deep);
+    box-shadow: none;
+  }
+
+  :root.light .btn-primary:hover {
+    background: var(--color-waxe-warm);
+    color: white;
+    box-shadow: 0 4px 12px rgba(232, 131, 124, 0.3);
+  }
+
+  :root.light .btn-secondary {
+    background: transparent;
+    border: 1px solid var(--color-waxe-border);
+    box-shadow: none;
+  }
+
+  :root.light .btn-secondary:hover {
+    background: var(--color-waxe-surface);
+    box-shadow: none;
+  }
+
+  :root.light .input-field {
+    border: 1px solid var(--color-waxe-border);
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  :root.light .pill {
+    border: 1px solid var(--color-waxe-border);
+    background: var(--color-waxe-card);
+    box-shadow: none;
+  }
+
+  :root.light .pill-active {
+    background: var(--color-waxe-text);
+    border-color: var(--color-waxe-text);
+    color: var(--color-waxe-deep);
+    box-shadow: none;
+  }
+
+  :root.light .nav-item-active {
+    background: var(--color-waxe-text);
+    color: var(--color-waxe-deep);
+    box-shadow: none;
+  }
+
+  :root.light .nav-item-active .glyph-box {
+    color: var(--color-waxe-deep);
+  }
+
+  :root.light .message-inbound {
+    border: 1px solid var(--color-waxe-border);
+    background: var(--color-waxe-surface);
+    box-shadow: none;
+  }
+
+  :root.light .message-outbound {
+    border: 1px solid var(--color-waxe-text);
+    background: var(--color-waxe-text);
+    color: var(--color-waxe-deep);
+    box-shadow: none;
   }
 
   /* ── Form Elements ── */
 
   .input-field {
     @apply w-full px-3 py-2.5 text-sm
-           bg-waxe-surface/50 border border-waxe-border text-waxe-text
-           focus:outline-none focus:border-waxe-text-secondary
-           placeholder:text-waxe-text-secondary
+           bg-waxe-surface text-waxe-text
+           focus:outline-none
+           placeholder:text-waxe-text-muted
            transition-all duration-200;
     font-family: var(--font-mono);
     border-radius: var(--radius-md);
+    border: none;
+    box-shadow: inset 3px 3px 6px #b8bec7, inset -3px -3px 6px #ffffff;
   }
 
   select.input-field {
@@ -602,16 +753,19 @@
 
   .pill {
     @apply inline-flex items-center px-3 py-1 text-[12px] font-medium
-           border border-waxe-border bg-waxe-card/80 backdrop-blur-sm
-           text-waxe-text;
+           bg-waxe-card text-waxe-text;
     font-family: var(--font-mono);
     border-radius: var(--radius-full);
+    border: none;
+    box-shadow: 3px 3px 6px #b8bec7, -3px -3px 6px #ffffff;
     text-transform: none;
     letter-spacing: 0;
   }
 
   .pill-active {
-    @apply bg-waxe-text border-waxe-text text-waxe-deep;
+    @apply text-waxe-warm;
+    font-weight: 600;
+    box-shadow: inset 2px 2px 4px #b8bec7, inset -2px -2px 4px #ffffff;
   }
 
   .text-gradient {
@@ -637,12 +791,13 @@
 
   .nav-item-active {
     @apply flex items-center gap-3 px-3 py-2.5 text-[13px] font-semibold
-           bg-waxe-text text-waxe-deep;
+           bg-waxe-surface text-waxe-warm;
     font-family: var(--font-mono);
     border-radius: var(--radius-md);
     clip-path: none;
     text-transform: none;
     letter-spacing: 0;
+    box-shadow: inset 3px 3px 6px #b8bec7, inset -3px -3px 6px #ffffff;
   }
 
   /* ── Dashboard Table ── */
@@ -663,15 +818,19 @@
 
   .message-inbound {
     @apply max-w-[75%] px-4 py-2.5 text-sm
-           bg-waxe-surface border border-waxe-border text-waxe-text;
+           bg-waxe-surface text-waxe-text;
     border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) 4px;
+    border: none;
+    box-shadow: 4px 4px 8px #b8bec7, -4px -4px 8px #ffffff;
     clip-path: none;
   }
 
   .message-outbound {
     @apply max-w-[75%] px-4 py-2.5 text-sm
-           bg-waxe-text text-waxe-deep border border-waxe-text;
+           bg-waxe-warm text-white;
     border-radius: var(--radius-lg) var(--radius-lg) 4px var(--radius-lg);
+    border: none;
+    box-shadow: 4px 4px 8px #b8bec7, -4px -4px 8px #ffffff;
     clip-path: none;
   }
 
@@ -813,13 +972,13 @@
     -webkit-mask-image: linear-gradient(90deg, black 0%, transparent 60%);
   }
 
-  /* Dark mode — muted */
+  /* Neumorphic — no gradient (monochrome surface) */
   :root:not(.light) .gradient-panel-fill {
-    opacity: 0.15;
+    opacity: 0;
   }
 
   :root:not(.light) .gradient-panel-noise {
-    opacity: 0.02;
+    opacity: 0;
   }
 
   /* Light mode — full Neutone warmth */
@@ -867,6 +1026,526 @@
   .status-dot-error {
     background: var(--color-waxe-negative);
   }
+}
+
+/* ══════════════════════════════════════════════════════
+   RETRO MODE — Reactivate tactical/mecha aesthetics
+   ══════════════════════════════════════════════════════ */
+
+/* ── Clip-paths: chamfered corners ── */
+
+:root.retro .clip-card {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  border-radius: 0;
+}
+
+:root.retro .clip-card-bl {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  border-radius: 0;
+}
+
+:root.retro .clip-card-tr-bl {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  border-radius: 0;
+}
+
+:root.retro .clip-stat {
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  border-radius: 0;
+}
+
+:root.retro .clip-badge {
+  clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+  border-radius: 0;
+  padding-right: 10px;
+}
+
+:root.retro .clip-badge-left {
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 100%, 6px 100%);
+  border-radius: 0;
+  padding-left: 10px;
+}
+
+:root.retro .clip-modal {
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  border-radius: 0;
+}
+
+:root.retro .clip-hex {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  border-radius: 0;
+}
+
+:root.retro .clip-hex-lg {
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  border-radius: 0;
+}
+
+/* ── Scanline overlay ── */
+
+:root.retro .scanline::after {
+  display: block;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    var(--color-boot-scanline) 2px,
+    var(--color-boot-scanline) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Corner marks — L-shaped brackets ── */
+
+:root.retro .corner-marks::before,
+:root.retro .corner-marks::after {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+:root.retro .corner-marks::before {
+  top: 0;
+  left: 0;
+  border-top: 1px solid rgba(72, 176, 168, 0.3);
+  border-left: 1px solid rgba(72, 176, 168, 0.3);
+}
+
+:root.retro .corner-marks::after {
+  bottom: 0;
+  right: 0;
+  border-bottom: 1px solid rgba(72, 176, 168, 0.3);
+  border-right: 1px solid rgba(72, 176, 168, 0.3);
+}
+
+/* ── Hatch divider — diagonal stripe ── */
+
+:root.retro .hatch-divider {
+  height: 3px;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(72, 176, 168, 0.2),
+    rgba(72, 176, 168, 0.2) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  background-color: transparent;
+}
+
+:root.retro .hatch-divider-strong {
+  height: 6px;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 2px,
+    rgba(72, 176, 168, 0.1) 2px,
+    rgba(72, 176, 168, 0.1) 4px
+  );
+  background-color: transparent;
+}
+
+/* ── Hatch inline — crosshatch decorators ── */
+
+:root.retro .hatch-inline {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 2px, var(--color-boot-hatch) 2px, var(--color-boot-hatch) 4px),
+    repeating-linear-gradient(-45deg, transparent, transparent 2px, var(--color-boot-hatch) 2px, var(--color-boot-hatch) 4px);
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+:root.retro .hatch-inline-lg {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 3px, var(--color-boot-hatch) 3px, var(--color-boot-hatch) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 3px, var(--color-boot-hatch) 3px, var(--color-boot-hatch) 6px);
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+:root.retro .hatch-inline-strong {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(72, 176, 168, 0.1) 2px, rgba(72, 176, 168, 0.1) 4px),
+    repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(72, 176, 168, 0.1) 2px, rgba(72, 176, 168, 0.1) 4px);
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* ── Hatch background ── */
+
+:root.retro .hatch-bg {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 4px,
+    var(--color-boot-hatch) 4px,
+    var(--color-boot-hatch) 6px
+  );
+}
+
+/* ── Designation tags — uppercase tactical labels ── */
+
+:root.retro .designation-tag {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── Compound badges — angular ── */
+
+:root.retro .badge-compound {
+  border-radius: 0;
+  clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+
+:root.retro .badge-compound-label {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+:root.retro .badge-compound-code {
+  border-radius: 0;
+}
+
+/* ── Buttons — angular, uppercase ── */
+
+:root.retro .btn-primary {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+  box-shadow: none;
+  background: var(--color-waxe-warm);
+  color: #D8E0E8;
+  border-color: transparent;
+}
+
+:root.retro .btn-primary:hover {
+  background: var(--color-waxe-warm-hover);
+  box-shadow: 0 0 12px rgba(208, 128, 48, 0.3);
+  color: #D8E0E8;
+}
+
+:root.retro .btn-secondary {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  box-shadow: none;
+}
+
+:root.retro .btn-ghost {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── Nav items — angular ── */
+
+:root.retro .nav-item {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+:root.retro .nav-item-active {
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(58, 90, 124, 0.3);
+  border: 1px solid rgba(58, 90, 124, 0.5);
+  color: #D8E0E8;
+}
+
+:root.retro .nav-item-active .glyph-box {
+  color: var(--color-waxe-cool);
+}
+
+/* ── Cards — opaque, no glass ── */
+
+:root.retro .card,
+:root.retro .value-card {
+  border-radius: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(22, 28, 40, 0.85);
+  border: 1px solid rgba(58, 90, 124, 0.5);
+  box-shadow:
+    0 0 1px rgba(72, 176, 168, 0.15),
+    inset 0 1px 0 rgba(58, 90, 124, 0.2);
+}
+
+:root.retro .stat-card {
+  border-radius: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(22, 28, 40, 0.85);
+  border: 1px solid rgba(58, 90, 124, 0.5);
+  box-shadow:
+    0 0 1px rgba(72, 176, 168, 0.15),
+    inset 0 1px 0 rgba(58, 90, 124, 0.2);
+}
+
+/* ── Messages — angular ── */
+
+:root.retro .message-inbound {
+  border-radius: 2px;
+  clip-path: none;
+}
+
+:root.retro .message-outbound {
+  border-radius: 2px;
+  clip-path: none;
+  background: rgba(58, 90, 124, 0.35);
+  color: #D8E0E8;
+  border-color: rgba(58, 90, 124, 0.5);
+}
+
+/* ── Form elements ── */
+
+:root.retro .input-field {
+  border-radius: 0;
+}
+
+:root.retro .pill {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+:root.retro .pill-active {
+  background: rgba(72, 176, 168, 0.15);
+  border-color: rgba(72, 176, 168, 0.5);
+  color: var(--color-waxe-cool);
+  box-shadow: 0 0 6px rgba(72, 176, 168, 0.2);
+}
+
+/* ── Tabs ── */
+
+:root.retro .tab-item {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+:root.retro .tab-item-active {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-color: var(--color-waxe-positive);
+}
+
+/* ── Table ── */
+
+:root.retro .table-header {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Glyph boxes — angular ── */
+
+:root.retro .glyph-box {
+  border-radius: 0;
+  border: 1px solid var(--color-waxe-border);
+}
+
+:root.retro .nav-item .glyph-box {
+  border: 1px solid var(--color-waxe-border);
+  color: var(--color-waxe-text-muted);
+}
+
+:root.retro .nav-item:hover .glyph-box {
+  border-color: var(--color-waxe-text-secondary);
+  color: var(--color-waxe-text);
+}
+
+/* ── Skew boxes — angular ── */
+
+:root.retro .skew-box {
+  clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+  border-radius: 0;
+}
+
+:root.retro .skew-box-strong {
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  border-radius: 0;
+}
+
+/* ── Accent strip — angular ── */
+
+:root.retro .accent-strip-left {
+  border-radius: 0;
+  border-left: 3px solid var(--color-waxe-warm);
+}
+
+/* ── Vinyl groove — reactivate ── */
+
+:root.retro .vinyl-groove::before {
+  display: block;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-boot-hatch),
+    var(--color-boot-hatch) 2px,
+    transparent 2px,
+    transparent 6px
+  );
+}
+
+/* ── Circuit line — reactivate ── */
+
+:root.retro .circuit-line::after {
+  display: block;
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -12px;
+  width: 12px;
+  height: 1px;
+  background: var(--color-waxe-border);
+}
+
+/* ── Section index — tactical style ── */
+
+:root.retro .section-index {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+:root.retro .section-index::before {
+  color: var(--color-waxe-positive);
+}
+
+/* ── Vertical label — uppercase ── */
+
+:root.retro .vertical-label {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ── Text gradient — solid warm ── */
+
+:root.retro .text-gradient {
+  color: var(--color-waxe-warm);
+}
+
+/* ── Label text — uppercase ── */
+
+:root.retro .label-text {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Gradient panel — hidden in retro ── */
+
+:root.retro .gradient-panel-fill {
+  opacity: 0 !important;
+}
+
+:root.retro .gradient-panel-noise {
+  opacity: 0;
+}
+
+/* ── Global viewport scanline overlay ── */
+
+:root.retro body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  mix-blend-mode: multiply;
+}
+
+/* ── HUD glow on active nav ── */
+
+:root.retro .nav-item-active {
+  box-shadow: 0 0 8px rgba(58, 90, 124, 0.4);
+}
+
+/* ── HUD inner glow on buttons ── */
+
+:root.retro .btn-primary {
+  box-shadow: 0 0 8px rgba(208, 128, 48, 0.3);
+}
+
+:root.retro .btn-primary:hover {
+  box-shadow: 0 0 14px rgba(208, 128, 48, 0.5);
+}
+
+/* ── Sidebar — faint right-edge glow ── */
+
+:root.retro aside {
+  box-shadow: 1px 0 12px rgba(58, 90, 124, 0.15);
+}
+
+/* ── Crosshair marks — reactivate ── */
+
+:root.retro .crosshair-mark::before {
+  display: block;
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 1px;
+  transform: translate(-50%, -50%);
+  background: var(--color-waxe-text-muted);
+}
+
+:root.retro .crosshair-mark::after {
+  display: block;
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+  background: var(--color-waxe-text-muted);
+}
+
+/* ── Status dot — amber default in retro ── */
+
+:root.retro .status-dot {
+  background: var(--color-waxe-positive);
+  border-radius: 0;
+  width: 8px;
+  height: 8px;
+}
+
+/* ── Selection highlight ── */
+
+:root.retro ::selection {
+  background: rgba(208, 128, 48, 0.25);
+  color: var(--color-waxe-text);
 }
 
 @media print {

@@ -7,7 +7,7 @@ import { useTheme } from '@/lib/theme-context'
 
 const navItems = [
   { href: '/dashboard', label: 'Overview', icon: '★' },
-  { href: '/dashboard/orders', label: 'Orders', icon: '▦' },
+  { href: '/dashboard/orders', label: 'Sales Orders', icon: '▦' },
   { href: '/dashboard/inventory', label: 'Inventory', icon: '▤' },
   { href: '/dashboard/pos', label: 'POS', icon: '◉' },
   { href: '/dashboard/customers', label: 'Customers', icon: '◎' },
@@ -60,26 +60,20 @@ export default function Sidebar() {
             onClick={toggleTheme}
             className="relative flex items-center cursor-pointer rounded-full border border-waxe-border overflow-hidden transition-colors"
             style={{ fontFamily: 'var(--font-mono)', height: 26 }}
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            aria-label={`Switch theme (current: ${theme})`}
           >
-            <span
-              className="text-[9px] font-medium px-2.5 flex items-center h-full transition-colors"
-              style={{
-                color: theme === 'light' ? 'var(--color-waxe-deep)' : 'var(--color-waxe-text-muted)',
-                background: theme === 'light' ? 'var(--color-waxe-text)' : 'transparent',
-              }}
-            >
-              light
-            </span>
-            <span
-              className="text-[9px] font-medium px-2.5 flex items-center h-full transition-colors"
-              style={{
-                color: theme === 'dark' ? 'var(--color-waxe-deep)' : 'var(--color-waxe-text-muted)',
-                background: theme === 'dark' ? 'var(--color-waxe-text)' : 'transparent',
-              }}
-            >
-              dark
-            </span>
+            {([['dark', 'morph'], ['light', 'light'], ['retro', 'retro']] as const).map(([mode, label]) => (
+              <span
+                key={mode}
+                className="text-[9px] font-medium px-2.5 flex items-center h-full transition-colors"
+                style={{
+                  color: theme === mode ? 'var(--color-waxe-deep)' : 'var(--color-waxe-text-muted)',
+                  background: theme === mode ? 'var(--color-waxe-text)' : 'transparent',
+                }}
+              >
+                {label}
+              </span>
+            ))}
           </button>
         </div>
         <div className="flex items-center gap-2 mt-2">

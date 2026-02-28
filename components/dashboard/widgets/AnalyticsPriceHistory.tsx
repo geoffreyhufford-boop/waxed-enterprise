@@ -2,15 +2,14 @@
 
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { priceHistoryData, priceIntelSummary } from '@/lib/dashboard-data'
+import { useTheme } from '@/lib/theme-context'
+import { getChartPalette } from '@/lib/chart-theme'
 import PinButton from '../PinButton'
 
-const chartTooltipStyle = {
-  contentStyle: { background: '#141020', border: '1px solid #2D2540', borderRadius: '12px', fontSize: '10px', fontFamily: 'var(--font-mono)' },
-  labelStyle: { color: '#5A4D70', fontWeight: 500, fontSize: '9px' },
-  itemStyle: { color: '#E8E0D8', fontFamily: 'var(--font-mono)' },
-}
-
 export default function AnalyticsPriceHistory() {
+  const { theme } = useTheme()
+  const c = getChartPalette(theme)
+
   return (
     <div className="relative bg-waxe-card border border-waxe-border p-5 flex flex-col h-[360px] clip-card-bl">
       <PinButton widgetId="analytics-price-history" />
@@ -35,26 +34,26 @@ export default function AnalyticsPriceHistory() {
           <AreaChart data={priceHistoryData}>
             <defs>
               <linearGradient id="widgetStoreAvgGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#E8837C" stopOpacity={0.4} />
-                <stop offset="95%" stopColor="#E8837C" stopOpacity={0.05} />
+                <stop offset="5%" stopColor={c.primary} stopOpacity={0.4} />
+                <stop offset="95%" stopColor={c.primary} stopOpacity={0.05} />
               </linearGradient>
               <linearGradient id="widgetDiscogsAvgGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#6A6090" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#6A6090" stopOpacity={0.05} />
+                <stop offset="5%" stopColor={c.channels.discogs} stopOpacity={0.3} />
+                <stop offset="95%" stopColor={c.channels.discogs} stopOpacity={0.05} />
               </linearGradient>
               <linearGradient id="widgetSuggestedAvgGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#4A9A62" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#4A9A62" stopOpacity={0.05} />
+                <stop offset="5%" stopColor={c.quaternary} stopOpacity={0.3} />
+                <stop offset="95%" stopColor={c.quaternary} stopOpacity={0.05} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(238,233,223,0.08)" />
-            <XAxis dataKey="month" tick={{ fill: '#5A4D70', fontSize: 11 }} axisLine={false} tickLine={false} />
-            <YAxis tick={{ fill: '#5A4D70', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} domain={['dataMin - 5', 'dataMax + 5']} />
-            <Tooltip {...chartTooltipStyle} formatter={(value) => [`$${Number(value)}`, '']} />
+            <CartesianGrid strokeDasharray="3 3" stroke={c.grid} />
+            <XAxis dataKey="month" tick={{ fill: c.axisLabel, fontSize: 11 }} axisLine={false} tickLine={false} />
+            <YAxis tick={{ fill: c.axisLabel, fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} domain={['dataMin - 5', 'dataMax + 5']} />
+            <Tooltip {...c.tooltip} formatter={(value) => [`$${Number(value)}`, '']} />
             <Legend iconType="plainline" wrapperStyle={{ fontSize: '10px', fontFamily: 'var(--font-mono)', paddingTop: '8px' }} />
-            <Area type="monotone" dataKey="storeAvg" stroke="#E8837C" fill="url(#widgetStoreAvgGrad)" strokeWidth={2.5} name="Your Store" />
-            <Area type="monotone" dataKey="discogsAvg" stroke="#6A6090" fill="url(#widgetDiscogsAvgGrad)" strokeWidth={2} name="Discogs Median" />
-            <Area type="monotone" dataKey="suggestedAvg" stroke="#4A9A62" fill="url(#widgetSuggestedAvgGrad)" strokeWidth={2} name="Suggested" />
+            <Area type="monotone" dataKey="storeAvg" stroke={c.primary} fill="url(#widgetStoreAvgGrad)" strokeWidth={2.5} name="Your Store" />
+            <Area type="monotone" dataKey="discogsAvg" stroke={c.channels.discogs} fill="url(#widgetDiscogsAvgGrad)" strokeWidth={2} name="Discogs Median" />
+            <Area type="monotone" dataKey="suggestedAvg" stroke={c.quaternary} fill="url(#widgetSuggestedAvgGrad)" strokeWidth={2} name="Suggested" />
           </AreaChart>
         </ResponsiveContainer>
       </div>

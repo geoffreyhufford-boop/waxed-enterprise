@@ -3,17 +3,23 @@
 import { useState, useMemo } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell, ResponsiveContainer } from 'recharts'
 import { channelFeeStructures } from '@/lib/dashboard-data'
+import { useTheme } from '@/lib/theme-context'
+import { getChartPalette } from '@/lib/chart-theme'
 import PinButton from '../PinButton'
 
-const chartTooltipStyle = {
-  contentStyle: { background: '#141020', border: '1px solid #2D2540', borderRadius: '12px', fontSize: '10px', fontFamily: 'var(--font-mono)' },
-  labelStyle: { color: '#5A4D70', fontWeight: 500, fontSize: '9px' },
-  itemStyle: { color: '#E8E0D8', fontFamily: 'var(--font-mono)' },
-}
-
 export default function OverviewMarginCalculator() {
+  const { theme } = useTheme()
+  const c = getChartPalette(theme)
+
   const [salePrice, setSalePrice] = useState(45)
   const [shipping, setShipping] = useState(5)
+
+  const channelColors: Record<string, string> = {
+    'Discogs': c.channels.discogs,
+    'Shopify': c.channels.storefront,
+    'In-Store POS': c.channels.pos,
+    'WAXED': c.channels.waxed,
+  }
 
   const channelData = useMemo(() => {
     return channelFeeStructures.map((ch) => {
@@ -28,11 +34,11 @@ export default function OverviewMarginCalculator() {
         totalFee: Math.round(totalFee * 100) / 100,
         marginPct: Math.round(marginPct * 10) / 10,
         feePct: Math.round((ch.platformFeePct + ch.shippingFeePct) * 10) / 10,
-        color: ch.color,
+        color: channelColors[ch.channel] || ch.color,
         description: ch.description,
       }
     })
-  }, [salePrice, shipping])
+  }, [salePrice, shipping, channelColors])
 
   return (
     <div className="relative bg-waxe-card border border-waxe-border p-5 flex flex-col h-[360px] clip-card-bl">
@@ -71,10 +77,10 @@ export default function OverviewMarginCalculator() {
         <div className="w-[55%] min-h-0">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={channelData} layout="vertical" margin={{ left: 10, right: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(238,233,223,0.08)" horizontal={false} />
-              <XAxis type="number" tick={{ fill: '#5A4D70', fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} />
-              <YAxis type="category" dataKey="channel" tick={{ fill: '#5A4D70', fontSize: 10 }} axisLine={false} tickLine={false} width={70} />
-              <Tooltip {...chartTooltipStyle} formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Net Profit']} />
+              <CartesianGrid strokeDasharray="3 3" stroke={c.grid} horizontal={false} />
+              <XAxis type="number" tick={{ fill: c.axisLabel, fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} />
+              <YAxis type="category" dataKey="channel" tick={{ fill: c.axisLabel, fontSize: 10 }} axisLine={false} tickLine={false} width={70} />
+              <Tooltip {...c.tooltip} formatter={(value) => [`$${Number(value).toFixed(2)}`, 'Net Profit']} />
               <Bar dataKey="netProfit" radius={[0, 2, 2, 0]} barSize={14} name="Net Profit">
                 {channelData.map((entry, index) => (
                   <Cell key={index} fill={entry.color} />

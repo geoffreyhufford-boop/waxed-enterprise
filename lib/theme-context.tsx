@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
 
-type Theme = 'dark' | 'light'
+type Theme = 'dark' | 'light' | 'retro'
 
 interface ThemeContextValue {
   theme: Theme
@@ -11,22 +11,28 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
+const CYCLE: Record<Theme, Theme> = {
+  dark: 'light',
+  light: 'retro',
+  retro: 'dark',
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>('dark')
 
   // Sync with what the inline script already set
   useEffect(() => {
     const stored = localStorage.getItem('waxe-theme') as Theme | null
-    if (stored === 'light' || stored === 'dark') {
+    if (stored === 'light' || stored === 'dark' || stored === 'retro') {
       setTheme(stored)
     }
   }, [])
 
   const toggleTheme = () => {
-    const next = theme === 'dark' ? 'light' : 'dark'
+    const next = CYCLE[theme]
     setTheme(next)
     localStorage.setItem('waxe-theme', next)
-    document.documentElement.classList.remove('dark', 'light')
+    document.documentElement.classList.remove('dark', 'light', 'retro')
     document.documentElement.classList.add(next)
   }
 

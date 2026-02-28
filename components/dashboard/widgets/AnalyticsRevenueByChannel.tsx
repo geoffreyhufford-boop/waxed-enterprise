@@ -2,15 +2,14 @@
 
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { channelRevenueData } from '@/lib/dashboard-data'
+import { useTheme } from '@/lib/theme-context'
+import { getChartPalette } from '@/lib/chart-theme'
 import PinButton from '../PinButton'
 
-const chartTooltipStyle = {
-  contentStyle: { background: '#141020', border: '1px solid #2D2540', borderRadius: '12px', fontSize: '10px', fontFamily: 'var(--font-mono)' },
-  labelStyle: { color: '#5A4D70', fontWeight: 500, fontSize: '9px' },
-  itemStyle: { color: '#E8E0D8', fontFamily: 'var(--font-mono)' },
-}
-
 export default function AnalyticsRevenueByChannel() {
+  const { theme } = useTheme()
+  const c = getChartPalette(theme)
+
   return (
     <div className="relative bg-waxe-card border border-waxe-border p-5 flex flex-col h-[360px] clip-card-bl">
       <PinButton widgetId="analytics-revenue-by-channel" />
@@ -26,26 +25,26 @@ export default function AnalyticsRevenueByChannel() {
           <AreaChart data={channelRevenueData}>
             <defs>
               <linearGradient id="widgetDiscogsGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#2D2540" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#2D2540" stopOpacity={0.05} />
+                <stop offset="5%" stopColor={c.channels.discogs} stopOpacity={0.3} />
+                <stop offset="95%" stopColor={c.channels.discogs} stopOpacity={0.05} />
               </linearGradient>
               <linearGradient id="widgetStorefrontGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#7B6FA0" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#7B6FA0" stopOpacity={0.05} />
+                <stop offset="5%" stopColor={c.channels.storefront} stopOpacity={0.3} />
+                <stop offset="95%" stopColor={c.channels.storefront} stopOpacity={0.05} />
               </linearGradient>
               <linearGradient id="widgetPosGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#E8837C" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#E8837C" stopOpacity={0.05} />
+                <stop offset="5%" stopColor={c.channels.pos} stopOpacity={0.3} />
+                <stop offset="95%" stopColor={c.channels.pos} stopOpacity={0.05} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(238,233,223,0.08)" />
-            <XAxis dataKey="month" tick={{ fill: '#5A4D70', fontSize: 11 }} axisLine={false} tickLine={false} />
-            <YAxis tick={{ fill: '#5A4D70', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
-            <Tooltip {...chartTooltipStyle} formatter={(value) => [`$${Number(value).toLocaleString()}`, '']} />
+            <CartesianGrid strokeDasharray="3 3" stroke={c.grid} />
+            <XAxis dataKey="month" tick={{ fill: c.axisLabel, fontSize: 11 }} axisLine={false} tickLine={false} />
+            <YAxis tick={{ fill: c.axisLabel, fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+            <Tooltip {...c.tooltip} formatter={(value) => [`$${Number(value).toLocaleString()}`, '']} />
             <Legend iconType="plainline" wrapperStyle={{ fontSize: '10px', fontFamily: 'var(--font-mono)', paddingTop: '8px' }} />
-            <Area type="monotone" dataKey="discogs" stackId="1" stroke="#2D2540" fill="url(#widgetDiscogsGrad)" strokeWidth={2} name="Discogs" />
-            <Area type="monotone" dataKey="storefront" stackId="1" stroke="#7B6FA0" fill="url(#widgetStorefrontGrad)" strokeWidth={2} name="Storefront" />
-            <Area type="monotone" dataKey="pos" stackId="1" stroke="#E8837C" fill="url(#widgetPosGrad)" strokeWidth={2} name="POS" />
+            <Area type="monotone" dataKey="discogs" stackId="1" stroke={c.channels.discogs} fill="url(#widgetDiscogsGrad)" strokeWidth={2} name="Discogs" />
+            <Area type="monotone" dataKey="storefront" stackId="1" stroke={c.channels.storefront} fill="url(#widgetStorefrontGrad)" strokeWidth={2} name="Storefront" />
+            <Area type="monotone" dataKey="pos" stackId="1" stroke={c.channels.pos} fill="url(#widgetPosGrad)" strokeWidth={2} name="POS" />
           </AreaChart>
         </ResponsiveContainer>
       </div>

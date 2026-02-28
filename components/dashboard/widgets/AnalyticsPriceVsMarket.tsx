@@ -2,15 +2,14 @@
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { priceVsMarketData } from '@/lib/dashboard-data'
+import { useTheme } from '@/lib/theme-context'
+import { getChartPalette } from '@/lib/chart-theme'
 import PinButton from '../PinButton'
 
-const chartTooltipStyle = {
-  contentStyle: { background: '#141020', border: '1px solid #2D2540', borderRadius: '12px', fontSize: '10px', fontFamily: 'var(--font-mono)' },
-  labelStyle: { color: '#5A4D70', fontWeight: 500, fontSize: '9px' },
-  itemStyle: { color: '#E8E0D8', fontFamily: 'var(--font-mono)' },
-}
-
 export default function AnalyticsPriceVsMarket() {
+  const { theme } = useTheme()
+  const c = getChartPalette(theme)
+
   return (
     <div className="relative bg-waxe-card border border-waxe-border p-5 flex flex-col h-[360px] clip-card-bl">
       <PinButton widgetId="analytics-price-vs-market" />
@@ -24,13 +23,13 @@ export default function AnalyticsPriceVsMarket() {
       <div className="flex-1 min-h-0">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={priceVsMarketData} layout="vertical" barGap={2}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(238,233,223,0.08)" horizontal={false} />
-            <XAxis type="number" tick={{ fill: '#5A4D70', fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} />
-            <YAxis type="category" dataKey="artist" tick={{ fill: '#5A4D70', fontSize: 9 }} axisLine={false} tickLine={false} width={90} />
-            <Tooltip {...chartTooltipStyle} formatter={(value) => [`$${value}`, '']} />
+            <CartesianGrid strokeDasharray="3 3" stroke={c.grid} horizontal={false} />
+            <XAxis type="number" tick={{ fill: c.axisLabel, fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} />
+            <YAxis type="category" dataKey="artist" tick={{ fill: c.axisLabel, fontSize: 9 }} axisLine={false} tickLine={false} width={90} />
+            <Tooltip {...c.tooltip} formatter={(value) => [`$${value}`, '']} />
             <Legend iconType="plainline" wrapperStyle={{ fontSize: '10px', fontFamily: 'var(--font-mono)', paddingTop: '8px' }} />
-            <Bar dataKey="yourPrice" fill="#2D2540" barSize={6} name="Your Price" radius={[0, 2, 2, 0]} />
-            <Bar dataKey="discogsMedian" fill="#E8837C" barSize={6} name="Discogs Median" radius={[0, 2, 2, 0]} />
+            <Bar dataKey="yourPrice" fill={c.secondary} barSize={6} name="Your Price" radius={[0, 2, 2, 0]} />
+            <Bar dataKey="discogsMedian" fill={c.primary} barSize={6} name="Discogs Median" radius={[0, 2, 2, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>

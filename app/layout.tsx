@@ -34,7 +34,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: `
           (function(){var t=localStorage.getItem('waxe-theme');
-          if(t==='light'){document.documentElement.classList.remove('dark');document.documentElement.classList.add('light')}})()
+          if(t==='light'||t==='retro'){document.documentElement.classList.remove('dark');document.documentElement.classList.add(t)}})()
         `}} />
       </head>
       <body className="min-h-screen">
