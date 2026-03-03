@@ -62,7 +62,7 @@ export default function Sidebar() {
             style={{ fontFamily: 'var(--font-mono)', height: 26 }}
             aria-label={`Switch theme (current: ${theme})`}
           >
-            {([['dark', 'morph'], ['light', 'light'], ['retro', 'retro']] as const).map(([mode, label]) => (
+            {([['dark', 'morph']] as const).map(([mode, label]) => (
               <span
                 key={mode}
                 className="text-[9px] font-medium px-2.5 flex items-center h-full transition-colors"

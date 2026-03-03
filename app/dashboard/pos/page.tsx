@@ -37,7 +37,7 @@ export default function POSPage() {
     }
    />
 
-   <div className="flex-1 min-h-0 overflow-y-auto">
+   <div className="flex-1 min-h-0 overflow-y-auto p-2 -m-2">
    {/* Quick Stats */}
    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
     {posQuickStats.map((stat) => (
