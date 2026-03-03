@@ -109,6 +109,15 @@ export interface Shelf {
   records: { id: string; artist: string; title: string; featured: boolean }[]
 }
 
+export interface StorefrontSocialLinks {
+  instagram?: string
+  twitter?: string
+  tiktok?: string
+  facebook?: string
+  youtube?: string
+  bandcamp?: string
+}
+
 export interface StorefrontConfig {
   storeName: string
   url: string
@@ -116,7 +125,10 @@ export interface StorefrontConfig {
   primaryColor: string
   accentColor: string
   logoText: string
+  logoUrl?: string
+  headerImageUrl?: string
   description: string
+  socialLinks: StorefrontSocialLinks
 }
 
 export interface RevenueDataPoint {
@@ -496,6 +508,11 @@ export const storefrontConfig: StorefrontConfig = {
   accentColor: '#2400FF',
   logoText: 'W&G',
   description: 'Portland\'s finest curated vinyl since 2018',
+  socialLinks: {
+    instagram: 'waxandgroove',
+    twitter: 'waxandgroove',
+    bandcamp: 'waxandgroove',
+  },
 }
 
 export const revenueData: RevenueDataPoint[] = [
@@ -836,7 +853,7 @@ export interface ChannelFeeStructure {
 export const channelFeeStructures: ChannelFeeStructure[] = [
   { channel: 'Discogs', platformFeePct: 8, shippingFeePct: 8, fixedFee: 0, color: '#6A6090', description: '8% on sale + 8% on shipping' },
   { channel: 'Shopify', platformFeePct: 2.9, shippingFeePct: 0, fixedFee: 0.30, color: '#7B6FA0', description: '2.9% + $0.30 per transaction' },
-  { channel: 'In-Store POS', platformFeePct: 0, shippingFeePct: 0, fixedFee: 0, color: '#E8837C', description: 'No platform fees' },
+  { channel: 'In-Store POS', platformFeePct: 0, shippingFeePct: 0, fixedFee: 0, color: '#E87B35', description: 'No platform fees' },
   { channel: 'WAXED', platformFeePct: 5, shippingFeePct: 0, fixedFee: 0, color: '#4A9A62', description: '5% flat — no shipping commission' },
 ]
 

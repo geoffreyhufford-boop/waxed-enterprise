@@ -1,14 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import { DashboardHeader, MessageThread } from '@/components/dashboard'
+import { DashboardHeader, MessageThread, StatusBadge } from '@/components/dashboard'
 import { conversations, networkConversations } from '@/lib/dashboard-data'
+import { customerProfiles } from '@/lib/customer-data'
 
 export default function MessagesPage() {
  const [activeTab, setActiveTab] = useState<'marketplace' | 'network'>('marketplace')
  const [activeConv, setActiveConv] = useState(0)
  const [search, setSearch] = useState('')
  const [showCompose, setShowCompose] = useState(false)
+ const [showBroadcast, setShowBroadcast] = useState(false)
 
  const allConversations = activeTab === 'marketplace' ? conversations : networkConversations
  const active = allConversations[activeConv] || allConversations[0]
@@ -27,7 +29,10 @@ export default function MessagesPage() {
     title="Messages"
     subtitle={`${totalUnread} unread messages`}
     actions={
-     <button className="btn-primary text-sm px-4 py-2" onClick={() => setShowCompose(true)}>+ Compose</button>
+     <div className="flex gap-2">
+      <button className="btn-secondary text-sm px-4 py-2" onClick={() => setShowBroadcast(true)}>Broadcast</button>
+      <button className="btn-primary text-sm px-4 py-2" onClick={() => setShowCompose(true)}>+ Compose</button>
+     </div>
     }
    />
 
@@ -152,6 +157,199 @@ export default function MessagesPage() {
      </div>
     </div>
    )}
+
+   {/* Broadcast Modal */}
+   {showBroadcast && (
+    <BroadcastModal onClose={() => setShowBroadcast(false)} />
+   )}
+  </div>
+ )
+}
+
+// ─── Broadcast Modal Component ───────────────────────────────
+
+type BroadcastChannel = 'email' | 'sms' | 'push'
+type AudienceSegment = 'all' | 'vip' | 'wholesale' | 'retail'
+
+const channelOptions: { key: BroadcastChannel; label: string; description: string }[] = [
+ { key: 'email', label: 'Email', description: 'Send to customer email addresses' },
+ { key: 'sms', label: 'SMS', description: 'Text message to phone numbers on file' },
+ { key: 'push', label: 'Push Notification', description: 'In-app notification via storefront' },
+]
+
+const segmentOptions: { key: AudienceSegment; label: string }[] = [
+ { key: 'all', label: 'All Customers' },
+ { key: 'vip', label: 'VIP' },
+ { key: 'wholesale', label: 'Wholesale' },
+ { key: 'retail', label: 'Retail' },
+]
+
+function BroadcastModal({ onClose }: { onClose: () => void }) {
+ const [channels, setChannels] = useState<Set<BroadcastChannel>>(new Set(['email']))
+ const [audience, setAudience] = useState<AudienceSegment>('all')
+ const [subject, setSubject] = useState('')
+ const [body, setBody] = useState('')
+ const [sent, setSent] = useState(false)
+
+ const recipientCount = audience === 'all'
+  ? customerProfiles.length
+  : customerProfiles.filter((c) => c.tier === audience).length
+
+ const toggleChannel = (ch: BroadcastChannel) => {
+  const next = new Set(channels)
+  if (next.has(ch)) {
+   if (next.size > 1) next.delete(ch)
+  } else {
+   next.add(ch)
+  }
+  setChannels(next)
+ }
+
+ return (
+  <div className="fixed inset-0 z-50 flex items-start justify-center pt-[5vh]">
+   <div className="absolute inset-0 bg-waxe-text/40" onClick={onClose} />
+   <div className="relative w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden bg-waxe-base border border-waxe-border shadow-xl clip-modal">
+    {/* Header */}
+    <div className="shrink-0 bg-waxe-base border-b border-waxe-border p-5 z-10">
+     <div className="flex items-center justify-between">
+      <div>
+       <h2 className="text-xl font-semibold text-waxe-text">Broadcast Message</h2>
+       <p className="text-xs text-waxe-text-muted mt-1">Send to multiple customers at once</p>
+      </div>
+      <button onClick={onClose} className="text-waxe-text-muted hover:text-waxe-text text-lg">✕</button>
+     </div>
+    </div>
+
+    {/* Body */}
+    <div className="flex-1 min-h-0 overflow-y-auto p-5 space-y-5">
+     {sent ? (
+      <div className="text-center py-12">
+       <p className="text-2xl mb-2">✓</p>
+       <p className="text-lg font-semibold text-waxe-text mb-1">Broadcast Queued</p>
+       <p className="text-sm text-waxe-text-secondary mb-1">
+        Sending to {recipientCount} {audience === 'all' ? 'customers' : `${audience} customers`}
+       </p>
+       <p className="text-xs text-waxe-text-muted">
+        via {[...channels].map((ch) => channelOptions.find((c) => c.key === ch)?.label).join(' + ')}
+       </p>
+       <button className="btn-secondary text-sm px-4 py-2 mt-6" onClick={onClose}>Done</button>
+      </div>
+     ) : (
+      <>
+       {/* Channel Selection */}
+       <div>
+        <p className="text-[10px] font-medium text-waxe-text-muted mb-2">Channels</p>
+        <div className="grid grid-cols-3 gap-2">
+         {channelOptions.map((ch) => (
+          <button
+           key={ch.key}
+           onClick={() => toggleChannel(ch.key)}
+           className={`p-3 border text-left transition-colors ${
+            channels.has(ch.key)
+             ? 'border-waxe-text bg-waxe-surface/30'
+             : 'border-waxe-border hover:border-waxe-border-hover'
+           }`}
+          >
+           <p className="text-sm font-medium text-waxe-text mb-0.5">{ch.label}</p>
+           <p className="text-[10px] text-waxe-text-muted">{ch.description}</p>
+          </button>
+         ))}
+        </div>
+       </div>
+
+       {/* Audience Segment */}
+       <div>
+        <p className="text-[10px] font-medium text-waxe-text-muted mb-2">Audience</p>
+        <div className="flex gap-1.5">
+         {segmentOptions.map((seg) => {
+          const count = seg.key === 'all'
+           ? customerProfiles.length
+           : customerProfiles.filter((c) => c.tier === seg.key).length
+          return (
+           <button
+            key={seg.key}
+            onClick={() => setAudience(seg.key)}
+            className={`text-[11px] font-medium px-3 py-1.5 border transition-colors ${
+             audience === seg.key
+              ? 'bg-waxe-text text-waxe-deep border-waxe-text'
+              : 'text-waxe-text bg-waxe-card/80 backdrop-blur-sm border-waxe-border hover:border-waxe-border-hover'
+            }`}
+           >
+            {seg.label}
+            <span className="ml-1.5 text-[10px] opacity-60">{count}</span>
+           </button>
+          )
+         })}
+        </div>
+        <p className="text-xs text-waxe-text-muted mt-2">
+         {recipientCount} recipient{recipientCount !== 1 ? 's' : ''} selected
+        </p>
+       </div>
+
+       {/* Subject (email only) */}
+       {channels.has('email') && (
+        <div>
+         <label className="text-xs font-medium text-waxe-text-muted mb-1.5 block">Subject</label>
+         <input
+          type="text"
+          className="input-field"
+          placeholder="Email subject line..."
+          value={subject}
+          onChange={(e) => setSubject(e.target.value)}
+         />
+        </div>
+       )}
+
+       {/* Message Body */}
+       <div>
+        <label className="text-xs font-medium text-waxe-text-muted mb-1.5 block">Message</label>
+        <textarea
+         className="input-field min-h-[120px] resize-y"
+         placeholder="Write your message..."
+         value={body}
+         onChange={(e) => setBody(e.target.value)}
+        />
+        <p className="text-[10px] text-waxe-text-muted mt-1">
+         Use {'{{name}}'} to personalize with customer name
+        </p>
+       </div>
+
+       {/* Preview */}
+       {body && (
+        <div className="bg-waxe-surface/30 border border-waxe-border/50 p-4">
+         <p className="text-[10px] font-medium text-waxe-text-muted mb-2">Preview</p>
+         <div className="bg-waxe-card border border-waxe-border p-3">
+          {channels.has('email') && subject && (
+           <p className="text-xs font-semibold text-waxe-text mb-1">{subject}</p>
+          )}
+          <p className="text-sm text-waxe-text-secondary leading-relaxed">
+           {body.replace(/\{\{name\}\}/g, 'Sarah Mitchell')}
+          </p>
+         </div>
+        </div>
+       )}
+      </>
+     )}
+    </div>
+
+    {/* Footer */}
+    {!sent && (
+     <div className="shrink-0 bg-waxe-card border-t border-waxe-border p-5 flex items-center justify-between">
+      <p className="text-xs text-waxe-text-muted">
+       {[...channels].map((ch) => channelOptions.find((c) => c.key === ch)?.label).join(' + ')} → {recipientCount} recipients
+      </p>
+      <div className="flex gap-2">
+       <button className="btn-secondary text-sm px-4 py-2" onClick={onClose}>Cancel</button>
+       <button
+        className="btn-primary text-sm px-4 py-2"
+        onClick={() => setSent(true)}
+       >
+        Send Broadcast
+       </button>
+      </div>
+     </div>
+    )}
+   </div>
   </div>
  )
 }

@@ -5,6 +5,7 @@ import { DashboardHeader, StatCard, StatusBadge, FilterDropdown, DataTable, Date
 import { orders, fulfillmentStats, inventoryRecords, type Order } from '@/lib/dashboard-data'
 import { exportToCSV } from '@/lib/export-utils'
 import { purchaseOrders, type PurchaseOrder } from '@/lib/purchase-order-data'
+import { getCreditAccount } from '@/lib/store-credit-data'
 
 const shippingMethodLabel: Record<string, string> = {
  standard: 'Standard',
@@ -40,6 +41,7 @@ export default function OrdersPage() {
  const actionsRef = useRef<HTMLDivElement>(null)
  const [toastMessage, setToastMessage] = useState<string | null>(null)
  const [confirmAction, setConfirmAction] = useState<{ type: 'refund' | 'cancel'; order: Order } | null>(null)
+ const [refundMethod, setRefundMethod] = useState<'original' | 'store_credit'>('original')
 
  useEffect(() => {
   if (!toastMessage) return
@@ -131,6 +133,7 @@ export default function OrdersPage() {
  const handleRefundOrder = () => {
   if (!selectedOrder) return
   setActionsOpen(false)
+  setRefundMethod('original')
   setConfirmAction({ type: 'refund', order: selectedOrder })
  }
 
@@ -145,7 +148,15 @@ export default function OrdersPage() {
   const newStatus = confirmAction.type === 'refund' ? 'refunded' : 'cancelled'
   const updated = { ...confirmAction.order, status: newStatus } as Order
   setSelectedOrder(updated)
-  setToastMessage(`${confirmAction.order.id} ${confirmAction.type === 'refund' ? 'refunded' : 'cancelled'}`)
+  if (confirmAction.type === 'refund') {
+   setToastMessage(
+    refundMethod === 'store_credit'
+     ? `$${confirmAction.order.total.toFixed(2)} credited to ${confirmAction.order.customer.name}'s store credit`
+     : `${confirmAction.order.id} refunded to original payment method`
+   )
+  } else {
+   setToastMessage(`${confirmAction.order.id} cancelled`)
+  }
   setConfirmAction(null)
  }
 
@@ -173,7 +184,7 @@ export default function OrdersPage() {
 
    <div className="flex-1 min-h-0 flex flex-col">
     {/* Stats Row */}
-    <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+    <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4 p-2 -m-2">
      {fulfillmentStats.map((stat) => (
       <StatCard key={stat.label} {...stat} />
      ))}
@@ -501,11 +512,52 @@ export default function OrdersPage() {
       <h3 className="text-lg font-semibold text-waxe-text mb-2">
        {confirmAction.type === 'refund' ? 'Refund Order' : 'Cancel Order'}
       </h3>
-      <p className="text-sm text-waxe-text-secondary mb-5">
-       {confirmAction.type === 'refund'
-        ? `Issue a full refund of $${confirmAction.order.total.toFixed(2)} for ${confirmAction.order.id}?`
-        : `This will cancel ${confirmAction.order.id}. This action cannot be undone.`}
-      </p>
+      {confirmAction.type === 'refund' ? (
+       <div className="mb-5">
+        <p className="text-sm text-waxe-text-secondary mb-4">
+         Issue a full refund of ${confirmAction.order.total.toFixed(2)} for {confirmAction.order.id}?
+        </p>
+        <p className="text-[10px] font-medium text-waxe-text-muted mb-2">Refund Method</p>
+        <div className="space-y-2">
+         <label className={`flex items-center gap-3 p-3 border cursor-pointer transition-colors ${refundMethod === 'original' ? 'border-waxe-text bg-waxe-surface/30' : 'border-waxe-border hover:border-waxe-border-hover'}`}>
+          <input
+           type="radio"
+           name="refundMethod"
+           checked={refundMethod === 'original'}
+           onChange={() => setRefundMethod('original')}
+           className="accent-waxe-text"
+          />
+          <div>
+           <p className="text-sm font-medium text-waxe-text">Refund to original payment</p>
+           <p className="text-xs text-waxe-text-muted">Return funds to the customer&apos;s original payment method</p>
+          </div>
+         </label>
+         <label className={`flex items-center gap-3 p-3 border cursor-pointer transition-colors ${refundMethod === 'store_credit' ? 'border-waxe-text bg-waxe-surface/30' : 'border-waxe-border hover:border-waxe-border-hover'}`}>
+          <input
+           type="radio"
+           name="refundMethod"
+           checked={refundMethod === 'store_credit'}
+           onChange={() => setRefundMethod('store_credit')}
+           className="accent-waxe-text"
+          />
+          <div>
+           <p className="text-sm font-medium text-waxe-text">Refund to store credit</p>
+           <p className="text-xs text-waxe-text-muted">
+            Add ${confirmAction.order.total.toFixed(2)} to {confirmAction.order.customer.name}&apos;s credit balance
+            {(() => {
+             const existing = getCreditAccount(confirmAction.order.customer.name)
+             return existing ? ` (current: $${existing.balance.toFixed(2)})` : ''
+            })()}
+           </p>
+          </div>
+         </label>
+        </div>
+       </div>
+      ) : (
+       <p className="text-sm text-waxe-text-secondary mb-5">
+        This will cancel {confirmAction.order.id}. This action cannot be undone.
+       </p>
+      )}
       <div className="flex items-center justify-end gap-3">
        <button className="btn-secondary text-sm px-4 py-2" onClick={() => setConfirmAction(null)}>No, Go Back</button>
        <button

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { DashboardHeader, StatCard, DateRangeSelector, SalesChannelFilter } from '@/components/dashboard'
 import { quickStats } from '@/lib/dashboard-data'
 import { usePinnedWidgets } from '@/lib/use-pinned-widgets'
+import { DashboardFilterProvider } from '@/lib/dashboard-filter-context'
 import { widgetRegistry } from '@/lib/widget-registry'
 import {
  DndContext,
@@ -95,7 +96,7 @@ export default function OverviewPage() {
    />
 
    {/* Stats Row */}
-   <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+   <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4 p-2 -m-2">
     {quickStats.map((stat) => (
      <StatCard key={stat.label} {...stat} />
     ))}
@@ -103,17 +104,19 @@ export default function OverviewPage() {
 
    {/* Pinned Widgets Grid */}
    {widgets.length > 0 ? (
-    <div className="flex-1 min-h-0 overflow-y-auto">
-     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <SortableContext items={pinned} strategy={rectSortingStrategy}>
-       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 pb-4">
-        {widgets.map((w) => (
-         <SortableWidget key={w.id} widget={w} />
-        ))}
-       </div>
-      </SortableContext>
-     </DndContext>
-    </div>
+    <DashboardFilterProvider dateRange={dateRange} channel={channel}>
+     <div className="flex-1 min-h-0 overflow-y-auto">
+      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+       <SortableContext items={pinned} strategy={rectSortingStrategy}>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 pb-4">
+         {widgets.map((w) => (
+          <SortableWidget key={w.id} widget={w} />
+         ))}
+        </div>
+       </SortableContext>
+      </DndContext>
+     </div>
+    </DashboardFilterProvider>
    ) : (
     <div className="flex-1 min-h-0 flex items-center justify-center">
      <div className="text-center space-y-3">

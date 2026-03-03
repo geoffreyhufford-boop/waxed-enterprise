@@ -24,7 +24,7 @@ interface ChartPalette {
 }
 
 const dark: ChartPalette = {
-  primary: '#E8837C',
+  primary: '#E87B35',
   secondary: '#7B6FA0',
   tertiary: '#2D2540',
   quaternary: '#4A9A62',
@@ -34,7 +34,7 @@ const dark: ChartPalette = {
   channels: {
     discogs: '#2D2540',
     storefront: '#7B6FA0',
-    pos: '#E8837C',
+    pos: '#E87B35',
     waxed: '#4A9A62',
   },
   tooltip: {

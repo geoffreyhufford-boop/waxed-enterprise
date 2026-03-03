@@ -16,9 +16,9 @@
   --color-waxe-text-secondary: #636E72;
   --color-waxe-text-muted: #B2BEC3;
 
-  /* Accent — warm salmon + cool lavender */
-  --color-waxe-warm: #E8837C;
-  --color-waxe-warm-hover: #D4736C;
+  /* Accent — cool orange + cool lavender */
+  --color-waxe-warm: #E87B35;
+  --color-waxe-warm-hover: #D06A28;
   --color-waxe-cool: #7B6FA0;
   --color-waxe-cool-muted: #EDE8F4;
 
@@ -45,10 +45,11 @@
   --color-waxed-olive-hover: #C0C5CC;
   --color-waxed-olive-muted: #B2BEC3;
   --color-waxed-sold: #7B6FA0;
-  --color-waxed-active: #E8837C;
+  --color-waxed-active: #E87B35;
 
-  /* Font — sans-serif system stack */
-  --font-mono: 'Inter', -apple-system, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+  /* Font — Darker Grotesque (UI) + IBM Plex Mono (data) */
+  --font-sans: 'Syne', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SF Mono', monospace;
 
   /* ── Neumorphic: Radius Tokens (softer) ── */
   --radius-sm: 12px;
@@ -84,8 +85,8 @@
   --color-waxe-text: #1A1A18;
   --color-waxe-text-secondary: #6B6B66;
   --color-waxe-text-muted: #A0A09A;
-  --color-waxe-warm: #E8837C;
-  --color-waxe-warm-hover: #D4736C;
+  --color-waxe-warm: #E87B35;
+  --color-waxe-warm-hover: #D06A28;
   --color-waxe-cool-muted: #E8E4F0;
   --color-waxe-positive: #22C55E;
   --color-waxe-negative: #EF4444;
@@ -99,7 +100,7 @@
   --color-waxed-olive: #E0DDD6;
   --color-waxed-olive-hover: #C8C5BE;
   --color-waxed-olive-muted: #A0A09A;
-  --color-waxed-active: #E8837C;
+  --color-waxed-active: #E87B35;
 
   /* Boot screen — light variant */
   --color-boot-bg: #F7F5F0;
@@ -161,8 +162,9 @@
   --color-waxed-sold: #48B0A8;
   --color-waxed-active: #D08030;
 
-  /* Font — monospace stack */
-  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  /* Font — retro theme */
+  --font-sans: 'Syne', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SF Mono', monospace;
 
   /* Radius — all zero (angular) */
   --radius-sm: 0px;
@@ -193,7 +195,7 @@
   body {
     @apply bg-waxe-deep text-waxe-text antialiased;
     min-height: 100vh;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-feature-settings: "ss01", "ss02";
     -webkit-font-smoothing: antialiased;
   }
@@ -548,7 +550,7 @@
            bg-waxe-warm text-white border-transparent
            transition-all duration-200
            focus:outline-none cursor-pointer;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     border-radius: var(--radius-full);
     box-shadow: 4px 4px 8px #b8bec7, -4px -4px 8px #ffffff;
     clip-path: none;
@@ -574,7 +576,7 @@
            bg-waxe-surface text-waxe-text border-transparent
            transition-all duration-200
            focus:outline-none cursor-pointer;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     border-radius: var(--radius-full);
     box-shadow: 4px 4px 8px #b8bec7, -4px -4px 8px #ffffff;
     clip-path: none;
@@ -600,7 +602,7 @@
            bg-transparent text-waxe-text-secondary
            hover:text-waxe-text hover:bg-waxe-surface/50
            transition-all duration-200;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     border-radius: var(--radius-sm);
     text-transform: none;
     letter-spacing: 0;
@@ -739,7 +741,7 @@
 
   .label-text {
     @apply block text-[12px] font-medium text-waxe-text-secondary mb-2;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     text-transform: none;
     letter-spacing: 0;
   }
@@ -766,17 +768,17 @@
     font-weight: 600;
     letter-spacing: 0;
     text-transform: none;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
   }
 
   /* ── Dashboard Navigation ── */
 
   .nav-item {
-    @apply flex items-center gap-3 px-3 py-2.5 text-[13px] font-medium
-           text-waxe-text-muted
+    @apply flex items-center gap-3 px-3 py-2.5 text-[13px] font-semibold
+           text-waxe-text-secondary
            hover:text-waxe-text hover:bg-waxe-surface/50
            transition-all duration-200 cursor-pointer;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     border-radius: var(--radius-md);
     text-transform: none;
     letter-spacing: 0;
@@ -785,7 +787,7 @@
   .nav-item-active {
     @apply flex items-center gap-3 px-3 py-2.5 text-[13px] font-semibold
            bg-waxe-surface text-waxe-warm;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     border-radius: var(--radius-md);
     clip-path: none;
     text-transform: none;
@@ -834,7 +836,7 @@
            text-waxe-text-muted
            hover:text-waxe-text
            transition-all duration-200 cursor-pointer;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     border-radius: var(--radius-sm);
     text-transform: none;
     letter-spacing: 0;
@@ -843,7 +845,7 @@
   .tab-item-active {
     @apply px-4 py-2 text-[13px] font-semibold
            text-waxe-text border-b-2 border-waxe-positive;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     position: relative;
     background-image: none;
     text-transform: none;
@@ -893,7 +895,7 @@
   /* ── Organic: Section Index → clean label ── */
 
   .section-index {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 0;

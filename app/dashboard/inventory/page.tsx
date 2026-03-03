@@ -8,6 +8,8 @@ import { exportToCSV } from '@/lib/export-utils'
 import { discountRules } from '@/lib/settings-data'
 import { consignors, consignmentPayouts, consignedRecords } from '@/lib/consignment-data'
 import { inventoryAudits } from '@/lib/audit-data'
+import { creditAccounts, creditTransactions, getCreditStats, getCreditTransactions, type StoreCreditAccount, type CreditTransaction } from '@/lib/store-credit-data'
+import { customerProfiles } from '@/lib/customer-data'
 
 const syncSourceLabel: Record<string, string> = {
  discogs: 'Discogs',
@@ -54,6 +56,7 @@ export default function InventoryPage() {
  const [showDiscounts, setShowDiscounts] = useState(false)
  const [showConsignment, setShowConsignment] = useState(false)
  const [showAudit, setShowAudit] = useState(false)
+ const [showStoreCredit, setShowStoreCredit] = useState(false)
 
  const consignedIds = useMemo(() => new Set(consignedRecords.filter(c => c.status === 'active').map(c => c.inventoryId)), [])
  const activeDiscounts = discountRules.filter(d => d.active)
@@ -141,6 +144,9 @@ export default function InventoryPage() {
       <button className="btn-ghost text-sm px-3 py-2" onClick={() => setShowDiscounts(true)}>
        Discounts{activeDiscounts.length > 0 && <span className="ml-1.5 inline-flex items-center justify-center w-5 h-5 text-[11px] font-medium bg-waxe-warm text-waxe-deep">{activeDiscounts.length}</span>}
       </button>
+      <button className="btn-ghost text-sm px-3 py-2" onClick={() => setShowStoreCredit(true)}>
+       Store Credit
+      </button>
       <button className="btn-ghost text-sm px-3 py-2" onClick={() => setShowConsignment(true)}>Consignment</button>
       <button className="btn-ghost text-sm px-3 py-2" onClick={() => setShowAudit(true)}>Audit</button>
       <button className="btn-secondary text-sm px-4 py-2" onClick={() => setShowImport(true)}>Import</button>
@@ -150,7 +156,7 @@ export default function InventoryPage() {
    />
 
    {/* Stats Row */}
-   <div className="shrink-0 grid grid-cols-2 lg:grid-cols-3 gap-3 mb-3">
+   <div className="shrink-0 grid grid-cols-2 lg:grid-cols-3 gap-3 mb-3 p-2 -m-2">
     <StatCard label="Total Records" value="2,847" trend="+124" trendUp={true} />
     <StatCard label="Active Listings" value="2,412" trend="+98" trendUp={true} />
     <StatCard label="Sell Thru Rate" value="6.5%" trend="+0.8%" trendUp={true} />
@@ -1184,6 +1190,11 @@ export default function InventoryPage() {
     </div>
    )}
 
+   {/* ─── Store Credit Modal ─── */}
+   {showStoreCredit && (
+    <StoreCreditModal onClose={() => setShowStoreCredit(false)} />
+   )}
+
    {/* ─── Discounts Modal ─── */}
    {showDiscounts && (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-[5vh]">
@@ -1273,7 +1284,7 @@ function ConsignmentModal({ onClose, consignors: csgrs, payouts, totalOwed, tota
       <h2 className="text-xl font-semibold text-waxe-text">Consignment</h2>
       <button onClick={onClose} className="text-waxe-text-muted hover:text-waxe-text text-lg">✕</button>
      </div>
-     <div className="grid grid-cols-3 gap-3">
+     <div className="grid grid-cols-3 gap-3 p-2 -m-2">
       <div className="stat-card">
        <p className="text-[10px] font-medium text-waxe-text-muted">Consignors</p>
        <p className="text-lg font-semibold text-waxe-text font-mono">{csgrs.length}</p>
@@ -1490,6 +1501,164 @@ function AuditModal({ onClose, audits, activeAudit }: {
         </div>
        ))}
       </div>
+     )}
+    </div>
+   </div>
+  </div>
+ )
+}
+
+// ─── Store Credit Modal Component ────────────────────────────
+
+function StoreCreditModal({ onClose }: { onClose: () => void }) {
+ const [tab, setTab] = useState<'accounts' | 'transactions'>('accounts')
+ const [showIssueForm, setShowIssueForm] = useState(false)
+ const [issueCustomer, setIssueCustomer] = useState('')
+ const [issueAmount, setIssueAmount] = useState('')
+ const [issueNote, setIssueNote] = useState('')
+
+ const stats = getCreditStats()
+
+ return (
+  <div className="fixed inset-0 z-50 flex items-start justify-center pt-[5vh]">
+   <div className="absolute inset-0 bg-waxe-text/40" onClick={onClose} />
+   <div className="relative w-full max-w-3xl h-[85vh] flex flex-col overflow-hidden bg-waxe-base border border-waxe-border shadow-xl clip-modal">
+    <div className="shrink-0 bg-waxe-base border-b border-waxe-border p-5 z-10">
+     <div className="flex items-center justify-between mb-3">
+      <h2 className="text-xl font-semibold text-waxe-text">Store Credit</h2>
+      <div className="flex items-center gap-3">
+       <button className="btn-ghost text-sm" onClick={() => setShowIssueForm(!showIssueForm)}>+ Issue Credit</button>
+       <button onClick={onClose} className="text-waxe-text-muted hover:text-waxe-text text-lg">✕</button>
+      </div>
+     </div>
+     <div className="grid grid-cols-3 gap-3 p-2 -m-2">
+      <div className="stat-card">
+       <p className="text-[10px] font-medium text-waxe-text-muted">Active Accounts</p>
+       <p className="text-lg font-semibold text-waxe-text font-mono">{stats.activeAccounts}</p>
+      </div>
+      <div className="stat-card">
+       <p className="text-[10px] font-medium text-waxe-text-muted">Outstanding Balance</p>
+       <p className="text-lg font-semibold text-waxe-warm font-mono">${stats.outstandingBalance.toFixed(2)}</p>
+      </div>
+      <div className="stat-card">
+       <p className="text-[10px] font-medium text-waxe-text-muted">Total Redeemed</p>
+       <p className="text-lg font-semibold text-waxe-positive font-mono">${stats.totalRedeemed.toFixed(2)}</p>
+      </div>
+     </div>
+     <div className="flex gap-1.5 mt-3">
+      {(['accounts', 'transactions'] as const).map((t) => (
+       <button
+        key={t}
+        onClick={() => setTab(t)}
+        className={`text-[11px] font-medium px-3 py-1.5 border ${
+         tab === t ? 'bg-waxe-text text-waxe-deep border-waxe-text' : 'text-waxe-text bg-waxe-card/80 backdrop-blur-sm border-waxe-border hover:border-waxe-border-hover'
+        }`}
+       >
+        {t === 'accounts' ? 'Accounts' : 'Transactions'}
+       </button>
+      ))}
+     </div>
+    </div>
+
+    <div className="flex-1 min-h-0 overflow-y-auto p-5">
+     {/* Inline Issue Credit Form */}
+     {showIssueForm && (
+      <div className="bg-waxe-card border border-waxe-border p-4 mb-4 clip-stat">
+       <p className="text-[10px] font-medium text-waxe-text-muted mb-3">Issue Store Credit</p>
+       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+        <select
+         className="bg-waxe-deep border border-waxe-border text-sm text-waxe-text px-3 py-2 focus:outline-none focus:border-waxe-border-hover"
+         value={issueCustomer}
+         onChange={(e) => setIssueCustomer(e.target.value)}
+        >
+         <option value="">Select customer...</option>
+         {customerProfiles.map((c) => (
+          <option key={c.id} value={c.id}>{c.name}</option>
+         ))}
+        </select>
+        <input
+         type="number"
+         placeholder="Amount ($)"
+         className="bg-waxe-deep border border-waxe-border text-sm text-waxe-text px-3 py-2 focus:outline-none focus:border-waxe-border-hover"
+         value={issueAmount}
+         onChange={(e) => setIssueAmount(e.target.value)}
+        />
+        <input
+         type="text"
+         placeholder="Note (optional)"
+         className="bg-waxe-deep border border-waxe-border text-sm text-waxe-text px-3 py-2 focus:outline-none focus:border-waxe-border-hover"
+         value={issueNote}
+         onChange={(e) => setIssueNote(e.target.value)}
+        />
+       </div>
+       <div className="flex items-center gap-2 mt-3">
+        <button
+         className="btn-primary text-sm px-4 py-2"
+         onClick={() => {
+          setShowIssueForm(false)
+          setIssueCustomer('')
+          setIssueAmount('')
+          setIssueNote('')
+         }}
+        >
+         Issue Credit
+        </button>
+        <button className="btn-ghost text-sm px-3 py-2" onClick={() => setShowIssueForm(false)}>Cancel</button>
+       </div>
+      </div>
+     )}
+
+     {tab === 'accounts' ? (
+      <div className="space-y-3">
+       {creditAccounts.map((account) => {
+        const txns = getCreditTransactions(account.id)
+        return (
+         <div key={account.id} className="bg-waxe-card border border-waxe-border p-4 clip-stat">
+          <div className="flex items-start justify-between mb-2">
+           <div>
+            <div className="flex items-center gap-2">
+             <p className="text-sm font-medium text-waxe-text">{account.customerName}</p>
+             <StatusBadge status={account.status} />
+            </div>
+            <p className="text-xs text-waxe-text-muted mt-0.5">Since {account.createdAt} · Last activity {account.lastActivity}</p>
+           </div>
+           <div className="text-right">
+            <p className="text-xs text-waxe-text-muted">Balance</p>
+            <p className="text-lg font-bold font-mono text-waxe-text">${account.balance.toFixed(2)}</p>
+           </div>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-xs text-waxe-text-muted">
+           <div>Total Issued: <strong className="text-waxe-text font-mono">${account.totalIssued.toFixed(2)}</strong></div>
+           <div>Total Redeemed: <strong className="text-waxe-text font-mono">${account.totalRedeemed.toFixed(2)}</strong></div>
+           <div>Transactions: <strong className="text-waxe-text">{txns.length}</strong></div>
+           <div>Status: <strong className="text-waxe-text">{account.status}</strong></div>
+          </div>
+          <div className="flex gap-2 mt-3">
+           <button className="btn-ghost text-[11px] px-2 py-1" onClick={() => setTab('transactions')}>View Transactions</button>
+           <button className="btn-ghost text-[11px] px-2 py-1">Adjust Balance</button>
+          </div>
+         </div>
+        )
+       })}
+      </div>
+     ) : (
+      <DataTable headers={['Date', 'Customer', 'Type', 'Amount', 'Balance', 'Note', 'By']}>
+       {creditTransactions.map((tx) => (
+        <tr key={tx.id} className="table-row hover:bg-waxe-surface/30">
+         <td className="px-4 py-3 text-sm text-waxe-text whitespace-nowrap">{tx.createdAt}</td>
+         <td className="px-4 py-3 text-sm text-waxe-text">{tx.customerName}</td>
+         <td className="px-4 py-3"><StatusBadge status={tx.type} /></td>
+         <td className="px-4 py-3 text-sm font-medium font-mono">
+          <span className={tx.amount >= 0 ? 'text-waxe-positive' : 'text-waxe-negative'}>
+           {tx.amount >= 0 ? '+' : ''}{tx.amount.toFixed(2)}
+          </span>
+         </td>
+         <td className="px-4 py-3 text-sm font-mono text-waxe-text">${tx.balanceAfter.toFixed(2)}</td>
+         <td className="px-4 py-3 text-xs text-waxe-text-secondary max-w-[200px] truncate">{tx.note}</td>
+         <td className="px-4 py-3 text-xs text-waxe-text-muted whitespace-nowrap">{tx.issuedBy}</td>
+        </tr>
+       ))}
+      </DataTable>
      )}
     </div>
    </div>

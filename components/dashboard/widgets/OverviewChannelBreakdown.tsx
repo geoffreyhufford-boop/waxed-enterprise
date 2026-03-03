@@ -6,7 +6,7 @@ const channelBreakdown = [
   { channel: 'Online (Storefront)', revenue: 6240, percentage: 44, color: '#E8E0D8' },
   { channel: 'In-Store (POS)', revenue: 4980, percentage: 35, color: '#5A4D70' },
   { channel: 'Discogs', revenue: 2150, percentage: 15, color: '#7B6FA0' },
-  { channel: 'Other', revenue: 860, percentage: 6, color: '#E8837C' },
+  { channel: 'Other', revenue: 860, percentage: 6, color: '#E87B35' },
 ]
 
 export default function OverviewChannelBreakdown() {

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { DashboardHeader, StatusBadge, ShelfCard } from '@/components/dashboard'
-import { shelves, storefrontConfig, inventoryRecords } from '@/lib/dashboard-data'
+import { shelves, storefrontConfig, inventoryRecords, type StorefrontSocialLinks } from '@/lib/dashboard-data'
 
 const artworkMap = Object.fromEntries(inventoryRecords.map(r => [r.id, r.artworkUrl]))
 const recordMap = Object.fromEntries(inventoryRecords.map(r => [r.id, r]))
@@ -27,9 +27,20 @@ const marqueeItems3 = [
  { text: 'Subscribe', icon: '', sep: '→' },
 ]
 
+const socialPlatforms: { key: keyof StorefrontSocialLinks; label: string; icon: string }[] = [
+ { key: 'instagram', label: 'Instagram', icon: '◎' },
+ { key: 'twitter', label: 'X / Twitter', icon: '𝕏' },
+ { key: 'tiktok', label: 'TikTok', icon: '♪' },
+ { key: 'facebook', label: 'Facebook', icon: 'f' },
+ { key: 'youtube', label: 'YouTube', icon: '▶' },
+ { key: 'bandcamp', label: 'Bandcamp', icon: '◆' },
+]
+
 export default function StorefrontPage() {
  const [selectedShelf, setSelectedShelf] = useState(0)
  const activeShelf = shelves[selectedShelf]
+ const [socialLinks, setSocialLinks] = useState(storefrontConfig.socialLinks)
+ const activeSocials = socialPlatforms.filter((p) => socialLinks[p.key])
 
  return (
   <div className="flex flex-col flex-1 min-h-0">
@@ -75,6 +86,9 @@ export default function StorefrontPage() {
         {storefrontConfig.logoText}
        </div>
        <div className="flex items-center gap-3">
+        {activeSocials.map((p) => (
+         <span key={p.key} className="text-[11px] font-medium" style={{ color: '#888' }}>{p.icon}</span>
+        ))}
         <span className="text-[11px]" style={{ color: '#888' }}>♡</span>
         <span className="text-[11px]" style={{ color: '#888' }}>☰</span>
        </div>
@@ -184,6 +198,28 @@ export default function StorefrontPage() {
         ))}
        </div>
       </div>
+
+      {/* Footer */}
+      <div className="px-6 py-6 border-t" style={{ borderColor: '#E5E5E5', background: '#F9F9F9' }}>
+       <div className="flex items-center justify-between mb-4">
+        <div className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] text-white font-bold" style={{ background: storefrontConfig.accentColor }}>
+         {storefrontConfig.logoText}
+        </div>
+        {activeSocials.length > 0 && (
+         <div className="flex items-center gap-3">
+          {activeSocials.map((p) => (
+           <span key={p.key} className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold text-white" style={{ background: '#333' }}>
+            {p.icon}
+           </span>
+          ))}
+         </div>
+        )}
+       </div>
+       <div className="flex items-center justify-between">
+        <p className="text-[10px]" style={{ color: '#999' }}>{storefrontConfig.storeName}</p>
+        <p className="text-[10px]" style={{ color: '#BBB' }}>Powered by WAXED</p>
+       </div>
+      </div>
      </div>
     </div>
 
@@ -225,6 +261,67 @@ export default function StorefrontPage() {
          </div>
         </div>
        </div>
+       <div className="grid grid-cols-2 gap-3">
+        <div>
+         <label className="label-text">Logo</label>
+         <div className="border border-dashed border-waxe-border hover:border-waxe-border-hover p-3 text-center cursor-pointer transition-colors">
+          {storefrontConfig.logoUrl ? (
+           <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-waxe-surface overflow-hidden shrink-0">
+             <img src={storefrontConfig.logoUrl} alt="" className="w-full h-full object-contain" />
+            </div>
+            <button className="text-[10px] text-waxe-text-muted hover:text-waxe-text">Replace</button>
+           </div>
+          ) : (
+           <div>
+            <p className="text-xs text-waxe-text-muted mb-0.5">↑ Upload</p>
+            <p className="text-[10px] text-waxe-text-muted">PNG, SVG</p>
+           </div>
+          )}
+         </div>
+        </div>
+        <div>
+         <label className="label-text">Header Image</label>
+         <div className="border border-dashed border-waxe-border hover:border-waxe-border-hover p-3 text-center cursor-pointer transition-colors">
+          {storefrontConfig.headerImageUrl ? (
+           <div className="flex items-center gap-2">
+            <div className="w-12 h-8 bg-waxe-surface overflow-hidden shrink-0">
+             <img src={storefrontConfig.headerImageUrl} alt="" className="w-full h-full object-cover" />
+            </div>
+            <button className="text-[10px] text-waxe-text-muted hover:text-waxe-text">Replace</button>
+           </div>
+          ) : (
+           <div>
+            <p className="text-xs text-waxe-text-muted mb-0.5">↑ Upload</p>
+            <p className="text-[10px] text-waxe-text-muted">JPG, PNG</p>
+           </div>
+          )}
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+
+     {/* Social Links */}
+     <div className="bg-waxe-card border border-waxe-border p-5 clip-card">
+      <div className="flex items-center gap-2 mb-2">
+       <h2 className="text-[11px] font-semibold text-waxe-text">Social Links</h2>
+       <span className="text-[10px] text-waxe-text-muted">— auto-populates icons in header & footer</span>
+      </div>
+      <div className="hatch-divider mb-4" />
+      <div className="space-y-2">
+       {socialPlatforms.map((platform) => (
+        <div key={platform.key} className="flex items-center gap-2">
+         <span className="w-6 h-6 flex items-center justify-center text-sm text-waxe-text-muted shrink-0">{platform.icon}</span>
+         <input
+          type="text"
+          placeholder={platform.label}
+          className="input-field text-xs flex-1"
+          value={socialLinks[platform.key] || ''}
+          onChange={(e) => setSocialLinks({ ...socialLinks, [platform.key]: e.target.value || undefined })}
+         />
+        </div>
+       ))}
       </div>
      </div>
 

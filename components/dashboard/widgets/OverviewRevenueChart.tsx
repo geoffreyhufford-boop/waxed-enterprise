@@ -4,11 +4,13 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { revenueData } from '@/lib/dashboard-data'
 import { useTheme } from '@/lib/theme-context'
 import { getChartPalette } from '@/lib/chart-theme'
+import { useDashboardFilters } from '@/lib/dashboard-filter-context'
 import PinButton from '../PinButton'
 
 export default function OverviewRevenueChart() {
   const { theme } = useTheme()
   const c = getChartPalette(theme)
+  const { dateRange } = useDashboardFilters()
 
   return (
     <div className="relative bg-waxe-card border border-waxe-border p-5 flex flex-col h-[360px] clip-card-bl">
@@ -17,7 +19,7 @@ export default function OverviewRevenueChart() {
         <div className="flex items-center gap-2">
           <h2 className="text-[11px] font-semibold text-waxe-text">Revenue</h2>
           <span className="text-[11px] text-waxe-cool font-medium">→</span>
-          <p className="text-[11px] text-waxe-text-muted">Last 7 months</p>
+          <p className="text-[11px] text-waxe-text-muted">{dateRange}</p>
           <span className="hatch-inline ml-1" />
         </div>
         <div className="text-right mr-11">

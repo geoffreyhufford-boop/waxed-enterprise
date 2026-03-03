@@ -12,7 +12,7 @@ const genreColors: Record<string, string> = {
   House: '#4A9A62',
   Ambient: '#6A5D80',
   Techno: '#0D0B14',
-  Disco: '#E8837C',
+  Disco: '#E87B35',
   'R&B': '#7B6FA0',
   Soul: '#C04040',
   Electronic: '#3D3050',

@@ -1,6 +1,7 @@
 'use client'
 
 import PinButton from '../PinButton'
+import { useDashboardFilters } from '@/lib/dashboard-filter-context'
 
 const topSellers = [
   { artist: 'Aphex Twin', title: 'Selected Ambient Works 85-92', sold: 14, revenue: 1190, genre: 'Ambient', artwork: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/5f/b3/e0/5fb3e08d-c2cd-3da4-6ad7-c5dc61803683/cover.jpg/300x300bb.jpg' },
@@ -11,12 +12,13 @@ const topSellers = [
 ]
 
 export default function OverviewTopSellers() {
+  const { dateRange } = useDashboardFilters()
   return (
     <div className="relative bg-waxe-card border border-waxe-border p-5 flex flex-col h-[360px] clip-card-bl">
       <PinButton widgetId="overview-top-sellers" />
       <div className="flex items-center justify-between mb-2 shrink-0">
         <div className="flex items-center gap-2">
-          <h2 className="text-[11px] font-semibold text-waxe-text">Top Sellers → This Month</h2>
+          <h2 className="text-[11px] font-semibold text-waxe-text">Top Sellers → {dateRange}</h2>
           <span className="hatch-inline" />
         </div>
         <span className="text-[11px] text-waxe-text-muted mr-11">by units sold</span>

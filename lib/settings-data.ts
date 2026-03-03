@@ -22,7 +22,7 @@ export interface AuditLogEntry {
   userId: string
   userName: string
   action: string
-  category: 'inventory' | 'orders' | 'settings' | 'pricing' | 'customers'
+  category: 'inventory' | 'orders' | 'settings' | 'pricing' | 'customers' | 'store_credit'
   timestamp: string
   details?: string
 }
@@ -94,6 +94,7 @@ export const rolePermissions: RolePermission[] = [
   { feature: 'View Analytics', owner: true, manager: true, cashier: false },
   { feature: 'Export Data', owner: true, manager: true, cashier: false },
   { feature: 'Manage Discounts', owner: true, manager: true, cashier: false },
+  { feature: 'Manage Store Credit', owner: true, manager: true, cashier: false },
   { feature: 'Manage Staff', owner: true, manager: false, cashier: false },
   { feature: 'Manage Customers', owner: true, manager: true, cashier: true },
   { feature: 'Process POS Sales', owner: true, manager: true, cashier: true },
@@ -160,6 +161,24 @@ export const auditLog: AuditLogEntry[] = [
     action: 'Updated customer tier — Alex Chen → VIP',
     category: 'customers',
     timestamp: '2025-02-19 14:12',
+  },
+  {
+    id: 'log-009',
+    userId: 'staff-001',
+    userName: 'Jordan Reeves',
+    action: 'Issued $207.99 store credit to James Rodriguez',
+    category: 'store_credit',
+    timestamp: '2025-02-15 11:30',
+    details: 'Refund to credit — order ORD-0241 (wrong pressing shipped)',
+  },
+  {
+    id: 'log-010',
+    userId: 'staff-002',
+    userName: 'Maya Chen',
+    action: 'Issued $15.00 store credit to Lena Kowalski',
+    category: 'store_credit',
+    timestamp: '2025-02-25 16:45',
+    details: 'Courtesy credit — shipping delay on ORD-0244',
   },
   {
     id: 'log-008',

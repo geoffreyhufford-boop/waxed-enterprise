@@ -59,6 +59,12 @@ const statusStyles: Record<string, string> = {
   // Consignment statuses
   consigned: 'bg-waxe-cool text-waxe-deep',
   returned: 'bg-waxe-surface text-waxe-text-muted',
+  // Store credit statuses
+  issued: 'bg-waxe-positive text-waxe-deep',
+  redeemed: 'bg-waxe-cool text-waxe-deep',
+  adjustment: 'bg-waxe-surface text-waxe-text',
+  frozen: 'bg-waxe-negative/20 text-waxe-negative',
+  store_credit: 'bg-waxe-warm/20 text-waxe-warm',
 }
 
 interface StatusBadgeProps {

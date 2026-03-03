@@ -423,7 +423,7 @@ function InboundPackRequestCard({ request }: { request: InboundPackRequest }) {
 
 const genreColors: Record<string, string> = {
  Jazz: '#2D2540', House: '#4A9A62', Ambient: '#5A4D70', Techno: '#0D0B14',
- Disco: '#E8837C', 'R&B': '#7B6FA0', Soul: '#C04040', Electronic: '#2D2540',
+ Disco: '#E87B35', 'R&B': '#7B6FA0', Soul: '#C04040', Electronic: '#2D2540',
  Funk: '#7B6FA0', Garage: '#4A9A62',
 }
 
@@ -626,7 +626,7 @@ export default function MarketplacePage() {
     </div>
 
     {/* Stats Row */}
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4 p-2 -m-2">
      <StatCard label="Stores in Network" value="47" trend="+6 this month" trendUp={true} />
      <StatCard label="Aged Inventory" value={String(deadStockItems.filter(d => d.daysInStock >= 60).length)} trend="60+ days sitting" trendUp={false} />
      <StatCard label="Inbound Requests" value={String(pendingRequests.length)} trend={`${inboundPackRequests.length} total`} trendUp={pendingRequests.length > 0} />

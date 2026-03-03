@@ -118,7 +118,7 @@ export default function SettingsPage() {
       <div className="flex flex-wrap items-center gap-2 mb-4">
        <div className="flex items-center gap-1.5">
         <span className="text-[10px] font-medium text-waxe-text-muted">Category:</span>
-        {['All', 'inventory', 'orders', 'settings', 'pricing', 'customers'].map((cat) => (
+        {['All', 'inventory', 'orders', 'settings', 'pricing', 'customers', 'store_credit'].map((cat) => (
          <button
           key={cat}
           onClick={() => setCategoryFilter(cat)}

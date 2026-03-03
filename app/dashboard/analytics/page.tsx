@@ -11,6 +11,7 @@ import {
  priceHistoryData, priceIntelSummary, channelFeeStructures,
 } from '@/lib/dashboard-data'
 import { deadStockItems, wantListItems } from '@/lib/restock-data'
+import { DashboardFilterProvider } from '@/lib/dashboard-filter-context'
 
 const chartTooltipStyle = {
  contentStyle: { background: '#141020', border: '1px solid #2D2540', borderRadius: '12px', fontSize: '10px', fontFamily: 'var(--font-mono)' },
@@ -22,6 +23,7 @@ export default function AnalyticsPage() {
  const [dateRange, setDateRange] = useState('Last 7 Months')
 
  return (
+  <DashboardFilterProvider dateRange={dateRange}>
   <div className="flex flex-col flex-1 min-h-0">
    <DashboardHeader
     title="Analytics"
@@ -35,7 +37,7 @@ export default function AnalyticsPage() {
    />
 
    {/* Stats Row */}
-   <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+   <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4 p-2 -m-2">
     <StatCard label="Revenue (MTD)" value="$14,230" trend="+18%" trendUp={true} />
     <StatCard label="Margin" value="46%" trend="+1%" trendUp={true} />
     <StatCard label="Avg Order Value" value="$76.50" trend="+$4.20" trendUp={true} />
@@ -62,7 +64,7 @@ export default function AnalyticsPage() {
            <Legend iconType="plainline" wrapperStyle={{ fontSize: '10px', fontFamily: 'var(--font-mono)', paddingTop: '8px' }} />
            <Bar dataKey="discogs" fill="#6A6090" name="Discogs" radius={[2, 2, 0, 0]} />
            <Bar dataKey="storefront" fill="#7B6FA0" name="Storefront" radius={[2, 2, 0, 0]} />
-           <Bar dataKey="pos" fill="#E8837C" name="POS" radius={[2, 2, 0, 0]} />
+           <Bar dataKey="pos" fill="#E87B35" name="POS" radius={[2, 2, 0, 0]} />
           </BarChart>
          )
         })()}
@@ -75,7 +77,7 @@ export default function AnalyticsPage() {
          <YAxis tick={{ fill: '#6A5D80', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
          <Tooltip {...chartTooltipStyle} formatter={(value, name) => [`$${Number(value).toLocaleString()}`, name === 'margin' ? 'Margin' : name === 'cost' ? 'COGS' : String(name)]} />
          <Bar dataKey="cost" stackId="1" fill="#3D3050" name="COGS" radius={[0, 0, 0, 0]} />
-         <Bar dataKey="margin" stackId="1" fill="#E8837C" name="Margin" radius={[2, 2, 0, 0]} />
+         <Bar dataKey="margin" stackId="1" fill="#E87B35" name="Margin" radius={[2, 2, 0, 0]} />
         </BarChart>
        </ChartCard>
       </div>
@@ -110,7 +112,7 @@ export default function AnalyticsPage() {
          {[
           { name: 'Discogs', pct: 43, color: '#6A6090' },
           { name: 'Storefront', pct: 33, color: '#7B6FA0' },
-          { name: 'In-store', pct: 24, color: '#E8837C' },
+          { name: 'In-store', pct: 24, color: '#E87B35' },
          ].map((ch) => (
           <div key={ch.name} className="flex items-center gap-2">
            <div className="w-2 h-2 shrink-0" style={{ backgroundColor: ch.color }} />
@@ -152,7 +154,7 @@ export default function AnalyticsPage() {
          <Tooltip {...chartTooltipStyle} formatter={(value) => [`$${value}`, '']} />
          <Legend iconType="plainline" wrapperStyle={{ fontSize: '10px', fontFamily: 'var(--font-mono)', paddingTop: '8px' }} />
          <Bar dataKey="yourPrice" fill="#6A6090" barSize={6} name="Your Price" radius={[0, 2, 2, 0]} />
-         <Bar dataKey="discogsMedian" fill="#E8837C" barSize={6} name="Discogs Median" radius={[0, 2, 2, 0]} />
+         <Bar dataKey="discogsMedian" fill="#E87B35" barSize={6} name="Discogs Median" radius={[0, 2, 2, 0]} />
         </BarChart>
        </ChartCard>
       </div>
@@ -219,7 +221,7 @@ export default function AnalyticsPage() {
          <XAxis dataKey="week" tick={{ fill: '#6A5D80', fontSize: 11 }} axisLine={false} tickLine={false} />
          <YAxis tick={{ fill: '#6A5D80', fontSize: 11 }} axisLine={false} tickLine={false} />
          <Tooltip {...chartTooltipStyle} />
-         <Bar dataKey="sold" fill="#E8837C" radius={[2, 2, 0, 0]} name="Sold" />
+         <Bar dataKey="sold" fill="#E87B35" radius={[2, 2, 0, 0]} name="Sold" />
          <Bar dataKey="added" fill="#6A6090" radius={[2, 2, 0, 0]} name="Added" />
         </BarChart>
        </ChartCard>
@@ -363,8 +365,8 @@ export default function AnalyticsPage() {
         <AreaChart data={priceHistoryData}>
          <defs>
           <linearGradient id="analyticsStoreGrad" x1="0" y1="0" x2="0" y2="1">
-           <stop offset="5%" stopColor="#E8837C" stopOpacity={0.4} />
-           <stop offset="95%" stopColor="#E8837C" stopOpacity={0.05} />
+           <stop offset="5%" stopColor="#E87B35" stopOpacity={0.4} />
+           <stop offset="95%" stopColor="#E87B35" stopOpacity={0.05} />
           </linearGradient>
           <linearGradient id="analyticsDiscogsGrad" x1="0" y1="0" x2="0" y2="1">
            <stop offset="5%" stopColor="#6A6090" stopOpacity={0.3} />
@@ -380,7 +382,7 @@ export default function AnalyticsPage() {
          <YAxis tick={{ fill: '#6A5D80', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}`} domain={['dataMin - 5', 'dataMax + 5']} />
          <Tooltip {...chartTooltipStyle} formatter={(value) => [`$${Number(value)}`, '']} />
          <Legend iconType="plainline" wrapperStyle={{ fontSize: '10px', fontFamily: 'var(--font-mono)', paddingTop: '8px' }} />
-         <Area type="monotone" dataKey="storeAvg" stroke="#E8837C" fill="url(#analyticsStoreGrad)" strokeWidth={2.5} name="Your Store" />
+         <Area type="monotone" dataKey="storeAvg" stroke="#E87B35" fill="url(#analyticsStoreGrad)" strokeWidth={2.5} name="Your Store" />
          <Area type="monotone" dataKey="discogsAvg" stroke="#6A6090" fill="url(#analyticsDiscogsGrad)" strokeWidth={2} name="Discogs Median" />
          <Area type="monotone" dataKey="suggestedAvg" stroke="#4A9A62" fill="url(#analyticsSuggestedGrad)" strokeWidth={2} name="Suggested" />
         </AreaChart>
@@ -435,5 +437,6 @@ export default function AnalyticsPage() {
    </div>
 
   </div>
+  </DashboardFilterProvider>
  )
 }

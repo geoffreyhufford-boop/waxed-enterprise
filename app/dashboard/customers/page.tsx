@@ -3,11 +3,16 @@
 import { useState, useMemo } from 'react'
 import { DashboardHeader, StatCard, StatusBadge } from '@/components/dashboard'
 import { customerProfiles, type CustomerProfile } from '@/lib/customer-data'
+import { getCreditAccount, getCreditTransactions } from '@/lib/store-credit-data'
+import { discountRules } from '@/lib/settings-data'
 
 export default function CustomersPage() {
  const [search, setSearch] = useState('')
  const [tierFilter, setTierFilter] = useState<string>('All')
  const [selectedCustomer, setSelectedCustomer] = useState<CustomerProfile>(customerProfiles[0])
+ const [showIssueCredit, setShowIssueCredit] = useState(false)
+ const [issueCreditAmount, setIssueCreditAmount] = useState('')
+ const [issueCreditNote, setIssueCreditNote] = useState('')
 
  const filtered = useMemo(() =>
   customerProfiles.filter((c) => {
@@ -32,7 +37,7 @@ export default function CustomersPage() {
    />
 
    {/* Stats Row */}
-   <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+   <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4 p-2 -m-2">
     <StatCard label="Total Customers" value={String(customerProfiles.length)} />
     <StatCard label="VIP Customers" value={String(vipCount)} />
     <StatCard label="Total Revenue" value={`$${totalRevenue.toLocaleString()}`} />
@@ -149,6 +154,84 @@ export default function CustomersPage() {
        </div>
       </div>
 
+      {/* Store Credit */}
+      {(() => {
+       const creditAccount = getCreditAccount(selectedCustomer.id)
+       const recentTxns = creditAccount ? getCreditTransactions(creditAccount.id).slice(-3).reverse() : []
+       return (
+        <div className="bg-waxe-surface/30 p-4">
+         <p className="text-[10px] font-medium text-waxe-text-muted mb-3">Store Credit</p>
+         {creditAccount ? (
+          <div>
+           <div className="grid grid-cols-3 gap-4 mb-3">
+            <div>
+             <p className="text-xs text-waxe-text-muted mb-0.5">Balance</p>
+             <p className="text-xl font-bold text-waxe-text font-mono">${creditAccount.balance.toFixed(2)}</p>
+            </div>
+            <div>
+             <p className="text-xs text-waxe-text-muted mb-0.5">Total Issued</p>
+             <p className="text-sm font-medium text-waxe-text font-mono">${creditAccount.totalIssued.toFixed(2)}</p>
+            </div>
+            <div>
+             <p className="text-xs text-waxe-text-muted mb-0.5">Total Redeemed</p>
+             <p className="text-sm font-medium text-waxe-text font-mono">${creditAccount.totalRedeemed.toFixed(2)}</p>
+            </div>
+           </div>
+           {recentTxns.length > 0 && (
+            <div className="border-t border-waxe-border/30 pt-3">
+             <p className="text-[10px] text-waxe-text-muted mb-2">Recent Transactions</p>
+             <div className="space-y-1.5">
+              {recentTxns.map((tx) => (
+               <div key={tx.id} className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                 <StatusBadge status={tx.type} />
+                 <span className="text-waxe-text-secondary truncate max-w-[200px]">{tx.note}</span>
+                </div>
+                <span className={`font-mono font-medium ${tx.amount >= 0 ? 'text-waxe-positive' : 'text-waxe-negative'}`}>
+                 {tx.amount >= 0 ? '+' : ''}{tx.amount.toFixed(2)}
+                </span>
+               </div>
+              ))}
+             </div>
+            </div>
+           )}
+           <button className="btn-ghost text-[11px] px-2 py-1 mt-3" onClick={() => setShowIssueCredit(true)}>+ Issue More Credit</button>
+          </div>
+         ) : (
+          <div className="flex items-center justify-between">
+           <p className="text-sm text-waxe-text-muted">No store credit account</p>
+           <button className="btn-ghost text-[11px] px-2 py-1" onClick={() => setShowIssueCredit(true)}>Issue Credit</button>
+          </div>
+         )}
+        </div>
+       )
+      })()}
+
+      {/* Applicable Discounts */}
+      {(() => {
+       const applicable = discountRules.filter((d) => {
+        if (!d.active) return false
+        if (d.type === 'customer_tier' && d.customerTier !== selectedCustomer.tier) return false
+        return true
+       })
+       return applicable.length > 0 ? (
+        <div className="bg-waxe-surface/30 p-4">
+         <p className="text-[10px] font-medium text-waxe-text-muted mb-3">Active Discounts ({applicable.length})</p>
+         <div className="space-y-2">
+          {applicable.map((rule) => (
+           <div key={rule.id} className="flex items-center justify-between py-1.5">
+            <div className="flex items-center gap-2">
+             <StatusBadge status={rule.type} />
+             <span className="text-sm text-waxe-text">{rule.name}</span>
+            </div>
+            <span className="text-sm font-semibold font-mono text-waxe-positive">{rule.value}% off</span>
+           </div>
+          ))}
+         </div>
+        </div>
+       ) : null
+      })()}
+
       {/* Want List */}
       <div className="bg-waxe-surface/30 p-4">
        <p className="text-[10px] font-medium text-waxe-text-muted mb-3">
@@ -187,6 +270,48 @@ export default function CustomersPage() {
      </div>
     </div>
    </div>
+
+   {/* ─── Issue Credit Dialog ─── */}
+   {showIssueCredit && (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center">
+     <div className="absolute inset-0 bg-waxe-text/50" onClick={() => setShowIssueCredit(false)} />
+     <div className="relative w-full max-w-sm bg-waxe-base border border-waxe-border shadow-xl p-6">
+      <h3 className="text-lg font-semibold text-waxe-text mb-1">Issue Store Credit</h3>
+      <p className="text-sm text-waxe-text-secondary mb-4">Credit for {selectedCustomer.name}</p>
+      <div className="space-y-3">
+       <div>
+        <label className="text-xs text-waxe-text-muted mb-1 block">Amount</label>
+        <input
+         type="number"
+         placeholder="0.00"
+         className="w-full bg-waxe-deep border border-waxe-border text-sm text-waxe-text px-3 py-2 focus:outline-none focus:border-waxe-border-hover font-mono"
+         value={issueCreditAmount}
+         onChange={(e) => setIssueCreditAmount(e.target.value)}
+        />
+       </div>
+       <div>
+        <label className="text-xs text-waxe-text-muted mb-1 block">Note</label>
+        <input
+         type="text"
+         placeholder="Reason for credit..."
+         className="w-full bg-waxe-deep border border-waxe-border text-sm text-waxe-text px-3 py-2 focus:outline-none focus:border-waxe-border-hover"
+         value={issueCreditNote}
+         onChange={(e) => setIssueCreditNote(e.target.value)}
+        />
+       </div>
+      </div>
+      <div className="flex items-center justify-end gap-3 mt-5">
+       <button className="btn-secondary text-sm px-4 py-2" onClick={() => { setShowIssueCredit(false); setIssueCreditAmount(''); setIssueCreditNote('') }}>Cancel</button>
+       <button
+        className="btn-primary text-sm px-4 py-2"
+        onClick={() => { setShowIssueCredit(false); setIssueCreditAmount(''); setIssueCreditNote('') }}
+       >
+        Issue Credit
+       </button>
+      </div>
+     </div>
+    </div>
+   )}
   </div>
  )
 }
