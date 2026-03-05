@@ -45,7 +45,6 @@ const statusStyles: Record<string, string> = {
   customer_tier: 'bg-waxe-cool text-waxe-deep',
   volume: 'bg-waxe-surface text-waxe-text',
   // PO statuses
-  delivered: 'bg-waxe-text text-waxe-deep',
   partially_received: 'bg-waxe-warm text-waxe-text',
   received: 'bg-waxe-positive text-waxe-deep',
   closed: 'bg-waxe-surface text-waxe-text-muted',
