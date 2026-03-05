@@ -7,7 +7,9 @@ const statusStyles: Record<string, string> = {
   beta: 'bg-waxe-surface text-waxe-text-muted',
   pending: 'bg-waxe-surface text-waxe-text-muted',
   reserved: 'bg-waxe-warm text-waxe-text',
+  on_hold: 'bg-waxe-warm text-waxe-text',
   sold: 'bg-waxe-negative text-waxe-deep',
+  sold_out: 'bg-waxe-negative text-waxe-deep',
   accepted: 'bg-waxe-positive text-waxe-deep',
   declined: 'bg-waxe-negative text-waxe-deep',
   countered: 'bg-waxe-warm text-waxe-text',
@@ -43,7 +45,7 @@ const statusStyles: Record<string, string> = {
   customer_tier: 'bg-waxe-cool text-waxe-deep',
   volume: 'bg-waxe-surface text-waxe-text',
   // PO statuses
-  sent: 'bg-waxe-text text-waxe-deep',
+  delivered: 'bg-waxe-text text-waxe-deep',
   partially_received: 'bg-waxe-warm text-waxe-text',
   received: 'bg-waxe-positive text-waxe-deep',
   closed: 'bg-waxe-surface text-waxe-text-muted',

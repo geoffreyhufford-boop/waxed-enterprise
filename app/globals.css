@@ -116,6 +116,50 @@
   --color-boot-logo-filter: none;
 }
 
+/* ── Dark Mode (Anthracite Ivory) ── */
+:root.dark {
+  --color-waxe-deep: #1A1916;
+  --color-waxe-base: #1E1D1A;
+  --color-waxe-surface: #28271F;
+  --color-waxe-card: #232220;
+  --color-waxe-card-solid: #232220;
+  --color-waxe-sidebar: #161512;
+  --color-waxe-border: #3A382E;
+  --color-waxe-border-hover: #4A483E;
+  --color-waxe-text: #E8E0D8;
+  --color-waxe-text-secondary: #A89E90;
+  --color-waxe-text-muted: #706858;
+  --color-waxe-warm: #E87B35;
+  --color-waxe-warm-hover: #D06A28;
+  --color-waxe-cool: #8A7EB0;
+  --color-waxe-cool-muted: #2A2838;
+  --color-waxe-positive: #22C55E;
+  --color-waxe-negative: #EF4444;
+  --color-waxed-black: #E8E0D8;
+  --color-waxed-dark: #1A1916;
+  --color-waxed-card: #232220;
+  --color-waxed-border: #3A382E;
+  --color-waxed-text: #E8E0D8;
+  --color-waxed-text-secondary: #A89E90;
+  --color-waxed-text-muted: #706858;
+  --color-waxed-olive: #3A382E;
+  --color-waxed-olive-hover: #4A483E;
+  --color-waxed-olive-muted: #706858;
+  --color-waxed-active: #E87B35;
+
+  --color-boot-bg: #1A1916;
+  --color-boot-panel: #232220;
+  --color-boot-border: #3A382E;
+  --color-boot-border-active: #22C55E;
+  --color-boot-text: #E8E0D8;
+  --color-boot-text-muted: #706858;
+  --color-boot-accent: #22C55E;
+  --color-boot-positive: #22C55E;
+  --color-boot-scanline: transparent;
+  --color-boot-hatch: transparent;
+  --color-boot-logo-filter: none;
+}
+
 /* ── Retro Mode (NERV MAGI System) ── */
 :root.retro {
   /* Dark void with faint blue cast */
@@ -715,6 +759,85 @@
     background: var(--color-waxe-warm);
     color: white;
     box-shadow: 4px 4px 8px #ccc9c3, -4px -4px 8px #ffffff;
+  }
+
+  /* ── Dark Mode Neumorphic Overrides ── */
+  :root.dark .card,
+  :root.dark .value-card {
+    border: none;
+    background: var(--color-waxe-card);
+    backdrop-filter: none;
+  }
+
+  :root.dark .stat-card {
+    border: none;
+    background: var(--color-waxe-card);
+    backdrop-filter: none;
+  }
+
+  :root.dark .btn-primary {
+    box-shadow: 4px 4px 8px #0e0d0b, -4px -4px 8px #2a2926;
+  }
+
+  :root.dark .btn-primary:hover {
+    box-shadow: 2px 2px 4px #0e0d0b, -2px -2px 4px #2a2926;
+  }
+
+  :root.dark .btn-secondary {
+    background: var(--color-waxe-surface);
+    border: none;
+    box-shadow: 4px 4px 8px #0e0d0b, -4px -4px 8px #2a2926;
+  }
+
+  :root.dark .btn-secondary:hover {
+    box-shadow: 2px 2px 4px #0e0d0b, -2px -2px 4px #2a2926;
+  }
+
+  :root.dark .input-field {
+    border: none;
+    background: var(--color-waxe-surface);
+    box-shadow: inset 3px 3px 6px #0e0d0b, inset -3px -3px 6px #2a2926;
+  }
+
+  :root.dark .pill {
+    border: none;
+    background: var(--color-waxe-card);
+    box-shadow: 3px 3px 6px #0e0d0b, -3px -3px 6px #2a2926;
+  }
+
+  :root.dark .pill-active {
+    color: var(--color-waxe-warm);
+    box-shadow: inset 2px 2px 4px #0e0d0b, inset -2px -2px 4px #2a2926;
+  }
+
+  :root.dark .nav-item-active {
+    background: var(--color-waxe-surface);
+    color: var(--color-waxe-warm);
+    box-shadow: inset 3px 3px 6px #0e0d0b, inset -3px -3px 6px #2a2926;
+  }
+
+  :root.dark .nav-item-active .glyph-box {
+    color: var(--color-waxe-warm);
+  }
+
+  :root.dark .message-inbound {
+    border: none;
+    background: var(--color-waxe-surface);
+    box-shadow: 4px 4px 8px #0e0d0b, -4px -4px 8px #2a2926;
+  }
+
+  :root.dark .message-outbound {
+    border: none;
+    background: var(--color-waxe-warm);
+    color: white;
+    box-shadow: 4px 4px 8px #0e0d0b, -4px -4px 8px #2a2926;
+  }
+
+  :root.dark .boot-blob-1,
+  :root.dark .boot-blob-2,
+  :root.dark .boot-blob-3,
+  :root.dark .boot-blob-4 {
+    opacity: 0.4;
   }
 
   /* ── Form Elements ── */
@@ -1543,3 +1666,129 @@
   .print-target, .print-target * { visibility: visible; }
   .print-target { position: absolute; left: 0; top: 0; width: 100%; }
 }
+
+/* ── Launchpad App Icons ── */
+
+.launchpad-icon {
+  border-radius: var(--radius-xl);
+  border: none;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+:root.light .launchpad-icon {
+  box-shadow:
+    8px 8px 16px #c8c5be,
+    -8px -8px 16px #ffffff;
+}
+
+:root.light .launchpad-icon:hover {
+  box-shadow:
+    4px 4px 8px #c8c5be,
+    -4px -4px 8px #ffffff;
+  transform: scale(0.97);
+}
+
+:root.light .launchpad-icon:active {
+  box-shadow:
+    inset 4px 4px 8px #c8c5be,
+    inset -4px -4px 8px #ffffff;
+  transform: scale(0.94);
+}
+
+:root.dark .launchpad-icon {
+  box-shadow:
+    8px 8px 16px #0e0d0b,
+    -8px -8px 16px #2e2d28;
+}
+
+:root.dark .launchpad-icon:hover {
+  box-shadow:
+    4px 4px 8px #0e0d0b,
+    -4px -4px 8px #2e2d28;
+  transform: scale(0.97);
+}
+
+:root.dark .launchpad-icon:active {
+  box-shadow:
+    inset 4px 4px 8px #0e0d0b,
+    inset -4px -4px 8px #2e2d28;
+  transform: scale(0.94);
+}
+
+:root.retro .launchpad-icon {
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  border: 1px solid var(--color-waxe-border);
+  box-shadow: none;
+}
+
+:root.retro .launchpad-icon:hover {
+  box-shadow: 0 0 16px rgba(58, 90, 124, 0.35);
+  transform: scale(0.97);
+}
+
+:root.retro .launchpad-icon:active {
+  box-shadow: inset 0 0 12px rgba(58, 90, 124, 0.3);
+  transform: scale(0.94);
+}
+
+/* ── Dock ── */
+
+.launchpad-dock {
+  border-radius: var(--radius-xl);
+}
+
+:root.light .launchpad-dock {
+  box-shadow:
+    0 -4px 20px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+:root.dark .launchpad-dock {
+  box-shadow:
+    0 -4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+:root.retro .launchpad-dock {
+  border-radius: 0;
+  clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%, 0 12px);
+  backdrop-filter: none;
+  background: var(--color-waxe-card) !important;
+  border: 1px solid var(--color-waxe-border);
+  box-shadow: 0 0 20px rgba(58, 90, 124, 0.2);
+}
+
+/* ── Intelligence Tab ── */
+
+.intel-card {
+  background: var(--color-waxe-card);
+  border: 1px solid var(--color-waxe-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  box-shadow: var(--shadow-card, none);
+}
+
+/* Intelligence nav item pulse dot */
+.intel-nav-item::after {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-waxe-warm);
+  margin-left: auto;
+  opacity: 0.6;
+  animation: intel-pulse 2s ease-in-out infinite;
+}
+
+@keyframes intel-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+:root.retro .intel-card {
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+}
+
+:root.retro .intel-nav-item::after { background: var(--color-waxe-cool); }

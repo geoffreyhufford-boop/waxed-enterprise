@@ -30,13 +30,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className="light" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
         <script dangerouslySetInnerHTML={{ __html: `
-          (function(){localStorage.removeItem('waxe-theme');document.documentElement.className='dark'})()
+          (function(){var t=localStorage.getItem('waxe-theme');if(t==='light'||t==='dark'||t==='retro'){document.documentElement.className=t}else{document.documentElement.className='light'}})()
         `}} />
       </head>
       <body className="min-h-screen">

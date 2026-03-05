@@ -4,19 +4,34 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from '@/lib/theme-context'
+import { useIntelligence } from '@/lib/intelligence-context'
 
-const navItems = [
-  { href: '/dashboard', label: 'Overview', icon: '★' },
-  { href: '/dashboard/orders', label: 'Sales Orders', icon: '▦' },
-  { href: '/dashboard/inventory', label: 'Inventory', icon: '▤' },
-  { href: '/dashboard/pos', label: 'POS', icon: '◉' },
-  { href: '/dashboard/customers', label: 'Customers', icon: '◎' },
-  { href: '/dashboard/analytics', label: 'Analytics', icon: '◈' },
-  { href: '/dashboard/storefront', label: 'Storefront', icon: '◫' },
-  { href: '/dashboard/marketplace', label: 'Marketplace', icon: '◆' },
-  { href: '/dashboard/messages', label: 'Messages', icon: '◻' },
-  { href: '/dashboard/settings', label: 'Settings', icon: '⚙' },
+const topNavItems = [
+  { href: '/dashboard', label: 'Overview', icon: '\u25C8' },
+  { href: '/dashboard/sales', label: 'Orders', icon: '\u25A6' },
+  { href: '/dashboard/inventory', label: 'Inventory', icon: '\u25A4' },
+  { href: '/dashboard/customers', label: 'Customers', icon: '\u25CE' },
 ]
+
+const bottomNavItems = [
+  { href: '/dashboard/storefront', label: 'Storefront', icon: '\u25A3' },
+  { href: '/dashboard/marketplace', label: 'Marketplace', icon: '\u25C6' },
+  { href: '/dashboard/messages', label: 'Messages', icon: '\u25C7' },
+]
+
+function IntelButton() {
+  const { active, toggle } = useIntelligence()
+
+  return (
+    <button
+      onClick={toggle}
+      className={`${active ? 'nav-item-active' : 'nav-item'} intel-nav-item w-full`}
+    >
+      <span className="glyph-box">{'\u{1F916}'}</span>
+      <span>Assistant</span>
+    </button>
+  )
+}
 
 export default function Sidebar() {
   const pathname = usePathname()
@@ -39,7 +54,7 @@ export default function Sidebar() {
       <div className="hatch-divider" />
       <div className="flex-1 py-2 px-2 flex flex-col">
         <div className="space-y-0.5 mt-1">
-          {navItems.map((item) => (
+          {topNavItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -52,6 +67,30 @@ export default function Sidebar() {
           ))}
         </div>
       </div>
+      <div className="px-2 pb-1 space-y-0.5">
+        {bottomNavItems.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={() => setMobileOpen(false)}
+            className={isActive(item.href) ? 'nav-item-active' : 'nav-item'}
+          >
+            <span className="glyph-box">{item.icon}</span>
+            <span>{item.label}</span>
+          </Link>
+        ))}
+        <div className="my-1" />
+        <IntelButton />
+        <Link
+          href="/dashboard/settings"
+          onClick={() => setMobileOpen(false)}
+          className={isActive('/dashboard/settings') ? 'nav-item-active' : 'nav-item'}
+        >
+          <span className="glyph-box">{'\u2699'}</span>
+          <span>Settings</span>
+        </Link>
+      </div>
+      <div className="hatch-divider" />
       <div className="p-4">
         <p className="designation-tag mb-1.5">Wax & Groove</p>
         <div className="flex items-center gap-2">
@@ -62,7 +101,7 @@ export default function Sidebar() {
             style={{ fontFamily: 'var(--font-mono)', height: 26 }}
             aria-label={`Switch theme (current: ${theme})`}
           >
-            {([['dark', 'morph']] as const).map(([mode, label]) => (
+            {([['light', 'ivory'], ['dark', 'dark'], ['retro', 'magi']] as const).map(([mode, label]) => (
               <span
                 key={mode}
                 className="text-[9px] font-medium px-2.5 flex items-center h-full transition-colors"
@@ -79,7 +118,7 @@ export default function Sidebar() {
         <div className="flex items-center gap-2 mt-2">
           <div className="badge-compound">
             <span className="badge-compound-label">ENT</span>
-            <span className="badge-compound-code">V3.0</span>
+            <span className="badge-compound-code">V3.1</span>
           </div>
         </div>
       </div>

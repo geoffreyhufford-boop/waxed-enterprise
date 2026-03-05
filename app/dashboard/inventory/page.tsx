@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { DashboardHeader, StatCard, StatusBadge, FilterDropdown, DataTable } from '@/components/dashboard'
+import { DashboardHeader, StatusBadge, FilterDropdown, DataTable } from '@/components/dashboard'
 import { inventoryRecords, catalogResults, importBatch, crates, type InventoryRecord } from '@/lib/dashboard-data'
 import { useMemo } from 'react'
 import { exportToCSV } from '@/lib/export-utils'
@@ -14,8 +14,8 @@ import { customerProfiles } from '@/lib/customer-data'
 const syncSourceLabel: Record<string, string> = {
  discogs: 'Discogs',
  shopify: 'Shopify',
- csv: 'CSV',
- manual: 'Manual',
+ csv: 'Storefront',
+ manual: 'In-Store',
 }
 
 const syncSourceColor: Record<string, string> = {
@@ -57,6 +57,7 @@ export default function InventoryPage() {
  const [showConsignment, setShowConsignment] = useState(false)
  const [showAudit, setShowAudit] = useState(false)
  const [showStoreCredit, setShowStoreCredit] = useState(false)
+ const [showTradeIn, setShowTradeIn] = useState(false)
 
  const consignedIds = useMemo(() => new Set(consignedRecords.filter(c => c.status === 'active').map(c => c.inventoryId)), [])
  const activeDiscounts = discountRules.filter(d => d.active)
@@ -147,6 +148,7 @@ export default function InventoryPage() {
       <button className="btn-ghost text-sm px-3 py-2" onClick={() => setShowStoreCredit(true)}>
        Store Credit
       </button>
+      <button className="btn-ghost text-sm px-3 py-2" onClick={() => setShowTradeIn(true)}>Trade-In</button>
       <button className="btn-ghost text-sm px-3 py-2" onClick={() => setShowConsignment(true)}>Consignment</button>
       <button className="btn-ghost text-sm px-3 py-2" onClick={() => setShowAudit(true)}>Audit</button>
       <button className="btn-secondary text-sm px-4 py-2" onClick={() => setShowImport(true)}>Import</button>
@@ -154,13 +156,6 @@ export default function InventoryPage() {
      </div>
     }
    />
-
-   {/* Stats Row */}
-   <div className="shrink-0 grid grid-cols-2 lg:grid-cols-3 gap-3 mb-3 p-2 -m-2">
-    <StatCard label="Total Records" value="2,847" trend="+124" trendUp={true} />
-    <StatCard label="Active Listings" value="2,412" trend="+98" trendUp={true} />
-    <StatCard label="Sell Thru Rate" value="6.5%" trend="+0.8%" trendUp={true} />
-   </div>
 
    {/* Search + Filters */}
    <div className="shrink-0 flex flex-wrap items-center gap-2 mb-3">
@@ -173,7 +168,7 @@ export default function InventoryPage() {
     />
     <FilterDropdown label="Genre" options={['All', 'Techno', 'House', 'Ambient', 'Electro', 'Dub Techno', 'Acid']} value={genreFilter} onChange={setGenreFilter} />
     <FilterDropdown label="Condition" options={['All', '5', '4', '3', '2', '1']} value={conditionFilter} onChange={setConditionFilter} />
-    <FilterDropdown label="Status" options={['All', 'active', 'sold', 'reserved', 'pending']} value={statusFilter} onChange={setStatusFilter} />
+    <FilterDropdown label="Status" options={['All', 'active', 'draft', 'sold_out', 'on_hold', 'pending']} value={statusFilter} onChange={setStatusFilter} />
    </div>
 
    {/* Crate Tabs */}
@@ -201,7 +196,7 @@ export default function InventoryPage() {
 
    {/* Inventory Table */}
    <div className="flex-1 min-h-0 relative">
-    <DataTable headers={['Photo', 'Record', 'Condition', 'Price', 'Suggested', 'Source', 'Status', 'Queue']} maxHeight="100%">
+    <DataTable headers={['Photo', 'Record', 'Condition', 'Price', 'Suggested', 'Sales Channel', 'Status', 'Queue']} maxHeight="100%">
     {filtered.map((record, i) => (
      <tr key={record.id} className={`table-row hover:bg-waxe-surface/30 transition-colors cursor-pointer ${selectedRecords.has(record.id) ? 'bg-waxe-cool/10' : ''}`} onClick={(e) => handleRowClick(record, i, e)}>
       {/* Album Art */}
@@ -937,13 +932,14 @@ export default function InventoryPage() {
            <label className="text-xs font-medium text-waxe-text-muted mb-1.5 block">Status</label>
            <select className="input-field" defaultValue={selectedRecord.status}>
             <option value="active">Active</option>
-            <option value="sold">Sold</option>
-            <option value="reserved">Reserved</option>
+            <option value="draft">Draft</option>
+            <option value="sold_out">Sold Out</option>
+            <option value="on_hold">On Hold</option>
             <option value="pending">Pending</option>
            </select>
           </div>
           <div>
-           <label className="text-xs font-medium text-waxe-text-muted mb-1.5 block">Sync Source</label>
+           <label className="text-xs font-medium text-waxe-text-muted mb-1.5 block">Sales Channel</label>
            <select className="input-field" defaultValue={selectedRecord.syncSource}>
             <option value="discogs">Discogs</option>
             <option value="shopify">Shopify</option>
@@ -958,6 +954,50 @@ export default function InventoryPage() {
            <input type="checkbox" defaultChecked={selectedRecord.inPrintQueue} className="accent-waxe-text w-4 h-4" />
            <span className="text-sm text-waxe-text">In print queue</span>
           </label>
+          <label className="flex items-center gap-2 cursor-pointer">
+           <input type="checkbox" className="accent-waxe-text w-4 h-4" />
+           <span className="text-sm text-waxe-text">Play Tested</span>
+          </label>
+         </div>
+
+         {/* Condition Photos */}
+         <div className="bg-waxe-surface/30 p-4">
+          <p className="text-[10px] font-medium text-waxe-text-muted mb-3">Condition Photos</p>
+          <div className="grid grid-cols-4 gap-2">
+           {selectedRecord.hasPhoto && (
+            <div className="aspect-square border border-waxe-border overflow-hidden relative group">
+             <div className="w-full h-full" style={{ background: selectedRecord.photoColor || '#333' }} />
+             <button className="absolute inset-0 bg-waxe-text/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-waxe-deep text-xs font-medium">
+              Remove
+             </button>
+            </div>
+           )}
+           <button className="aspect-square border border-dashed border-waxe-border hover:border-waxe-border-hover transition-colors flex flex-col items-center justify-center gap-1">
+            <span className="text-lg text-waxe-text-muted">+</span>
+            <span className="text-[9px] text-waxe-text-muted">Upload</span>
+           </button>
+          </div>
+          <p className="text-[10px] text-waxe-text-muted mt-2">Upload photos showing actual record condition — sleeve, vinyl, labels, inserts</p>
+         </div>
+
+         {/* Media — Audio / Video */}
+         <div className="bg-waxe-surface/30 p-4">
+          <p className="text-[10px] font-medium text-waxe-text-muted mb-3">Media</p>
+          <div className="space-y-3">
+           <div>
+            <label className="text-xs text-waxe-text-muted mb-1.5 block">YouTube / Video URL</label>
+            <input type="url" className="input-field" placeholder="https://youtube.com/watch?v=..." />
+           </div>
+           <div>
+            <label className="text-xs text-waxe-text-muted mb-1.5 block">Audio Preview</label>
+            <div className="flex gap-2">
+             <button className="btn-ghost text-[11px] px-3 py-1.5 flex-1 border border-dashed border-waxe-border">
+              Upload Audio Clip (.mp3, .wav)
+             </button>
+            </div>
+            <p className="text-[10px] text-waxe-text-muted mt-1">30-60s preview clip for storefront listing</p>
+           </div>
+          </div>
          </div>
         </div>
 
@@ -1188,6 +1228,11 @@ export default function InventoryPage() {
       </div>
      </div>
     </div>
+   )}
+
+   {/* ─── Trade-In Intake Modal ─── */}
+   {showTradeIn && (
+    <TradeInModal onClose={() => setShowTradeIn(false)} />
    )}
 
    {/* ─── Store Credit Modal ─── */}
@@ -1508,14 +1553,229 @@ function AuditModal({ onClose, audits, activeAudit }: {
  )
 }
 
+// ─── Trade-In Intake Modal Component ─────────────────────────
+
+function TradeInModal({ onClose }: { onClose: () => void }) {
+ const [intakeType, setIntakeType] = useState<'trade_in' | 'purchase' | 'consignment' | 'donation'>('trade_in')
+ const [customerSearchTI, setCustomerSearchTI] = useState('')
+ const [selectedCustomerTI, setSelectedCustomerTI] = useState('')
+ const [showCustomerDropdownTI, setShowCustomerDropdownTI] = useState(false)
+ const [items, setItems] = useState([{ artist: '', title: '', condition: '3', estimatedValue: '' }])
+ const [notes, setNotes] = useState('')
+ const [submitted, setSubmitted] = useState(false)
+
+ const addItem = () => setItems([...items, { artist: '', title: '', condition: '3', estimatedValue: '' }])
+ const removeItem = (i: number) => setItems(items.filter((_, idx) => idx !== i))
+ const updateItem = (i: number, field: string, value: string) => {
+  const next = [...items]
+  next[i] = { ...next[i], [field]: value }
+  setItems(next)
+ }
+
+ const totalValue = items.reduce((sum, it) => sum + (parseFloat(it.estimatedValue) || 0), 0)
+
+ const typeLabels: Record<string, { label: string; desc: string }> = {
+  trade_in: { label: 'Trade-In', desc: 'Customer trades records for store credit' },
+  purchase: { label: 'Purchase', desc: 'Buy records directly from customer' },
+  consignment: { label: 'Consignment', desc: 'Sell on behalf of customer, split proceeds' },
+  donation: { label: 'Donation', desc: 'Accept donated records with tax receipt' },
+ }
+
+ return (
+  <div className="fixed inset-0 z-50 flex items-start justify-center pt-[5vh]">
+   <div className="absolute inset-0 bg-waxe-text/40" onClick={onClose} />
+   <div className="relative w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden bg-waxe-base border border-waxe-border shadow-xl clip-modal">
+    <div className="shrink-0 bg-waxe-base border-b border-waxe-border p-5 z-10">
+     <div className="flex items-center justify-between mb-3">
+      <h2 className="text-xl font-semibold text-waxe-text">Record Intake</h2>
+      <button onClick={onClose} className="text-waxe-text-muted hover:text-waxe-text text-lg">✕</button>
+     </div>
+     <div className="flex gap-1.5">
+      {(Object.keys(typeLabels) as Array<keyof typeof typeLabels>).map((key) => (
+       <button
+        key={key}
+        onClick={() => setIntakeType(key as typeof intakeType)}
+        className={`text-[11px] font-medium px-3 py-1.5 border transition-colors ${
+         intakeType === key
+          ? 'bg-waxe-text text-waxe-deep border-waxe-text'
+          : 'text-waxe-text bg-waxe-card/80 backdrop-blur-sm border-waxe-border hover:border-waxe-border-hover'
+        }`}
+       >
+        {typeLabels[key].label}
+       </button>
+      ))}
+     </div>
+     <p className="text-xs text-waxe-text-muted mt-2">{typeLabels[intakeType].desc}</p>
+    </div>
+
+    <div className="flex-1 min-h-0 overflow-y-auto p-5 space-y-4">
+     {submitted ? (
+      <div className="text-center py-12">
+       <p className="text-2xl mb-2">✓</p>
+       <p className="text-lg font-semibold text-waxe-text mb-1">Intake Recorded</p>
+       <p className="text-sm text-waxe-text-secondary mb-1">
+        {items.length} item{items.length !== 1 ? 's' : ''} · {typeLabels[intakeType].label} · ${totalValue.toFixed(2)}
+       </p>
+       {intakeType === 'trade_in' && (
+        <p className="text-xs text-waxe-positive">Store credit of ${totalValue.toFixed(2)} issued</p>
+       )}
+       {intakeType === 'donation' && (
+        <p className="text-xs text-waxe-text-muted">Tax receipt generated</p>
+       )}
+       <button className="btn-secondary text-sm px-4 py-2 mt-6" onClick={onClose}>Done</button>
+      </div>
+     ) : (
+      <>
+       {/* Customer */}
+       <div>
+        <label className="text-xs font-medium text-waxe-text-muted mb-1.5 block">Customer</label>
+        <div className="relative">
+         <input
+          type="text"
+          placeholder="Search by name or email..."
+          className="input-field"
+          value={customerSearchTI}
+          onChange={(e) => { setCustomerSearchTI(e.target.value); setShowCustomerDropdownTI(true) }}
+          onFocus={() => setShowCustomerDropdownTI(true)}
+         />
+         {showCustomerDropdownTI && customerSearchTI && (
+          <div className="absolute top-full left-0 right-0 mt-1 bg-waxe-card border border-waxe-border shadow-lg z-20 max-h-40 overflow-y-auto">
+           {customerProfiles
+            .filter((c) => {
+             const q = customerSearchTI.toLowerCase()
+             return c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q)
+            })
+            .slice(0, 6)
+            .map((c) => (
+             <button
+              key={c.id}
+              className="w-full text-left px-3 py-2 hover:bg-waxe-surface/50 transition-colors"
+              onClick={() => {
+               setSelectedCustomerTI(c.id)
+               setCustomerSearchTI(`${c.name} (${c.email})`)
+               setShowCustomerDropdownTI(false)
+              }}
+             >
+              <span className="text-sm text-waxe-text">{c.name}</span>
+              <span className="text-[11px] text-waxe-text-muted ml-2">{c.email}</span>
+             </button>
+            ))}
+          </div>
+         )}
+        </div>
+       </div>
+
+       {/* Items */}
+       <div>
+        <div className="flex items-center justify-between mb-2">
+         <label className="text-xs font-medium text-waxe-text-muted">Items</label>
+         <button className="btn-ghost text-[11px] px-2 py-1" onClick={addItem}>+ Add Item</button>
+        </div>
+        <div className="space-y-2">
+         {items.map((item, i) => (
+          <div key={i} className="grid grid-cols-[1fr_1fr_80px_100px_32px] gap-2 items-center">
+           <input
+            type="text" placeholder="Artist" className="input-field text-sm"
+            value={item.artist} onChange={(e) => updateItem(i, 'artist', e.target.value)}
+           />
+           <input
+            type="text" placeholder="Title" className="input-field text-sm"
+            value={item.title} onChange={(e) => updateItem(i, 'title', e.target.value)}
+           />
+           <select className="input-field text-sm" value={item.condition} onChange={(e) => updateItem(i, 'condition', e.target.value)}>
+            <option value="5">Mint</option>
+            <option value="4">VG+</option>
+            <option value="3">VG</option>
+            <option value="2">G+</option>
+            <option value="1">Fair</option>
+           </select>
+           <div className="relative">
+            <span className="absolute left-2 top-1/2 -translate-y-1/2 text-xs text-waxe-text-muted">$</span>
+            <input
+             type="number" step="0.01" placeholder="Value" className="input-field text-sm pl-5"
+             value={item.estimatedValue} onChange={(e) => updateItem(i, 'estimatedValue', e.target.value)}
+            />
+           </div>
+           {items.length > 1 && (
+            <button onClick={() => removeItem(i)} className="text-waxe-text-muted hover:text-waxe-negative text-sm">✕</button>
+           )}
+          </div>
+         ))}
+        </div>
+       </div>
+
+       {/* Consignment split */}
+       {intakeType === 'consignment' && (
+        <div className="bg-waxe-surface/30 p-4">
+         <p className="text-[10px] font-medium text-waxe-text-muted mb-2">Consignment Terms</p>
+         <div className="grid grid-cols-2 gap-3">
+          <div>
+           <label className="text-xs text-waxe-text-muted mb-1 block">Store Split %</label>
+           <input type="number" className="input-field" defaultValue="30" />
+          </div>
+          <div>
+           <label className="text-xs text-waxe-text-muted mb-1 block">Duration (days)</label>
+           <input type="number" className="input-field" defaultValue="90" />
+          </div>
+         </div>
+        </div>
+       )}
+
+       {/* Donation tax form */}
+       {intakeType === 'donation' && (
+        <div className="bg-waxe-surface/30 p-4">
+         <p className="text-[10px] font-medium text-waxe-text-muted mb-2">Donation Details</p>
+         <label className="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" className="accent-waxe-text w-4 h-4" />
+          <span className="text-sm text-waxe-text">Generate tax receipt (501(c)(3) donation acknowledgment)</span>
+         </label>
+        </div>
+       )}
+
+       {/* Notes */}
+       <div>
+        <label className="text-xs font-medium text-waxe-text-muted mb-1.5 block">Notes</label>
+        <textarea
+         className="input-field min-h-[60px] resize-y"
+         placeholder="Condition notes, special agreements..."
+         value={notes}
+         onChange={(e) => setNotes(e.target.value)}
+        />
+       </div>
+      </>
+     )}
+    </div>
+
+    {!submitted && (
+     <div className="shrink-0 bg-waxe-card border-t border-waxe-border p-5 flex items-center justify-between">
+      <div className="text-xs text-waxe-text-muted">
+       {items.length} item{items.length !== 1 ? 's' : ''} · Total: <strong className="text-waxe-text font-mono">${totalValue.toFixed(2)}</strong>
+       {intakeType === 'trade_in' && <span className="ml-2 text-waxe-warm">→ Store Credit</span>}
+       {intakeType === 'purchase' && <span className="ml-2 text-waxe-positive">→ Cash Payout</span>}
+      </div>
+      <div className="flex gap-2">
+       <button className="btn-secondary text-sm px-4 py-2" onClick={onClose}>Cancel</button>
+       <button className="btn-primary text-sm px-4 py-2" onClick={() => setSubmitted(true)}>
+        {intakeType === 'trade_in' ? 'Issue Credit' : intakeType === 'purchase' ? 'Complete Purchase' : intakeType === 'consignment' ? 'Start Consignment' : 'Accept Donation'}
+       </button>
+      </div>
+     </div>
+    )}
+   </div>
+  </div>
+ )
+}
+
 // ─── Store Credit Modal Component ────────────────────────────
 
 function StoreCreditModal({ onClose }: { onClose: () => void }) {
  const [tab, setTab] = useState<'accounts' | 'transactions'>('accounts')
  const [showIssueForm, setShowIssueForm] = useState(false)
  const [issueCustomer, setIssueCustomer] = useState('')
+ const [customerSearch, setCustomerSearch] = useState('')
+ const [showCustomerDropdown, setShowCustomerDropdown] = useState(false)
  const [issueAmount, setIssueAmount] = useState('')
- const [issueNote, setIssueNote] = useState('')
+ const [issueExpiry, setIssueExpiry] = useState('')
 
  const stats = getCreditStats()
 
@@ -1566,16 +1826,46 @@ function StoreCreditModal({ onClose }: { onClose: () => void }) {
       <div className="bg-waxe-card border border-waxe-border p-4 mb-4 clip-stat">
        <p className="text-[10px] font-medium text-waxe-text-muted mb-3">Issue Store Credit</p>
        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        <select
-         className="bg-waxe-deep border border-waxe-border text-sm text-waxe-text px-3 py-2 focus:outline-none focus:border-waxe-border-hover"
-         value={issueCustomer}
-         onChange={(e) => setIssueCustomer(e.target.value)}
-        >
-         <option value="">Select customer...</option>
-         {customerProfiles.map((c) => (
-          <option key={c.id} value={c.id}>{c.name}</option>
-         ))}
-        </select>
+        <div className="relative">
+         <input
+          type="text"
+          placeholder="Search by name or email..."
+          className="w-full bg-waxe-deep border border-waxe-border text-sm text-waxe-text px-3 py-2 focus:outline-none focus:border-waxe-border-hover"
+          value={customerSearch}
+          onChange={(e) => { setCustomerSearch(e.target.value); setShowCustomerDropdown(true) }}
+          onFocus={() => setShowCustomerDropdown(true)}
+         />
+         {showCustomerDropdown && customerSearch && (
+          <div className="absolute top-full left-0 right-0 mt-1 bg-waxe-card border border-waxe-border shadow-lg z-20 max-h-40 overflow-y-auto">
+           {customerProfiles
+            .filter((c) => {
+             const q = customerSearch.toLowerCase()
+             return c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q)
+            })
+            .slice(0, 8)
+            .map((c) => (
+             <button
+              key={c.id}
+              className="w-full text-left px-3 py-2 hover:bg-waxe-surface/50 transition-colors"
+              onClick={() => {
+               setIssueCustomer(c.id)
+               setCustomerSearch(`${c.name} (${c.email})`)
+               setShowCustomerDropdown(false)
+              }}
+             >
+              <span className="text-sm text-waxe-text">{c.name}</span>
+              <span className="text-[11px] text-waxe-text-muted ml-2">{c.email}</span>
+             </button>
+            ))}
+           {customerProfiles.filter((c) => {
+            const q = customerSearch.toLowerCase()
+            return c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q)
+           }).length === 0 && (
+            <p className="px-3 py-2 text-[11px] text-waxe-text-muted">No customers found</p>
+           )}
+          </div>
+         )}
+        </div>
         <input
          type="number"
          placeholder="Amount ($)"
@@ -1583,13 +1873,15 @@ function StoreCreditModal({ onClose }: { onClose: () => void }) {
          value={issueAmount}
          onChange={(e) => setIssueAmount(e.target.value)}
         />
-        <input
-         type="text"
-         placeholder="Note (optional)"
-         className="bg-waxe-deep border border-waxe-border text-sm text-waxe-text px-3 py-2 focus:outline-none focus:border-waxe-border-hover"
-         value={issueNote}
-         onChange={(e) => setIssueNote(e.target.value)}
-        />
+        <div>
+         <input
+          type="date"
+          className="w-full bg-waxe-deep border border-waxe-border text-sm text-waxe-text px-3 py-2 focus:outline-none focus:border-waxe-border-hover"
+          value={issueExpiry}
+          onChange={(e) => setIssueExpiry(e.target.value)}
+         />
+         <p className="text-[10px] text-waxe-text-muted mt-1">Expiry date (leave blank for no expiry)</p>
+        </div>
        </div>
        <div className="flex items-center gap-2 mt-3">
         <button
@@ -1597,8 +1889,9 @@ function StoreCreditModal({ onClose }: { onClose: () => void }) {
          onClick={() => {
           setShowIssueForm(false)
           setIssueCustomer('')
+          setCustomerSearch('')
           setIssueAmount('')
-          setIssueNote('')
+          setIssueExpiry('')
          }}
         >
          Issue Credit

@@ -3,8 +3,8 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
-export default function MessagesRedirect() {
+export default function IntelligenceRedirect() {
  const router = useRouter()
- useEffect(() => { router.replace('/dashboard/customers') }, [router])
+ useEffect(() => { router.replace('/dashboard') }, [router])
  return null
 }

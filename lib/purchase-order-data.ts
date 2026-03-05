@@ -15,7 +15,7 @@ export interface PurchaseOrder {
   id: string
   supplierId: string
   supplierName: string
-  status: 'draft' | 'sent' | 'partially_received' | 'received' | 'closed'
+  status: 'draft' | 'delivered' | 'partially_received' | 'received' | 'closed'
   createdDate: string
   sentDate?: string
   expectedDelivery?: string
@@ -35,7 +35,7 @@ export const purchaseOrders: PurchaseOrder[] = [
     id: 'PO-041',
     supplierId: 'sup-001',
     supplierName: 'Tresor Records',
-    status: 'sent',
+    status: 'delivered',
     createdDate: '2025-02-20',
     sentDate: '2025-02-21',
     expectedDelivery: '2025-03-05',

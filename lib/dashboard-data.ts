@@ -31,7 +31,7 @@ export interface InventoryRecord {
   suggestedPrice?: number
   priceDelta?: number
   syncSource: 'discogs' | 'shopify' | 'csv' | 'manual'
-  status: 'active' | 'sold' | 'reserved' | 'pending'
+  status: 'active' | 'draft' | 'sold_out' | 'on_hold' | 'pending'
   genre: string
   inPrintQueue: boolean
   hasPhoto: boolean
@@ -255,7 +255,7 @@ export interface Order {
   customer: { name: string; email: string; address: string }
   items: OrderItem[]
   total: number
-  status: 'processing' | 'unfulfilled' | 'label_printed' | 'in_transit' | 'delivered' | 'refunded' | 'cancelled'
+  status: 'draft' | 'processing' | 'unfulfilled' | 'label_printed' | 'in_transit' | 'delivered' | 'refunded' | 'cancelled'
   shippingMethod: 'standard' | 'priority' | 'pickup'
   orderType: 'b2b' | 'd2c'
   trackingNumber?: string
@@ -362,7 +362,7 @@ export const inventoryRecords: InventoryRecord[] = [
     discogsMedian: 105, discogsLow: 45, discogsHigh: 350,
   },
   {
-    id: 'WX-006', artist: 'Boards of Canada', title: 'Music Has the Right to Children', label: 'Warp', year: 1998, condition: 3, price: 65.00, suggestedPrice: 68.00, priceDelta: 3, syncSource: 'shopify', status: 'reserved', genre: 'Ambient', inPrintQueue: true, hasPhoto: true, photoColor: '#2a3a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/b5/4c/c2/b54cc20d-03f5-f2c4-4a0d-9b51ad65af89/dj.txuslqgv.jpg/300x300bb.jpg',
+    id: 'WX-006', artist: 'Boards of Canada', title: 'Music Has the Right to Children', label: 'Warp', year: 1998, condition: 3, price: 65.00, suggestedPrice: 68.00, priceDelta: 3, syncSource: 'shopify', status: 'on_hold', genre: 'Ambient', inPrintQueue: true, hasPhoto: true, photoColor: '#2a3a2a', artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/b5/4c/c2/b54cc20d-03f5-f2c4-4a0d-9b51ad65af89/dj.txuslqgv.jpg/300x300bb.jpg',
     pressing: '1st Press', countryOfPressing: 'UK', catalogNo: 'WARP LP 55', matrixRunout: 'WARPLP55 A2 MPO', discogsReleaseId: 'r28384',
     vinylWeight: '140g', vinylColor: 'Black', format: '2x12"', speed: '33 RPM',
     sleeveCondition: 3, sleeveType: 'Gatefold', innerSleeve: 'Original printed',

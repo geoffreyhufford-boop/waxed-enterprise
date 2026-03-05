@@ -12,13 +12,13 @@ interface ThemeContextValue {
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
 const CYCLE: Record<Theme, Theme> = {
-  dark: 'light',
-  light: 'retro',
-  retro: 'dark',
+  light: 'dark',
+  dark: 'retro',
+  retro: 'light',
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark')
+  const [theme, setTheme] = useState<Theme>('light')
 
   // Sync with what the inline script already set
   useEffect(() => {
