@@ -1556,7 +1556,7 @@ function AuditModal({ onClose, audits, activeAudit }: {
 // ─── Trade-In Intake Modal Component ─────────────────────────
 
 function TradeInModal({ onClose }: { onClose: () => void }) {
- const [intakeType, setIntakeType] = useState<'trade_in' | 'purchase' | 'consignment' | 'donation'>('trade_in')
+ const [intakeType, setIntakeType] = useState<'trade_in' | 'purchase' | 'consignment'>('trade_in')
  const [customerSearchTI, setCustomerSearchTI] = useState('')
  const [selectedCustomerTI, setSelectedCustomerTI] = useState('')
  const [showCustomerDropdownTI, setShowCustomerDropdownTI] = useState(false)
@@ -1578,7 +1578,6 @@ function TradeInModal({ onClose }: { onClose: () => void }) {
   trade_in: { label: 'Trade-In', desc: 'Customer trades records for store credit' },
   purchase: { label: 'Purchase', desc: 'Buy records directly from customer' },
   consignment: { label: 'Consignment', desc: 'Sell on behalf of customer, split proceeds' },
-  donation: { label: 'Donation', desc: 'Accept donated records with tax receipt' },
  }
 
  return (
@@ -1618,9 +1617,6 @@ function TradeInModal({ onClose }: { onClose: () => void }) {
        </p>
        {intakeType === 'trade_in' && (
         <p className="text-xs text-waxe-positive">Store credit of ${totalValue.toFixed(2)} issued</p>
-       )}
-       {intakeType === 'donation' && (
-        <p className="text-xs text-waxe-text-muted">Tax receipt generated</p>
        )}
        <button className="btn-secondary text-sm px-4 py-2 mt-6" onClick={onClose}>Done</button>
       </div>
@@ -1721,17 +1717,6 @@ function TradeInModal({ onClose }: { onClose: () => void }) {
         </div>
        )}
 
-       {/* Donation tax form */}
-       {intakeType === 'donation' && (
-        <div className="bg-waxe-surface/30 p-4">
-         <p className="text-[10px] font-medium text-waxe-text-muted mb-2">Donation Details</p>
-         <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" className="accent-waxe-text w-4 h-4" />
-          <span className="text-sm text-waxe-text">Generate tax receipt (501(c)(3) donation acknowledgment)</span>
-         </label>
-        </div>
-       )}
-
        {/* Notes */}
        <div>
         <label className="text-xs font-medium text-waxe-text-muted mb-1.5 block">Notes</label>
@@ -1756,7 +1741,7 @@ function TradeInModal({ onClose }: { onClose: () => void }) {
       <div className="flex gap-2">
        <button className="btn-secondary text-sm px-4 py-2" onClick={onClose}>Cancel</button>
        <button className="btn-primary text-sm px-4 py-2" onClick={() => setSubmitted(true)}>
-        {intakeType === 'trade_in' ? 'Issue Credit' : intakeType === 'purchase' ? 'Complete Purchase' : intakeType === 'consignment' ? 'Start Consignment' : 'Accept Donation'}
+        {intakeType === 'trade_in' ? 'Issue Credit' : intakeType === 'purchase' ? 'Complete Purchase' : 'Start Consignment'}
        </button>
       </div>
      </div>

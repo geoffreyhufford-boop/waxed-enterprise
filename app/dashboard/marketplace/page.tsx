@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo, useRef, useEffect } from 'react'
-import { DashboardHeader, FilterDropdown, StatusBadge, DataTable, PackCard, ShelfCard } from '@/components/dashboard'
+import { DashboardHeader, FilterDropdown, StatusBadge, DataTable, PackCard } from '@/components/dashboard'
 import { marketplaceListings, marketplaceRecommendations } from '@/lib/marketplace-data'
 import type { MarketplaceListing } from '@/lib/marketplace-data'
 import { networkStores as restockStores, networkRecords, deadStockItems, wantListItems } from '@/lib/restock-data'
@@ -12,7 +12,7 @@ import { curatedPacks, inboundPackRequests, networkPackListings, calculateFees, 
 import type { InboundPackRequest, NetworkPackListing, PackPurchase } from '@/lib/pack-data'
 import { PackArtworkGrid } from '@/components/dashboard/PackCard'
 import { useCart } from '@/lib/cart-context'
-import { shelves, storefrontConfig, inventoryRecords, type StorefrontSocialLinks } from '@/lib/dashboard-data'
+import { inventoryRecords } from '@/lib/dashboard-data'
 
 // ─── MarketplaceListingCard ──────────────────────────────────
 
@@ -531,11 +531,8 @@ export default function MarketplacePage() {
  const { state, toggleDrawer } = useCart()
  const scrollRef = useRef<HTMLDivElement>(null)
  const [activePanel, setActivePanel] = useState(0)
- const panelCount = 4
+ const panelCount = 3
  const [headerCollapsed, setHeaderCollapsed] = useState(false)
- const [selectedShelf, setSelectedShelf] = useState(0)
- const activeShelf = shelves[selectedShelf]
- const [socialLinks, setSocialLinks] = useState(storefrontConfig.socialLinks)
  const artworkMap = Object.fromEntries(inventoryRecords.map(r => [r.id, r.artworkUrl]))
 
  // Restock panel filters
@@ -640,7 +637,7 @@ export default function MarketplacePage() {
 
    {/* Panel tabs */}
    <div className="shrink-0 flex items-center gap-1.5 pb-3 mb-3 border-b border-waxe-border pr-4">
-    {['Restock', 'Collections', 'Network', 'My Storefront'].map((label, i) => (
+    {['Restock', 'Collections', 'Network'].map((label, i) => (
      <button
       key={label}
       onClick={() => scrollToPanel(i)}
@@ -653,6 +650,17 @@ export default function MarketplacePage() {
       {label}
      </button>
     ))}
+    {pendingRequests.length > 0 && (
+     <button
+      onClick={() => scrollToPanel(1)}
+      className="flex items-center gap-1.5 text-[11px] font-medium px-3 py-1.5 border border-waxe-warm/40 bg-waxe-warm/10 text-waxe-warm hover:bg-waxe-warm/20 transition-colors"
+     >
+      Pending Requests
+      <span className="inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold bg-waxe-warm text-waxe-deep">
+       {pendingRequests.length}
+      </span>
+     </button>
+    )}
     <button
      onClick={() => setHeaderCollapsed(!headerCollapsed)}
      className="ml-auto text-[10px] text-waxe-text-muted hover:text-waxe-text transition-colors"
@@ -830,164 +838,6 @@ export default function MarketplacePage() {
        {networkTransactions.map((txn) => (
         <TransactionRow key={txn.id} transaction={txn} />
        ))}
-      </div>
-     </div>
-    </div>
-
-    {/* ── Panel 4: My Storefront ── */}
-    <div className="snap-start shrink-0 w-[92%] flex flex-col gap-4 min-h-0">
-     <div className="shrink-0 flex items-center justify-between">
-      <div className="flex items-center gap-3">
-       <button className="btn-ghost text-sm px-2 py-1" onClick={() => scrollToPanel(0)}>
-        {'<< '}Back
-       </button>
-       <div>
-        <h3 className="text-[11px] font-semibold text-waxe-text">My Storefront</h3>
-        <p className="text-[10px] text-waxe-text-muted">Customize your online record store</p>
-       </div>
-      </div>
-      <div className="flex items-center gap-3">
-       <StatusBadge status={storefrontConfig.status} label={storefrontConfig.status === 'live' ? 'Live' : 'Draft'} />
-       <button className="btn-secondary text-sm px-3 py-1.5">Preview</button>
-       <button className="btn-primary text-sm px-3 py-1.5">Publish</button>
-      </div>
-     </div>
-
-     <div className="flex-1 min-h-0 overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-       {/* Customize */}
-       <div className="bg-waxe-card border border-waxe-border p-5 clip-card">
-        <h2 className="text-[11px] font-semibold text-waxe-text mb-2">Customize</h2>
-        <div className="hatch-divider mb-4" />
-        <div className="space-y-3">
-         <div>
-          <label className="label-text">Store Name</label>
-          <input type="text" className="input-field" defaultValue={storefrontConfig.storeName} />
-         </div>
-         <div>
-          <label className="label-text">Description</label>
-          <textarea className="input-field resize-none h-16" defaultValue={storefrontConfig.description} />
-         </div>
-         <div className="grid grid-cols-2 gap-3">
-          <div>
-           <label className="label-text">Primary</label>
-           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 border border-waxe-border" style={{ background: storefrontConfig.primaryColor }} />
-            <span className="text-[11px] font-mono text-waxe-text-muted">{storefrontConfig.primaryColor}</span>
-           </div>
-          </div>
-          <div>
-           <label className="label-text">Accent</label>
-           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 border border-waxe-border" style={{ background: storefrontConfig.accentColor }} />
-            <span className="text-[11px] font-mono text-waxe-text-muted">{storefrontConfig.accentColor}</span>
-           </div>
-          </div>
-         </div>
-         <div className="grid grid-cols-2 gap-3">
-          <div>
-           <label className="label-text">Logo</label>
-           <div className="border border-dashed border-waxe-border hover:border-waxe-border-hover p-3 text-center cursor-pointer transition-colors">
-            <p className="text-xs text-waxe-text-muted mb-0.5">↑ Upload</p>
-            <p className="text-[10px] text-waxe-text-muted">PNG, SVG</p>
-           </div>
-          </div>
-          <div>
-           <label className="label-text">Header Image</label>
-           <div className="border border-dashed border-waxe-border hover:border-waxe-border-hover p-3 text-center cursor-pointer transition-colors">
-            <p className="text-xs text-waxe-text-muted mb-0.5">↑ Upload</p>
-            <p className="text-[10px] text-waxe-text-muted">JPG, PNG</p>
-           </div>
-          </div>
-         </div>
-        </div>
-       </div>
-
-       {/* Social Links */}
-       <div className="bg-waxe-card border border-waxe-border p-5 clip-card">
-        <h2 className="text-[11px] font-semibold text-waxe-text mb-2">Social Links</h2>
-        <div className="hatch-divider mb-4" />
-        <div className="space-y-2">
-         {([
-          { key: 'instagram' as keyof StorefrontSocialLinks, label: 'Instagram', icon: '◎' },
-          { key: 'twitter' as keyof StorefrontSocialLinks, label: 'X / Twitter', icon: '𝕏' },
-          { key: 'tiktok' as keyof StorefrontSocialLinks, label: 'TikTok', icon: '♪' },
-          { key: 'facebook' as keyof StorefrontSocialLinks, label: 'Facebook', icon: 'f' },
-          { key: 'youtube' as keyof StorefrontSocialLinks, label: 'YouTube', icon: '▶' },
-          { key: 'bandcamp' as keyof StorefrontSocialLinks, label: 'Bandcamp', icon: '◆' },
-         ]).map((platform) => (
-          <div key={platform.key} className="flex items-center gap-2">
-           <span className="w-6 h-6 flex items-center justify-center text-sm text-waxe-text-muted shrink-0">{platform.icon}</span>
-           <input
-            type="text"
-            placeholder={platform.label}
-            className="input-field text-xs flex-1"
-            value={socialLinks[platform.key] || ''}
-            onChange={(e) => setSocialLinks({ ...socialLinks, [platform.key]: e.target.value || undefined })}
-           />
-          </div>
-         ))}
-        </div>
-       </div>
-
-       {/* Shelves */}
-       <div className="bg-waxe-card border border-waxe-border p-5 clip-card">
-        <div className="flex items-center justify-between mb-2">
-         <h2 className="text-[11px] font-semibold text-waxe-text">Shelves</h2>
-         <button className="btn-ghost text-xs">+ Add</button>
-        </div>
-        <div className="hatch-divider mb-3" />
-        <div className="space-y-2">
-         {shelves.map((shelf, i) => (
-          <ShelfCard
-           key={shelf.id}
-           shelf={shelf}
-           isSelected={i === selectedShelf}
-           onSelect={() => setSelectedShelf(i)}
-           artworkMap={artworkMap}
-          />
-         ))}
-        </div>
-       </div>
-
-       {/* Selected shelf records */}
-       <div className="bg-waxe-card border border-waxe-border p-5 clip-card">
-        <div className="flex items-center justify-between mb-2">
-         <h2 className="text-[11px] font-semibold text-waxe-text">{activeShelf.name}</h2>
-         <button className="btn-ghost text-xs">+ Add</button>
-        </div>
-        <div className="hatch-divider mb-3" />
-        <div className="space-y-1">
-         {activeShelf.records.map((record) => (
-          <div key={record.id} className="flex items-center justify-between py-2 px-2 hover:bg-waxe-surface/30 transition-colors">
-           <div className="flex items-center gap-2 min-w-0">
-            <div className="w-8 h-8 bg-waxe-surface overflow-hidden shrink-0">
-             {artworkMap[record.id] ? (
-              <img src={artworkMap[record.id]} alt="" className="w-full h-full object-cover" />
-             ) : (
-              <div className="w-full h-full flex items-center justify-center text-[11px] font-medium text-waxe-text-muted">
-               {record.artist.split(' ').pop()?.charAt(0)}
-              </div>
-             )}
-            </div>
-            <div className="min-w-0">
-             <p className="text-xs text-waxe-text truncate">{record.artist}</p>
-             <p className="text-[11px] text-waxe-text-muted truncate">{record.title}</p>
-            </div>
-           </div>
-           <button
-            className={`w-6 h-6 flex items-center justify-center text-xs shrink-0 ${
-             record.featured
-              ? 'bg-waxe-warm/15 text-waxe-cool border border-waxe-warm/25'
-              : 'bg-waxe-surface text-waxe-text-muted border border-waxe-border'
-            }`}
-           >
-            ★
-           </button>
-          </div>
-         ))}
-        </div>
-       </div>
       </div>
      </div>
     </div>

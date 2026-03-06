@@ -2,13 +2,14 @@
 
 import { useState } from 'react'
 import { BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell } from 'recharts'
-import { DashboardHeader, ChartCard, StatusBadge, DataTable, PinButton, DateRangeSelector, SalesChannelFilter } from '@/components/dashboard'
+import { DashboardHeader, ChartCard, StatCard, StatusBadge, DataTable, PinButton, DateRangeSelector, SalesChannelFilter } from '@/components/dashboard'
 import { exportToPDF } from '@/lib/export-utils'
 import {
  channelRevenueData, marginData, genreBreakdowns,
  daysOnShelfData, priceVsMarketData, deadStockSummary, conditionBreakdowns,
  velocityData, restockRecommendations, missedSearches,
  priceHistoryData, priceIntelSummary, channelFeeStructures,
+ quickStats,
 } from '@/lib/dashboard-data'
 import { deadStockItems, wantListItems } from '@/lib/restock-data'
 import { DashboardFilterProvider } from '@/lib/dashboard-filter-context'
@@ -112,6 +113,13 @@ export default function AnalyticsPage() {
      </div>
     }
    />
+
+   {/* ── Hero Metrics ── */}
+   <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    {quickStats.map((stat) => (
+     <StatCard key={stat.label} {...stat} />
+    ))}
+   </div>
 
    <div id="analytics-content" className="flex-1 min-h-0 overflow-y-auto space-y-6 pb-6">
 

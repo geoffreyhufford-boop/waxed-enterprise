@@ -33,6 +33,11 @@ export default function CustomersPage() {
  const [detailView, setDetailView] = useState<'info' | 'messages'>('info')
  const [showBroadcast, setShowBroadcast] = useState(false)
  const [showCompose, setShowCompose] = useState(false)
+ const [showCreateSegment, setShowCreateSegment] = useState(false)
+ const [newSegmentName, setNewSegmentName] = useState('')
+ const [newSegmentRules, setNewSegmentRules] = useState<{ field: string; op: string; value: string }[]>([
+  { field: 'totalSpend', op: 'greater_than', value: '' },
+ ])
 
  const filtered = useMemo(() =>
   customerProfiles.filter((c) => {
@@ -81,7 +86,7 @@ export default function CustomersPage() {
        value={search}
        onChange={(e) => setSearch(e.target.value)}
       />
-      <div className="flex gap-1">
+      <div className="flex gap-1 items-center">
        {['All', 'vip', 'wholesale', 'retail'].map((tier) => (
         <button
          key={tier}
@@ -95,6 +100,12 @@ export default function CustomersPage() {
          {tier}
         </button>
        ))}
+       <button
+        onClick={() => setShowCreateSegment(true)}
+        className="text-[10px] font-medium px-2 py-1 border border-dashed border-waxe-border text-waxe-text-muted hover:text-waxe-text hover:border-waxe-text transition-colors ml-1"
+       >
+        + Segment
+       </button>
       </div>
      </div>
      <div className="flex-1 overflow-y-auto">
@@ -434,6 +445,121 @@ export default function CustomersPage() {
 
    {/* Broadcast Modal */}
    {showBroadcast && <BroadcastModal onClose={() => setShowBroadcast(false)} />}
+
+   {/* Create Segment Modal */}
+   {showCreateSegment && (
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[10vh]">
+     <div className="absolute inset-0 bg-waxe-text/40" onClick={() => setShowCreateSegment(false)} />
+     <div className="relative w-full max-w-md bg-waxe-card border border-waxe-border shadow-xl clip-card flex flex-col max-h-[70vh]">
+      <div className="shrink-0 px-5 py-4 border-b border-waxe-border">
+       <h2 className="text-base font-semibold text-waxe-text">Create Customer Segment</h2>
+       <p className="text-xs text-waxe-text-muted mt-0.5">Define rules to automatically group customers</p>
+      </div>
+
+      <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+       <div>
+        <label className="text-xs font-medium text-waxe-text-muted mb-1.5 block">Segment Name</label>
+        <input
+         type="text"
+         className="input-field"
+         placeholder="e.g. High Spenders, Jazz Collectors..."
+         value={newSegmentName}
+         onChange={(e) => setNewSegmentName(e.target.value)}
+        />
+       </div>
+
+       <div>
+        <label className="text-xs font-medium text-waxe-text-muted mb-2 block">Rules</label>
+        <div className="space-y-2">
+         {newSegmentRules.map((rule, i) => (
+          <div key={i} className="flex gap-2 items-center">
+           <select
+            className="input-field text-sm flex-1"
+            value={rule.field}
+            onChange={(e) => {
+             const next = [...newSegmentRules]
+             next[i] = { ...next[i], field: e.target.value }
+             setNewSegmentRules(next)
+            }}
+           >
+            <option value="totalSpend">Total Spend</option>
+            <option value="orderCount">Order Count</option>
+            <option value="lastOrder">Last Order</option>
+            <option value="tier">Tier</option>
+            <option value="topGenre">Top Genre</option>
+            <option value="joinDate">Join Date</option>
+           </select>
+           <select
+            className="input-field text-sm w-28"
+            value={rule.op}
+            onChange={(e) => {
+             const next = [...newSegmentRules]
+             next[i] = { ...next[i], op: e.target.value }
+             setNewSegmentRules(next)
+            }}
+           >
+            <option value="greater_than">greater than</option>
+            <option value="less_than">less than</option>
+            <option value="equals">equals</option>
+            <option value="contains">contains</option>
+           </select>
+           <input
+            type="text"
+            className="input-field text-sm w-24"
+            placeholder="value"
+            value={rule.value}
+            onChange={(e) => {
+             const next = [...newSegmentRules]
+             next[i] = { ...next[i], value: e.target.value }
+             setNewSegmentRules(next)
+            }}
+           />
+           {newSegmentRules.length > 1 && (
+            <button
+             onClick={() => setNewSegmentRules(newSegmentRules.filter((_, j) => j !== i))}
+             className="text-waxe-text-muted hover:text-waxe-negative text-sm shrink-0"
+            >
+             x
+            </button>
+           )}
+          </div>
+         ))}
+        </div>
+        <button
+         onClick={() => setNewSegmentRules([...newSegmentRules, { field: 'totalSpend', op: 'greater_than', value: '' }])}
+         className="text-[10px] font-medium text-waxe-cool hover:text-waxe-warm mt-2"
+        >
+         + Add Rule
+        </button>
+       </div>
+
+       <div className="bg-waxe-surface/30 border border-waxe-border/50 p-3">
+        <p className="text-[10px] font-medium text-waxe-text-muted mb-1">Preview</p>
+        <p className="text-sm text-waxe-text">
+         {(() => {
+          const matching = customerProfiles.filter(() => true)
+          return `${matching.length} customers match these rules`
+         })()}
+        </p>
+       </div>
+      </div>
+
+      <div className="shrink-0 px-5 py-4 border-t border-waxe-border flex justify-end gap-2">
+       <button className="btn-secondary text-sm px-4 py-2" onClick={() => setShowCreateSegment(false)}>Cancel</button>
+       <button
+        className="btn-primary text-sm px-4 py-2"
+        onClick={() => {
+         setShowCreateSegment(false)
+         setNewSegmentName('')
+         setNewSegmentRules([{ field: 'totalSpend', op: 'greater_than', value: '' }])
+        }}
+       >
+        Create Segment
+       </button>
+      </div>
+     </div>
+    </div>
+   )}
   </div>
  )
 }
